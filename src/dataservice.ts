@@ -520,17 +520,24 @@ export class FileNode {
                     // already in child set
                     // console.log(subordinateFilePaths[propertyLinkedPath]);
                 } else {
+                    let recurseLimitDepth: number | null = limitDepth === null ? null : limitDepth -1;
                     // has a node for this path been built yet?
                     let linkedNoteSystemNode = filePathNodeMap.get(propertyLinkedPath);
                     if (linkedNoteSystemNode === undefined) {
-                        // build new subordinate
+                        // no: build new subordinate
                         linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                    } else {
+                        // yes: we do not wanto to explore further down this subtree's children;
+                        // - We *could*, recursive loops are trapped, but this seems a bit too much
+                        //   information at too much expense as, presumably, the
+                        //   children are expanded elsewhere in the view.
+                        recurseLimitDepth = 0;
                     }
                     filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
                     let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
                         label,
                         relationshipDefinitions,
-                        limitDepth === null ? null : limitDepth -1,
+                        recurseLimitDepth,
                         filePathNodeMap,
                     );
                     subordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
