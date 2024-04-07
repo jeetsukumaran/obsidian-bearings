@@ -12,7 +12,7 @@ Wander through cathedrals (if you are an "architect") or bazaars (if you are a "
 
 Multiple hierarchies and non-hiearchies are supported simultaneously and concurrently.
 
-![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/f1cf1af0-3353-4313-8103-d01c209a0c61)
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/727692a1-f3d8-416d-9fb6-e27405d52e59)
 
 
 ## Installation
