@@ -54,11 +54,6 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             invertedRelationshipPropertyName: "source-references",
             categories: ["hierarchical"],
         },
-        "Reference": {
-            // designatedPropertyName: "entry-references",
-            invertedRelationshipPropertyName: "entry-bibliography",
-            categories: ["hierarchical"],
-        },
         "Collaborator": {
             designatedPropertyName: "entry-collaborators",
             invertedRelationshipPropertyName: "entry-collaborations",
@@ -67,6 +62,11 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Association": {
             designatedPropertyName: "entry-associations",
             invertedRelationshipPropertyName: "entry-associations",
+            categories: ["coordinate"],
+        },
+        "Reference": {
+            designatedPropertyName: "entry-references",
+            invertedRelationshipPropertyName: "entry-bibliography",
             categories: ["coordinate"],
         },
         "Referral": {

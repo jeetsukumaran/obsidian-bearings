@@ -69,8 +69,8 @@ Hovering over links opens up the Hover Editor (if installed).
 | Production  | hierarchical | ""                | ""                | `entry-collaborators`  |
 |             |              | ""                | ""                | `entry-collaborations` |
 |-------------|--------------|-------------------|-------------------|------------------------|
-| Bibliograpy | hierarchical | ""                | ""                | `entry-bibliography`   |
-|             |              | ""                | ""                | `entry-holdings`       |
+| Bibliograpy | hierarchical | "Document"        | "Reference"       | `entry-bibliography`   |
+|             |              | ""                | "Reference"       | `entry-references`     |
 |-------------|--------------|-------------------|-------------------|------------------------|
 | Association | coordinate   | "associated"      | "associated"      | `entry-associations`   |
 |-------------|--------------|-------------------|-------------------|------------------------|
