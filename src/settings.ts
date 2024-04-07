@@ -37,27 +37,27 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Parent": {
             designatedPropertyName: "entry-parents",
             invertedRelationshipPropertyName: "entry-children",
-            categories: ["hierarchical"],
+            categories: ["superordinate"],
         },
         "Classifier": {
             designatedPropertyName: "entry-classifiers",
             invertedRelationshipPropertyName: "entry-classifications",
-            categories: ["hierarchical"],
+            categories: ["superordinate"],
         },
         "Collection": {
             designatedPropertyName: "entry-collections",
             invertedRelationshipPropertyName: "entry-holdings",
-            categories: ["hierarchical"],
+            categories: ["superordinate"],
         },
         "Author": {
             designatedPropertyName: "source-authors",
             invertedRelationshipPropertyName: "source-references",
-            categories: ["hierarchical"],
+            categories: ["superordinate"],
         },
         "Collaborator": {
             designatedPropertyName: "entry-collaborators",
             invertedRelationshipPropertyName: "entry-collaborations",
-            categories: ["hierarchical"],
+            categories: ["superordinate"],
         },
         "Reference (bibliographical)": {
             designatedPropertyName: "entry-bibliography",
@@ -92,9 +92,9 @@ export class BearingsConfiguration {
         this.options = { ... settingsData.options };
     }
 
-    hierarchicalRelationshipDefinitions(): RelationshipDefinition[] {
+    superordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
-            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "hierarchical"  ));
+            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "superordinate"  ));
     }
 
     coordinateRelationshipDefinitions(): RelationshipDefinition[] {

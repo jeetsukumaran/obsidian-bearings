@@ -6,11 +6,7 @@ Metadata is tracked by frontmatter properties.
 
 Bearings allows you to flow through the logical hallways, highways, and byways of your notegraph's semantic architectures constructed by combining these two mechanisms.
 
-Bearings provides multiplexed dynamically-scoped tree views of the logical hallways, highways, and byways of the architectures of your knowledgebase with semantic relationships defined by frontmatter metadata.
-
-Wander through cathedrals (if you are an "architect") or bazaars (if you are a "gardner"), or the gardens of your cathedrals or the cathedrals of your gardens if you are someone in between at least part of the time.
-
-Multiple hierarchies and non-hiearchies are supported simultaneously and concurrently.
+Bearings provides multiplexed dynamically-scoped tree views of the logical hallways, highways, and byways of the architectures of your knowledgebase with semantic relationships defined by frontmatter metadata. Multiple hierarchies and non-hiearchies are supported simultaneously and concurrently.
 
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/727692a1-f3d8-416d-9fb6-e27405d52e59)
 
@@ -41,7 +37,7 @@ To test Beta builds of this plugin follow these steps:
 
 Navigate your notegraph through tree-based views of links listed in frontmatter properties that define semantic and logical relationships between notes.
 
-Relationships can be either hierarchical (e.g., superordinate/subordinates, parent/child, classifier/classified) or flat (e.g. coordinate, related, adjacent, see-also).
+Relationships can be either superordinate (e.g., superordinate/subordinates, parent/child, classifier/classified) or flat (e.g. coordinate, related, adjacent, see-also).
 
 Relationships are defined by specifying a link to another note in a given note's frontmatter properties.
 
@@ -53,10 +49,9 @@ entry-classifiers:
   - "[[classifier/note2]]"
 ```
 
-
 Semantics are applied through defined relationship terms (e.g., "entry-parents", or "entry-children"), with multiple relationships or hierarchies supported (e.g., "entry-classifiers"/"entry-classifieds").
 
-Views can present multiple classes of relationships together in a comprehensive tree view (all hierarchical relationships).
+Views can present multiple classes of relationships together in a comprehensive tree view (all superordinate relationships).
 
 Iconography provides information as to the type and direction of the relationship.
 
@@ -66,35 +61,40 @@ Hovering over links opens up the Hover Editor (if installed).
 
 ## Relationships
 
-### Predefined relationhips
-
-#### Hierarchical relationships (defined in terms of superordinate-major convention)
-
+### Default relationships
 
 
 | Name            | Type         | Focal note role   | Linked note role  | Focal note property    |
 |-----------------|--------------|-------------------|-------------------|------------------------|
-| Parent          | hierarchical | "child"           | "parent"          | `entry-parents`        |
+| Parent          | superordinate | "child"           | "parent"          | `entry-parents`        |
 |                 |              | "parent"          | "child"           | `entry-children`       |
-| Classifier      | hierarchical | "classified"      | "classifier"      | `entry-classifiers`    |
+| Classifier      | superordinate | "classified"      | "classifier"      | `entry-classifiers`    |
 |                 |              | "classifier"      | "classified"      | `entry-children`       |
-| Holding         | hierarchical | "holding"         | "collection"      | `entry-collections`    |
+| Holding         | superordinate | "holding"         | "collection"      | `entry-collections`    |
 |                 |              | "collection"      | "holding"         | `entry-holdings`       |
-| Source          | hierarchical | "source"          | "author"          | `source-authors`       |
+| Source          | superordinate | "source"          | "author"          | `source-authors`       |
 |                 |              | "author"          | "source"          | `source-references`    |
-| Production      | hierarchical | ""                | ""                | `entry-collaborators`  |
+| Production      | superordinate | ""                | ""                | `entry-collaborators`  |
 |                 |              | ""                | ""                | `entry-collaborations` |
 | Bibliographical | coordinate   | "Document"        | "Reference"       | `entry-bibliography`   |
 | Bibliographical | coordinate   | "Document"        | "Reference"       | `entry-references`     |
 | Association     | coordinate   | "associated"      | "associated"      | `entry-associations`   |
 | Referral        | coordinate   | "cross-reference" | "cross-reference" | `entry-referral`       |
 
+### Custom relationships
+
+You may add, delete, override the default relationships in the settings. 
+
+If you define your own scheme, make sure your relationship has at least the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below. Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
+
 
 ## Views
 
+Views are tree-lists of nodes of the subgraphs induced on your notegraph by considering the union of a set of relationships. For example, all hierarchical relationships are grouped together into the "Positions" view. Currently, this plugin 
+
 ### "Positions"
 
-All hierarchical relationships of the current note, with superordinate relationships tracked as a chain of superordinates to their roots, and all subordinate relationships expanded into full subtrees (tracked to their leaves or until the specifed depth).
+All superordinate relationships of the current note, with superordinate relationships tracked as a chain of superordinates to their roots, and all subordinate relationships expanded into full subtrees (tracked to their leaves or until the specifed depth).
 
 
 ### "Parallels"
