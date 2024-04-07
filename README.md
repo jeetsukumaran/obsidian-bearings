@@ -14,16 +14,25 @@ Multiple hierarchies and non-hiearchies are supported simultaneously and concurr
 
 ## Installation
 
+### Pre-requisites
 
-### Requirements
+[Dataview](https://blacksmithgu.github.io/obsidian-dataview/) is required to be installed, from the [Obsidian Community Plugin Store](https://obsidian.md/plugins?id=dataview) website or internally in the Obsidian application.
 
-Dataview is required to be installed.
+### Install via Community Plugin Store
 
-### Installations
+This plugin is available via the [Obsidian Community Plugin Store](https://obsidian.md/plugins?id=bearings), through the previous link or from the application.
 
-Install directly from the Obsidian community plugin store if available.
+### Install via BRAT
 
-Otherwise, download the latest release from GitHub, and unpack into your `$VAULT/.obsidian/plugins/` directory.
+To test Beta builds of this plugin follow these steps:
+
+- Install the BRAT plugin via Community Plugin Search
+- [Read the docs](https://tfthacker.com/BRAT)
+- Add `https://github.com/philips/supernote-obsidian-plugin`
+
+### Manually installing the plugin
+
+- Copy over `main.js`, `manifest.json` to your vault `${VAULT}/.obsidian/plugins/obsidian-bearings/` from [https://github.com/jeetsukumaran/obsidian-bearings/releases](https://github.com/jeetsukumaran/obsidian-bearings).
 
 ## Overview
 
