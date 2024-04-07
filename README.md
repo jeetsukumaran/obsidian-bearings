@@ -45,6 +45,15 @@ Relationships can be either hierarchical (e.g., superordinate/subordinates, pare
 
 Relationships are defined by specifying a link to another note in a given note's frontmatter properties.
 
+```
+entry-parents:
+  - "[[parent1]]"
+entry-classifiers:
+  - "[[classifier/note1]]"
+  - "[[classifier/note2]]"
+```
+
+
 Semantics are applied through defined relationship terms (e.g., "entry-parents", or "entry-children"), with multiple relationships or hierarchies supported (e.g., "entry-classifiers"/"entry-classifieds").
 
 Views can present multiple classes of relationships together in a comprehensive tree view (all hierarchical relationships).
