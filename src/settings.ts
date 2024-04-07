@@ -29,7 +29,7 @@ export interface BearingsSettingsData {
 
 export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     options: {
-        globalNamespacePrefix: "entry-", // string | null
+        // globalNamespacePrefix: "entry-", // string | null
         viewDepthLimitPrimary: 2,    // number | null
         viewDepthLimitSecondary: 2,     // number | null
     },
@@ -155,15 +155,15 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
     createOptionsSetting(container: HTMLElement, options: any): void {
         // Global Namespace Prefix
-        new Setting(container)
-            .setName('Global Namespace Prefix')
-            .setDesc('A prefix for global namespacing, can be null.')
-            .addText(text => text
-                .setValue(options.globalNamespacePrefix || "")
-                .onChange(async (value) => {
-                    options.globalNamespacePrefix = value || null; // Set to null if empty
-                    await this.saveSettingsFn();
-                }));
+        // new Setting(container)
+        //     .setName('Global Namespace Prefix')
+        //     .setDesc('A prefix for global namespacing, can be null.')
+        //     .addText(text => text
+        //         .setValue(options.globalNamespacePrefix || "")
+        //         .onChange(async (value) => {
+        //             options.globalNamespacePrefix = value || null; // Set to null if empty
+        //             await this.saveSettingsFn();
+        //         }));
 
         // View Depth Limit Primary
         new Setting(container)
