@@ -126,7 +126,7 @@ export class DataService {
         if (!this._dataviewApi) {
             this._dataviewApi = getAPI();
             if (!this._dataviewApi && !this._isDataviewUnavailableMessageSent) {
-                let message = "Bearings: Unable to acquire Dataview API. Is Dataview installed and enabled?"
+                let message = "Bearings: Unable to acquire Dataview API. is Dataview installed and enabled?"
                 new Notice(message);
                 console.log(message);
                 this._isDataviewUnavailableMessageSent = true;
@@ -518,21 +518,22 @@ export class FileNode {
                     subordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
                 } else if (subordinateFilePaths[propertyLinkedPath]) {
                     // already in child set
+                    // console.log(subordinateFilePaths[propertyLinkedPath]);
                 } else {
                     // has a node for this path been built yet?
                     let linkedNoteSystemNode = filePathNodeMap.get(propertyLinkedPath);
                     if (linkedNoteSystemNode === undefined) {
                         // build new subordinate
                         linkedNoteSystemNode = this.createNew(propertyLinkedPath);
-                        filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
-                        let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
-                            label,
-                            relationshipDefinitions,
-                            limitDepth === null ? null : limitDepth -1,
-                            filePathNodeMap,
-                        );
-                        subordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
                     }
+                    filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
+                    let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
+                        label,
+                        relationshipDefinitions,
+                        limitDepth === null ? null : limitDepth -1,
+                        filePathNodeMap,
+                    );
+                    subordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
 
                 }
             });
