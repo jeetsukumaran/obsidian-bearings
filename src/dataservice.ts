@@ -1,4 +1,5 @@
 import {
+    Notice,
     App,
 } from 'obsidian';
 
@@ -115,14 +116,21 @@ export type FilePathNodeMapType = Map<FilePathType, FileNode>;
 export class DataService {
     _dataviewApi: DataviewApi;
     _vaultFileRecords: FileNodeDataRecords[] = [];
+    _isDataviewUnavailableMessageSent: boolean = false;
 
     constructor() {
-        this.refresh()
+        this.refresh();
     }
 
     get dataviewApi() {
         if (!this._dataviewApi) {
             this._dataviewApi = getAPI();
+            if (!this._dataviewApi && !this._isDataviewUnavailableMessageSent) {
+                let message = "Bearings: Unable to acquire Dataview API. Is Dataview installed and enabled?"
+                new Notice(message);
+                console.log(message);
+                this._isDataviewUnavailableMessageSent = true;
+            }
         }
         return this._dataviewApi;
     }
