@@ -28,7 +28,7 @@ To test Beta builds of this plugin follow these steps:
 
 - Install the BRAT plugin via Community Plugin Search
 - [Read the docs](https://tfthacker.com/BRAT)
-- Add `https://github.com/philips/supernote-obsidian-plugin`
+- Add `https://github.com/jeetsukumaran/obsidian-bearings`
 
 ### Manually installing the plugin
 
