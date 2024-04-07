@@ -51,30 +51,31 @@ Hovering over links opens up the Hover Editor (if installed).
 
 
 
-| Name        | Type         | Focal note role   | Linked note role  | Focal note property    |
-|-------------|--------------|-------------------|-------------------|------------------------|
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Parent      | hierarchical | "child"           | "parent"          | `entry-parents`        |
-|             |              | "parent"          | "child"           | `entry-children`       |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Classifier  | hierarchical | "classified"      | "classifier"      | `entry-classifiers`    |
-|             |              | "classifier"      | "classified"      | `entry-children`       |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Holding     | hierarchical | "holding"         | "collection"      | `entry-collections`    |
-|             |              | "collection"      | "holding"         | `entry-holdings`       |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Source      | hierarchical | "source"          | "author"          | `source-authors`       |
-|             |              | "author"          | "source"          | `source-references`    |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Production  | hierarchical | ""                | ""                | `entry-collaborators`  |
-|             |              | ""                | ""                | `entry-collaborations` |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Bibliograpy | hierarchical | "Document"        | "Reference"       | `entry-bibliography`   |
-|             |              | ""                | "Reference"       | `entry-references`     |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Association | coordinate   | "associated"      | "associated"      | `entry-associations`   |
-|-------------|--------------|-------------------|-------------------|------------------------|
-| Referral    | coordinate   | "cross-reference" | "cross-reference" | `entry-referral`       |
+| Name            | Type         | Focal note role   | Linked note role  | Focal note property    |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Parent          | hierarchical | "child"           | "parent"          | `entry-parents`        |
+|                 |              | "parent"          | "child"           | `entry-children`       |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Classifier      | hierarchical | "classified"      | "classifier"      | `entry-classifiers`    |
+|                 |              | "classifier"      | "classified"      | `entry-children`       |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Holding         | hierarchical | "holding"         | "collection"      | `entry-collections`    |
+|                 |              | "collection"      | "holding"         | `entry-holdings`       |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Source          | hierarchical | "source"          | "author"          | `source-authors`       |
+|                 |              | "author"          | "source"          | `source-references`    |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Production      | hierarchical | ""                | ""                | `entry-collaborators`  |
+|                 |              | ""                | ""                | `entry-collaborations` |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Bibliographical | coordinate   | "Document"        | "Reference"       | `entry-bibliography`   |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Bibliographical | coordinate   | "Document"        | "Reference"       | `entry-references`     |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Association     | coordinate   | "associated"      | "associated"      | `entry-associations`   |
+|-----------------|--------------|-------------------|-------------------|------------------------|
+| Referral        | coordinate   | "cross-reference" | "cross-reference" | `entry-referral`       |
 
 
 ## Views
