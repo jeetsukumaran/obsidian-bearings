@@ -68,8 +68,8 @@ Hovering over links opens up the Hover Editor (if installed).
 |-----------------|---------------|------------------------|-------------------|-------------------|
 | Parent          | superordinate | `entry-parents`        | "child"           | "parent"          |
 | Child           | superordinate | `entry-children`       | "parent"          | "child"           |
-| Classifier      | superordinate | `entry-classifiers`    | "classified"      | "classifier"      |
-| Classified      | superordinate | `entry-classifieds`    | "classifier"      | "classified"      |
+| Classifier      | superordinate | `entry-classifiers`    | "classification"  | "classifier"      |
+| Classification  | superordinate | `entry-classifieds`    | "classifier"      | "classification"  |
 | Holding         | superordinate | `entry-collections`    | "holding"         | "collection"      |
 | Collection      | superordinate | `entry-holdings`       | "collection"      | "holding"         |
 | Source          | superordinate | `source-authors`       | "source"          | "author"          |
@@ -86,20 +86,32 @@ Hovering over links opens up the Hover Editor (if installed).
 
 You may add, delete, override the default relationships in the settings.
 
-If you define your own scheme, make sure your relationship has at least the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below. Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
+If you define your own scheme, make sure your relationship has at least the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below.
+Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
 
 
 ## Views
 
-Views are tree-lists of nodes of the subgraphs induced on your notegraph by considering the union of a set of relationships. For example, all hierarchical relationships are grouped together into the "Positions" view. Currently, this plugin
+Views are dynamically-scoped collapsible hierarchical lists or "trees" of subgraphs rooted at the current note, considering the union of connections under a particular set of relationshions.
+
+For example, the main "Positions" view shows all logically hierarchical relationships (superordinate-subordinate, parent-child, classifier-classifications) regardless of semantics (e.g., a "child" note will look the same as a "classified" note).
+Currently, views are predefined.
+Future plans include support for custom views as well as support for custom styling and iconography for different semantics (e.g., icons to distinguish between "parent" vs. "classifier").
 
 ### "Positions"
 
 All superordinate relationships of the current note, with superordinate relationships tracked as a chain of superordinates to their roots, and all subordinate relationships expanded into full subtrees (tracked to their leaves or until the specifed depth).
 
-
 ### "Parallels"
 
 Full subtree expansions of all *immediate* superordinates (e.g., all children of all parents of the current note) expanded into full subtrees (tracked to their leaves or until the specifed depth).
+
+### "Referrals"
+
+All coordinate relationships.
+
+### "Backlinks"
+
+All inlinks/backlinks to this note.
 
 
