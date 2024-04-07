@@ -64,33 +64,34 @@ Hovering over links opens up the Hover Editor (if installed).
 ### Default relationships
 
 
-| Name            | Type         | Focal note role   | Linked note role  | Focal note property    |
-|-----------------|--------------|-------------------|-------------------|------------------------|
-| Parent          | superordinate | "child"           | "parent"          | `entry-parents`        |
-|                 |              | "parent"          | "child"           | `entry-children`       |
-| Classifier      | superordinate | "classified"      | "classifier"      | `entry-classifiers`    |
-|                 |              | "classifier"      | "classified"      | `entry-children`       |
-| Holding         | superordinate | "holding"         | "collection"      | `entry-collections`    |
-|                 |              | "collection"      | "holding"         | `entry-holdings`       |
-| Source          | superordinate | "source"          | "author"          | `source-authors`       |
-|                 |              | "author"          | "source"          | `source-references`    |
-| Production      | superordinate | ""                | ""                | `entry-collaborators`  |
-|                 |              | ""                | ""                | `entry-collaborations` |
-| Bibliographical | coordinate   | "Document"        | "Reference"       | `entry-bibliography`   |
-| Bibliographical | coordinate   | "Document"        | "Reference"       | `entry-references`     |
-| Association     | coordinate   | "associated"      | "associated"      | `entry-associations`   |
-| Referral        | coordinate   | "cross-reference" | "cross-reference" | `entry-referral`       |
+| Name            | Type          | Focal note property    | Focal note role   | Linked note role  |
+|-----------------|---------------|------------------------|-------------------|-------------------|
+| Parent          | superordinate | `entry-parents`        | "child"           | "parent"          |
+| Child           | superordinate | `entry-children`       | "parent"          | "child"           |
+| Classifier      | superordinate | `entry-classifiers`    | "classified"      | "classifier"      |
+| Classified      | superordinate | `entry-classifieds`    | "classifier"      | "classified"      |
+| Holding         | superordinate | `entry-collections`    | "holding"         | "collection"      |
+| Collection      | superordinate | `entry-holdings`       | "collection"      | "holding"         |
+| Source          | superordinate | `source-authors`       | "source"          | "author"          |
+| Author          | superordinate | `source-sources`       | "author"          | "source"          |
+| Production      | superordinate | `entry-collaborators`  | "production"      | "collaborator"    |
+| Production      | superordinate | `entry-collaborations` | "collaborator"    | "production"      |
+| Bibliographical | coordinate    | `entry-bibliography`   | "reference"       | "bibliographical" |
+| Bibliographical | coordinate    | `entry-references`     | "bibliographical" | "reference"       |
+| Association     | coordinate    | `entry-associations`   | "associated"      | "associated"      |
+| Referral        | coordinate    | `entry-referral`       | "cross-reference" | "cross-reference" |
+
 
 ### Custom relationships
 
-You may add, delete, override the default relationships in the settings. 
+You may add, delete, override the default relationships in the settings.
 
 If you define your own scheme, make sure your relationship has at least the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below. Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
 
 
 ## Views
 
-Views are tree-lists of nodes of the subgraphs induced on your notegraph by considering the union of a set of relationships. For example, all hierarchical relationships are grouped together into the "Positions" view. Currently, this plugin 
+Views are tree-lists of nodes of the subgraphs induced on your notegraph by considering the union of a set of relationships. For example, all hierarchical relationships are grouped together into the "Positions" view. Currently, this plugin
 
 ### "Positions"
 
