@@ -959,6 +959,7 @@ export class NavigationEntryFrame extends NavigationBase {
         });
         let setIndicator = () => {
             if (entryData.children.length > 0) {
+                this.elements.entryNodeToggleContainer.classList.remove("bearings-node-leaf");
                 if (this.isOpen) {
 
                     // this.elements.entryNodeToggleContainer.innerHTML = this.composeOpenIndicatorInnerHTML();
@@ -979,11 +980,9 @@ export class NavigationEntryFrame extends NavigationBase {
                     });
                 }
             } else {
-                let terminal: string = `
-                    <div class="bearings-entry-node-terminal-container">
-                    </div>
-                `;
-                this.elements.entryNodeToggleContainer.innerHTML = terminal;
+                this.elements.entryNodeToggleContainer.classList.add("bearings-node-leaf");
+                let terminal: string = "⏺";
+                this.elements.entryNodeToggleContainer.setText(terminal);
             }
         };
         this.elements.entryNodeToggleContainer.addEventListener('click', () => {
