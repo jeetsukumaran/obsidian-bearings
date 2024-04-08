@@ -538,7 +538,6 @@ export class FileNode {
                     subordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
                 } else if (subordinateFilePaths[propertyLinkedPath]) {
                     // already in child set
-                    // console.log(subordinateFilePaths[propertyLinkedPath]);
                 } else {
                     let recurseLimitDepth: number | null = limitDepth === null ? null : limitDepth -1;
                     // has a node for this path been built yet?
@@ -551,7 +550,7 @@ export class FileNode {
                         // - We *could*, recursive loops are trapped, but this seems a bit too much
                         //   information at too much expense as, presumably, the
                         //   children are expanded elsewhere in the view.
-                        recurseLimitDepth = 0;
+                        recurseLimitDepth = -1;
                     }
                     filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
                     let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
@@ -579,9 +578,8 @@ export class FileNode {
         if (limitDepth != null && limitDepth < 0) {
             return subtreeRoot;
         }
+        let coordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
-            console.log("---");
-            console.log(this.filePath);
             let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
             // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
             let invertedRelationshipKey: string = designatedRelationshipKey;
@@ -591,8 +589,6 @@ export class FileNode {
                 filePathNodeMap,
                 false,
             );
-            console.log(linkedNotesystemPaths);
-            let coordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
             linkedNotesystemPaths.forEach( (propertyLinkedPath: string) => {
                 if (propertyLinkedPath === this.filePath) {
                     let linkedNoteSystemNode = this;
@@ -615,7 +611,6 @@ export class FileNode {
                     // );
                 } else if (coordinateFilePaths[propertyLinkedPath]) {
                     // already in child set
-                    // console.log(coordinateFilePaths[propertyLinkedPath]);
                 } else {
                     let recurseLimitDepth: number | null = limitDepth === null ? null : limitDepth -1;
                     // has a node for this path been built yet?
@@ -624,7 +619,7 @@ export class FileNode {
                         // no: build new subordinate
                         linkedNoteSystemNode = this.createNew(propertyLinkedPath);
                     } else {
-                        recurseLimitDepth = 0;
+                        recurseLimitDepth = -1;
                     }
                     filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
                     let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
@@ -692,10 +687,8 @@ export class FileNode {
 
     backlinkedFileNodes(): FileNode[] {
         // const file = app.vault.getAbstractFileByPath(this.fileData?.file?.path);
-        // console.log(this.fileData);
         // let backlinks = app.metadataCache.getBacklinksForFile(file);
         // let backlinks = app.metadataCache.getBacklinksForFile(file);
-        // console.log(backlinks);
         // Only markdown files; needs dataview
         const inlinks: Link[] = this.fileData?.file?.inlinks?.array() || [];
         return inlinks
