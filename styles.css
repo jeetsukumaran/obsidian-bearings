@@ -19,8 +19,8 @@
 
 .theme-dark {
     --bearings-counter-shade-01: #ffffff10;
-    --bearings-node-open-color: #ff8800cc;
-    --bearings-node-closed-color: #00ff88cc;
+    --bearings-node-open-color: #00ff88cc;
+    --bearings-node-closed-color: #ff8800cc;
     --bearings-node-leaf-color: #aaaa88;
 }
 
