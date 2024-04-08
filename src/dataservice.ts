@@ -202,6 +202,25 @@ export class DataService {
         );
     }
 
+    coordinateSubtrees(
+        filePath: string,
+        relationshipDefinitions: RelationshipDefinition[],
+        limitDepth: number | null = null,
+        filePathNodeMap?: FilePathNodeMapType,
+    ): FileNavigationTreeNode {
+        if (!filePathNodeMap) {
+            filePathNodeMap = new Map<FilePathType, FileNode>();
+        }
+        let startFileNode = filePathNodeMap.get(filePath) || this.getFileNode(filePath);
+        filePathNodeMap.set(filePath, startFileNode) // not tested
+        return startFileNode.coordinateSubtrees(
+            "standard",
+            relationshipDefinitions,
+            limitDepth,
+            filePathNodeMap,
+        );
+    }
+
     getFileNode(filePath: string): FileNode {
         let fileNode = new FileNode(
             filePath,
@@ -409,7 +428,6 @@ export class FileNode {
                 // isInvertLinkPolarity ? false : true, // are new elements inlinks?
             );
         }
-        // console.log(relationshipLinkedPathsMap);
         return [ ... new Set<FilePathType>(linkedNotesystemPaths)];
     }
 
@@ -541,6 +559,77 @@ export class FileNode {
                         filePathNodeMap,
                     );
                     subordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+
+                }
+            });
+        });
+        return subtreeRoot;
+    }
+
+    @Cacheable("label", "relationshipDefinitions")
+    coordinateSubtrees(
+        label: string,
+        relationshipDefinitions: RelationshipDefinition[],
+        limitDepth: number | null = null,
+        filePathNodeMap: FilePathNodeMapType,
+    ): FileNavigationTreeNode {
+        let subtreeRoot = new TreeNode<FileNode>(this);
+        if (limitDepth != null && limitDepth < 0) {
+            return subtreeRoot;
+        }
+        relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
+            // Inverted relationship: inlinked notes are establishing a superordinate relationship;
+            // but from the focal note's perspective, the relationship is subordinate
+            let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
+            let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
+            let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
+                designatedRelationshipKey,
+                invertedRelationshipKey,
+                filePathNodeMap,
+                false,
+            );
+            let coordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
+            linkedNotesystemPaths.forEach( (propertyLinkedPath: string) => {
+                if (propertyLinkedPath === this.filePath) {
+                    let linkedNoteSystemNode = this;
+                    filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
+
+                    // Expand coordinates
+                    let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
+                        label,
+                        relationshipDefinitions,
+                        -1, // will return terminal
+                        filePathNodeMap,
+                    );
+                    coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    // // Expand children
+                    // let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
+                    //     label,
+                    //     relationshipDefinitions,
+                    //     -1, // will return terminal
+                    //     filePathNodeMap,
+                    // );
+                } else if (coordinateFilePaths[propertyLinkedPath]) {
+                    // already in child set
+                    // console.log(coordinateFilePaths[propertyLinkedPath]);
+                } else {
+                    let recurseLimitDepth: number | null = limitDepth === null ? null : limitDepth -1;
+                    // has a node for this path been built yet?
+                    let linkedNoteSystemNode = filePathNodeMap.get(propertyLinkedPath);
+                    if (linkedNoteSystemNode === undefined) {
+                        // no: build new subordinate
+                        linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                    } else {
+                        recurseLimitDepth = 0;
+                    }
+                    filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
+                    let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
+                        label,
+                        relationshipDefinitions,
+                        recurseLimitDepth,
+                        filePathNodeMap,
+                    );
+                    coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
 
                 }
             });

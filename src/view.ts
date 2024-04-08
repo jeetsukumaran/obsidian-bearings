@@ -731,14 +731,22 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
         return this._validateDepthLimitSetting(this._context.configuration.options.viewDepthLimitSecondary);
     }
 
+    setLocalOptions(
+        entryFrame: NavigationEntryFrame,
+        entryData: FileNavigationTreeNode,
+    ) {
+        entryFrame.options.isHighlightFocalFile = true;
+        entryFrame.options.isOpenFocalFile = false;
+    }
+
     generateResults():
     NavigationViewResults {
-        let subtreeRoot = this._context.dataService.subordinateSubtrees(
+        let subtreeRoot = this._context.dataService.coordinateSubtrees(
             this.focalFilePath,
             this._context.configuration.coordinateRelationshipDefinitions(),
             this.discoveryDepthLimit,
-
         )
+
         // return {
         //     treeNodes: [... subtreeRoot.children],
         //     parentFileNode: subtreeRoot.value,
