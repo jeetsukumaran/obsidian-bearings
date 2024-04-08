@@ -962,20 +962,20 @@ export class NavigationEntryFrame extends NavigationBase {
                 if (this.isOpen) {
 
                     // this.elements.entryNodeToggleContainer.innerHTML = this.composeOpenIndicatorInnerHTML();
-                    this.elements.entryNodeToggleContainer.textContent = "🠷"
+                    this.elements.entryNodeToggleContainer.setText("🠷");
 
                     Object.values(this.elements).forEach( (el: HTMLElement) => {
-                        el.classList.remove("bearings-node-closed")
-                        el.classList.add("bearings-node-opened")
+                        el.classList.remove("bearings-node-closed");
+                        el.classList.add("bearings-node-opened");
                     });
 
                 } else {
 
-                    this.elements.entryNodeToggleContainer.textContent = "🠶"
+                    this.elements.entryNodeToggleContainer.setText("🠶");
 
                     Object.values(this.elements).forEach( (el: HTMLElement) => {
-                        el.classList.add("bearings-node-closed")
-                        el.classList.remove("bearings-node-opened")
+                        el.classList.add("bearings-node-closed");
+                        el.classList.remove("bearings-node-opened");
                     });
                 }
             } else {
