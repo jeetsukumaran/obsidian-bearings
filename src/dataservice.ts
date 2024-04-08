@@ -212,7 +212,7 @@ export class DataService {
             filePathNodeMap = new Map<FilePathType, FileNode>();
         }
         let startFileNode = filePathNodeMap.get(filePath) || this.getFileNode(filePath);
-        // filePathNodeMap.set(filePath, startFileNode) // not tested
+        filePathNodeMap.set(filePath, startFileNode) // not tested
         return startFileNode.coordinateSubtrees(
             "standard",
             relationshipDefinitions,
