@@ -394,7 +394,7 @@ export class FileNode {
 
     parsePropertyLinkedPaths(
         designatedRelationshipKey: string,
-        invertedRelationshipKey: string,
+        inlinkedRelationshipKey: string,
         filePathNodeMap: FilePathNodeMapType,
         isInvertLinkPolarity: boolean = false,
     ): FilePathType[] {
@@ -418,10 +418,10 @@ export class FileNode {
                 // isInvertLinkPolarity ? true : false, // are new elements inlinks?
             );
         }
-        if (invertedRelationshipKey) {
-            let inlinkedPaths: string[] = this.readInlinkedRelationshipPropertyPaths(invertedRelationshipKey);
+        if (inlinkedRelationshipKey) {
+            let inlinkedPaths: string[] = this.readInlinkedRelationshipPropertyPaths(inlinkedRelationshipKey);
             this._processPropertyLinkResults(
-                invertedRelationshipKey,
+                inlinkedRelationshipKey,
                 inlinkedPaths,
                 linkedNotesystemPaths,
                 {
@@ -582,10 +582,11 @@ export class FileNode {
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
             let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
             // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
-            let invertedRelationshipKey: string = designatedRelationshipKey;
+            let inlinkedRelationshipKey: string = designatedRelationshipKey;
+            // let invertedRelationshipKey: string = "";
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 designatedRelationshipKey,
-                invertedRelationshipKey,
+                inlinkedRelationshipKey,
                 filePathNodeMap,
                 false,
             );
