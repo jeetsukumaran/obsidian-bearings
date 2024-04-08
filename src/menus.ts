@@ -15,18 +15,18 @@ import {
     // setIcon,
     // CachedMetadata,
     normalizePath,
-    FileSystemAdapter,
+    // FileSystemAdapter,
 } from "obsidian";
 
 import * as _path from "path"
 
-function getVaultBasePath(): string {
-    const adapter = app.vault.adapter;
-    if (adapter instanceof FileSystemAdapter) {
-        return adapter.getBasePath();
-    }
-    return "";
-}
+// function getVaultBasePath(): string {
+//     const adapter = app.vault.adapter;
+//     if (adapter instanceof FileSystemAdapter) {
+//         return adapter.getBasePath();
+//     }
+//     return "";
+// }
 
 
 export function buildLinkOpenMenu(
@@ -221,7 +221,8 @@ export function buildLinkCopyMenu(
 ) {
     const normalizedLinkPath = normalizePath(linkPath);
     const internalPath = normalizedLinkPath.replace(/.md$/, "");
-    const absolutePath = _path.join(getVaultBasePath(), normalizedLinkPath);
+
+    // const absolutePath = _path.join(getVaultBasePath(), normalizedLinkPath);
 
     const _appendToClipboard = async (value: string) => {
         try {
@@ -269,36 +270,11 @@ export function buildLinkCopyMenu(
             .onClick(() => _copyToClipboard(`  - "[[${internalPath}]]"`))
     );
 
-    // menu.addItem((item) =>
-    //     item
-    //         .setTitle("Copy as internal link")
-    //         .setIcon("documents")
-    //         .onClick(() => _appendToClipboard(`[[${internalPath}]]`))
-    // );
-
-    // menu.addItem((item) =>
-    //     item
-    //         .setTitle("Copy as quoted internal link")
-    //         .setIcon("documents")
-    //         .onClick(() => _appendToClipboard(`"[[${internalPath}]]"`))
-    // );
-
     menu.addItem((item) =>
         item
             .setTitle("Append property item link to clipboard")
             .setIcon("list-end")
             .onClick(() => _appendToClipboard(`  - "[[${internalPath}]]"`))
-    );
-
-    if (includePostSeparator) {
-        menu.addSeparator();
-    }
-
-    menu.addItem((item) =>
-        item
-            .setTitle("Copy filesystem absolute path")
-            .setIcon("documents")
-            .onClick(() => _appendToClipboard(absolutePath))
     );
 
     if (includePostSeparator) {
@@ -313,6 +289,26 @@ export function buildLinkCopyMenu(
             .setIcon("clipboard-x")
             .onClick(_clearClipboard)
     );
+
+    // menu.addItem((item) =>
+    //     item
+    //         .setTitle("Copy relative directory path")
+    //         .setIcon("documents")
+    //         // .onClick(() => _appendToClipboard(internalPath.endsWith(".md") ? internalPath : internalPath + ".md"))
+    //         .onClick(() => _appendToClipboard(_path.dirname(internalPath)))
+    // );
+
+    menu.addItem((item) =>
+        item
+            .setTitle("Copy relative path")
+            .setIcon("documents")
+            .onClick(() => _appendToClipboard(internalPath))
+    );
+
+    if (includePostSeparator) {
+        menu.addSeparator();
+    }
+
 }
 
 
