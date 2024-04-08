@@ -357,9 +357,9 @@
     width: 8px;
     height: 8px;
     border-radius: 8px;
-    opacity: 0.6;
-    background-color: var(--text-muted);
-    border: solid 1px var(--text-muted);
+    /* opacity: 0.6; */
+    /* background-color: var(--text-muted); */
+    /* border: solid 1px var(--text-muted); */
     overflow: clip;
 }
 
