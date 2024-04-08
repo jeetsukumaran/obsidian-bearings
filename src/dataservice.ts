@@ -212,7 +212,7 @@ export class DataService {
             filePathNodeMap = new Map<FilePathType, FileNode>();
         }
         let startFileNode = filePathNodeMap.get(filePath) || this.getFileNode(filePath);
-        filePathNodeMap.set(filePath, startFileNode) // not tested
+        // filePathNodeMap.set(filePath, startFileNode) // not tested
         return startFileNode.coordinateSubtrees(
             "standard",
             relationshipDefinitions,
@@ -580,8 +580,9 @@ export class FileNode {
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
             // Inverted relationship: inlinked notes are establishing a superordinate relationship;
             // but from the focal note's perspective, the relationship is subordinate
-            let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
             let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
+            // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
+            let invertedRelationshipKey: string = "";
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 designatedRelationshipKey,
                 invertedRelationshipKey,

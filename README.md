@@ -64,29 +64,34 @@ Hovering over links opens up the Hover Editor (if installed).
 ### Default relationships
 
 
-| Name            | Type          | Focal note property    | Focal note role   | Linked note role  |
-|-----------------|---------------|------------------------|-------------------|-------------------|
-| Parent          | superordinate | `entry-parents`        | "child"           | "parent"          |
-| Child           | superordinate | `entry-children`       | "parent"          | "child"           |
-| Classifier      | superordinate | `entry-classifiers`    | "classification"  | "classifier"      |
-| Classification  | superordinate | `entry-classifieds`    | "classifier"      | "classification"  |
-| Holding         | superordinate | `entry-collections`    | "holding"         | "collection"      |
-| Collection      | superordinate | `entry-holdings`       | "collection"      | "holding"         |
-| Source          | superordinate | `source-authors`       | "source"          | "author"          |
-| Author          | superordinate | `source-sources`       | "author"          | "source"          |
-| Production      | superordinate | `entry-collaborators`  | "production"      | "collaborator"    |
-| Production      | superordinate | `entry-collaborations` | "collaborator"    | "production"      |
-| Bibliographical | coordinate    | `entry-bibliography`   | "reference"       | "bibliographical" |
-| Bibliographical | coordinate    | `entry-references`     | "bibliographical" | "reference"       |
-| Association     | coordinate    | `entry-associations`   | "associated"      | "associated"      |
-| Referral        | coordinate    | `entry-referral`       | "cross-reference" | "cross-reference" |
+| Name            | Category               | Focal note property    | Focal note role   | Linked note role  |
+|-----------------|------------------------|------------------------|-------------------|-------------------|
+| Parent          | superordinate          | `entry-parents`        | "child"           | "parent"          |
+| Child           | (implicit subordinate) | `entry-children`       | "parent"          | "child"           |
+|                 |                        |                        |                   |                   |
+| Classifier      | superordinate          | `entry-classifiers`    | "classification"  | "classifier"      |
+| Classification  | (implicit subordinate) | `entry-classifieds`    | "classifier"      | "classification"  |
+|                 |                        |                        |                   |                   |
+| Holding         | superordinate          | `entry-collections`    | "holding"         | "collection"      |
+| Collection      | (implicit subordinate) | `entry-holdings`       | "collection"      | "holding"         |
+|                 |                        |                        |                   |                   |
+| Source          | superordinate          | `source-authors`       | "source"          | "author"          |
+| Author          | (implicit subordinate) | `source-sources`       | "author"          | "source"          |
+|                 |                        |                        |                   |                   |
+| Collaborator    | superordinate          | `entry-collaborators`  | "production"      | "collaborator"    |
+| Production      | (implicit subordinate) | `entry-collaborations` | "collaborator"    | "production"      |
+|                 |                        |                        |                   |                   |
+| Bibliographical | coordinate             | `entry-bibliography`   | "reference"       | "bibliographical" |
+| Bibliographical | coordinate             | `entry-references`     | "bibliographical" | "reference"       |
+| Association     | coordinate             | `entry-associations`   | "associated"      | "associated"      |
+| Referral        | coordinate             | `entry-referral`       | "cross-reference" | "cross-reference" |
 
 
 ### Custom relationships
 
 You may add, delete, override the default relationships in the settings.
 
-If you define your own scheme, make sure your relationship has at least the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below.
+If you define your own scheme, make sure your relationship has at least one of the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below (the "subordinate" category is implictly given by the inverted property link).
 Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
 
 

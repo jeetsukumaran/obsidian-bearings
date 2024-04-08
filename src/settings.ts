@@ -60,18 +60,19 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             categories: ["superordinate"],
         },
         "Reference (bibliographical)": {
+            designatedPropertyName: "entry-references",
+            categories: ["coordinate", "bibliographical"],
+        },
+        "Bibliography": {
             designatedPropertyName: "entry-bibliography",
-            // invertedRelationshipPropertyName: "entry-bibliography",
             categories: ["coordinate", "bibliographical"],
         },
         "Association": {
             designatedPropertyName: "entry-associations",
-            // invertedRelationshipPropertyName: "entry-associations",
             categories: ["coordinate"],
         },
         "Referral": {
             designatedPropertyName: "entry-referrals",
-            // invertedRelationshipPropertyName: "entry-referrals",
             categories: ["coordinate"],
         },
         "Attachment": {
