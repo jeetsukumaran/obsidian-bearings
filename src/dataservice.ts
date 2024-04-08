@@ -309,42 +309,42 @@ export class FileNode {
             })
     }
 
-    readInvertedRelationshipPropertyPaths(
+    readInlinkedRelationshipPropertyPaths(
         propertyName: string,
     ): string[] {
-        return this.readInvertedRelationshipPropertyPathsFromVault(propertyName);
+        return this.readInlinkedPropertyPathsFromVault(propertyName);
     }
 
-    readInvertedRelationshipPropertyPathsFromInlinks(
-        propertyName: string,
-    ): string[] {
-        // slower than a vault wide search strangely ...
-        let invertedRelationshipPropertyPaths: string[] = [];
-        this.inlinkedFilePaths().map( (filePath: string) => this.dataService.readFileNodeDataRecords(filePath) )
-            .forEach( (fileNodeRecords: FileNodeDataRecords) => {
-                const fileNodePropertyValues = fileNodeRecords?.[propertyName];
-                if (fileNodePropertyValues && Array.isArray(fileNodePropertyValues)) {
-                    fileNodePropertyValues.forEach( (pagePropertyItem: FileNodeDataType) => {
-                        if (pagePropertyItem && pagePropertyItem.path === this.filePath) {
-                            let subscriberFilePath: string = fileNodeRecords.file?.path
-                            if (subscriberFilePath) {
-                                // if (!this.pathFilter || !this.pathFilter.excludedPathPatternSet.has(subscriberFilePath)) {
-                                // Convention is that link aliases reflect what the target node is to the in-linking node.
-                                // We use the display text when linking out, but when linking in it would incorrectly apply to
-                                // to the inlinking node
-                                // let displayText: string = pagePropertyItem.display
-                                let displayText = "";
-                                invertedRelationshipPropertyPaths.push( subscriberFilePath )
-                                // }
-                            }
-                        }
-                    })
-                }
-            })
-        return invertedRelationshipPropertyPaths
-    }
+    // readInvertedRelationshipPropertyPathsFromInlinks(
+    //     propertyName: string,
+    // ): string[] {
+    //     // slower than a vault wide search strangely ...
+    //     let invertedRelationshipPropertyPaths: string[] = [];
+    //     this.inlinkedFilePaths().map( (filePath: string) => this.dataService.readFileNodeDataRecords(filePath) )
+    //         .forEach( (fileNodeRecords: FileNodeDataRecords) => {
+    //             const fileNodePropertyValues = fileNodeRecords?.[propertyName];
+    //             if (fileNodePropertyValues && Array.isArray(fileNodePropertyValues)) {
+    //                 fileNodePropertyValues.forEach( (pagePropertyItem: FileNodeDataType) => {
+    //                     if (pagePropertyItem && pagePropertyItem.path === this.filePath) {
+    //                         let subscriberFilePath: string = fileNodeRecords.file?.path
+    //                         if (subscriberFilePath) {
+    //                             // if (!this.pathFilter || !this.pathFilter.excludedPathPatternSet.has(subscriberFilePath)) {
+    //                             // Convention is that link aliases reflect what the target node is to the in-linking node.
+    //                             // We use the display text when linking out, but when linking in it would incorrectly apply to
+    //                             // to the inlinking node
+    //                             // let displayText: string = pagePropertyItem.display
+    //                             let displayText = "";
+    //                             invertedRelationshipPropertyPaths.push( subscriberFilePath )
+    //                             // }
+    //                         }
+    //                     }
+    //                 })
+    //             }
+    //         })
+    //     return invertedRelationshipPropertyPaths
+    // }
 
-    readInvertedRelationshipPropertyPathsFromVault(
+    readInlinkedPropertyPathsFromVault(
         propertyName: string,
     ): string[] {
         let invertedRelationshipPropertyPaths: string[] = [];
@@ -419,7 +419,7 @@ export class FileNode {
             );
         }
         if (invertedRelationshipKey) {
-            let inlinkedPaths: string[] = this.readInvertedRelationshipPropertyPaths(invertedRelationshipKey);
+            let inlinkedPaths: string[] = this.readInlinkedRelationshipPropertyPaths(invertedRelationshipKey);
             this._processPropertyLinkResults(
                 invertedRelationshipKey,
                 inlinkedPaths,
@@ -580,17 +580,18 @@ export class FileNode {
             return subtreeRoot;
         }
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
-            // Inverted relationship: inlinked notes are establishing a superordinate relationship;
-            // but from the focal note's perspective, the relationship is subordinate
+            console.log("---");
+            console.log(this.filePath);
             let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
             // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
-            let invertedRelationshipKey: string = "";
+            let invertedRelationshipKey: string = designatedRelationshipKey;
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 designatedRelationshipKey,
                 invertedRelationshipKey,
                 filePathNodeMap,
                 false,
             );
+            console.log(linkedNotesystemPaths);
             let coordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
             linkedNotesystemPaths.forEach( (propertyLinkedPath: string) => {
                 if (propertyLinkedPath === this.filePath) {
