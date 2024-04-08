@@ -56,7 +56,7 @@ export default class BearingsPlugin extends Plugin {
         });
         this.addCommand({
             id: 'open-bearings-navigator',
-            name: 'View Bearings',
+            name: 'Navigate your vault using multihierarchical semantic relationship links',
             callback: () => {
                 this.activateView();
             }
