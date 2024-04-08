@@ -588,7 +588,7 @@ export class FileNode {
                 designatedRelationshipKey,
                 inlinkedRelationshipKey,
                 filePathNodeMap,
-                false,
+                true,
             );
             linkedNotesystemPaths.forEach( (propertyLinkedPath: string) => {
                 if (propertyLinkedPath === this.filePath) {
