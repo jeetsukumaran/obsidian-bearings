@@ -843,45 +843,45 @@ export class NavigationEntryFrame extends NavigationBase {
         this.parentViewFrame = parentViewFrame;
     }
 
-    composeOpenIndicatorInnerHTML(): string {
-        return "🠷";
+    // composeOpenIndicatorInnerHTML(): string {
+    //     return "🠷";
 
-        // return `
-        //     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-down"><circle cx="12" cy="12" r="10"/><path d="m16 10-4 4-4-4"/></svg>
-        // `;
-        return `
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-down-right"><path d="M12 22a10 10 0 1 1 10-10"/><path d="M22 22 12 12"/><path d="M22 16v6h-6"/></svg>
-        `;
-        // return "⇱";
+    //     // return `
+    //     //     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-down"><circle cx="12" cy="12" r="10"/><path d="m16 10-4 4-4-4"/></svg>
+    //     // `;
+    //     return `
+    //         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-down-right"><path d="M12 22a10 10 0 1 1 10-10"/><path d="M22 22 12 12"/><path d="M22 16v6h-6"/></svg>
+    //     `;
+    //     // return "⇱";
 
-        // return `
-        //     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-down-right"><path d="M12 22a10 10 0 1 1 10-10"/><path d="M22 22 12 12"/><path d="M22 16v6h-6"/></svg>
-        // `
+    //     // return `
+    //     //     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-down-right"><path d="M12 22a10 10 0 1 1 10-10"/><path d="M22 22 12 12"/><path d="M22 16v6h-6"/></svg>
+    //     // `
 
-        // return "🠷";
+    //     // return "🠷";
 
-        // return `
-        //     <svg xmlns="http://www.w3.org/2000/svg" width="${this.indicatorSize}" height="${this.indicatorSize}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"> <path d="m6 9 6 6 6-6"/></svg>
-        // `;
-    }
+    //     // return `
+    //     //     <svg xmlns="http://www.w3.org/2000/svg" width="${this.indicatorSize}" height="${this.indicatorSize}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"> <path d="m6 9 6 6 6-6"/></svg>
+    //     // `;
+    // }
 
-    composeClosedIndicatorInnerHTML(): string {
-        return "🠶";
-        // return `
-        //     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-right"><circle cx="12" cy="12" r="10"/><path d="m10 8 4 4-4 4"/></svg>
-        // `;
-        // return "⇲";
-        // return `
-        //     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-up-right"><path d="M22 12A10 10 0 1 1 12 2"/><path d="M22 2 12 12"/><path d="M16 2h6v6"/></svg>
-        // `;
-        return `
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-up-right"><path d="M22 12A10 10 0 1 1 12 2"/><path d="M22 2 12 12"/><path d="M16 2h6v6"/></svg>
-        `;
-        // return `
-        // <svg xmlns="http://www.w3.org/2000/svg" width="${this.indicatorSize}" height="${this.indicatorSize}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
-        // `;
+    // composeClosedIndicatorInnerHTML(): string {
+    //     return "🠶";
+    //     // return `
+    //     //     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-right"><circle cx="12" cy="12" r="10"/><path d="m10 8 4 4-4 4"/></svg>
+    //     // `;
+    //     // return "⇲";
+    //     // return `
+    //     //     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-up-right"><path d="M22 12A10 10 0 1 1 12 2"/><path d="M22 2 12 12"/><path d="M16 2h6v6"/></svg>
+    //     // `;
+    //     return `
+    //         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-out-up-right"><path d="M22 12A10 10 0 1 1 12 2"/><path d="M22 2 12 12"/><path d="M16 2h6v6"/></svg>
+    //     `;
+    //     // return `
+    //     // <svg xmlns="http://www.w3.org/2000/svg" width="${this.indicatorSize}" height="${this.indicatorSize}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+    //     // `;
 
-    }
+    // }
 
     get isHighlightFocalFile(): boolean {
         return this.options.isHighlightFocalFile ?? true;
@@ -960,14 +960,19 @@ export class NavigationEntryFrame extends NavigationBase {
         let setIndicator = () => {
             if (entryData.children.length > 0) {
                 if (this.isOpen) {
-                    this.elements.entryNodeToggleContainer.innerHTML = this.composeOpenIndicatorInnerHTML();
+
+                    // this.elements.entryNodeToggleContainer.innerHTML = this.composeOpenIndicatorInnerHTML();
+                    this.elements.entryNodeToggleContainer.textContent = "🠷"
+
                     Object.values(this.elements).forEach( (el: HTMLElement) => {
                         el.classList.remove("bearings-node-closed")
                         el.classList.add("bearings-node-opened")
                     });
 
                 } else {
-                    this.elements.entryNodeToggleContainer.innerHTML = this.composeClosedIndicatorInnerHTML();
+
+                    this.elements.entryNodeToggleContainer.textContent = "🠶"
+
                     Object.values(this.elements).forEach( (el: HTMLElement) => {
                         el.classList.add("bearings-node-closed")
                         el.classList.remove("bearings-node-opened")
