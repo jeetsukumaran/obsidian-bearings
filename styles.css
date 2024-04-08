@@ -143,6 +143,7 @@
     font-size: 0.6rem;
     font-weight: bold;
     opacity: 0.6;
+    margin-right: 10px;
 }
 
 .bearings-control-div-input-container {
@@ -167,6 +168,8 @@
 }
 
 .bearings-control-input-number-container {
+    display: flex;
+    align-items: center;
     margin: 0.2rem;
     margin-right: 0.5rem;
     margin-left: 0;

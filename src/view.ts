@@ -439,14 +439,11 @@ class InputNumberComponent {
             const labelEl = this.containerEl.appendChild(document.createElement("label"));
             labelEl.classList.add("bearings-control-label");
             labelEl.textContent = this.label;
-            labelEl.style.marginRight = "10px"; // Adjust spacing as needed
         }
 
         const inputAndButtonsContainer = this.containerEl.appendChild(document.createElement("div"));
         // inputAndButtonsContainer.classList.add("bearings-input-control-container");
         inputAndButtonsContainer.classList.add("bearings-control-input-number-container");
-        inputAndButtonsContainer.style.display = "flex";
-        inputAndButtonsContainer.style.alignItems = "center";
 
         this.inputEl = inputAndButtonsContainer.appendChild(document.createElement("input")) as HTMLInputElement;
         this.inputEl.setAttribute("type", "text");
