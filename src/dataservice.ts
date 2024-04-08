@@ -411,7 +411,9 @@ export class FileNode {
                 outlinkedPaths,
                 linkedNotesystemPaths,
                 {
-                    isInlink: isInvertLinkPolarity ? true : false, // are new elements inlinks?
+                    // Are new elements inlinks to the current note;?
+                    // They are if they used an outlink to connect to the note
+                    isInlink: isInvertLinkPolarity ? true : false,
                 },
                 // isInvertLinkPolarity ? true : false, // are new elements inlinks?
             );

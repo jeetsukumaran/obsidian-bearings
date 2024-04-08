@@ -938,7 +938,8 @@ export class NavigationEntryFrame extends NavigationBase {
         }
         if (relationships.length > 0) {
             const invertedRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
-            let relationshipPolarityGlyph: string = ""; if (invertedRelationships.length === 0) {
+            let relationshipPolarityGlyph: string = "";
+            if (invertedRelationships.length === 0) {
                 relationshipPolarityGlyph = OUTLINKED_RELATIONSHIP_GLYPH;
             } else if (invertedRelationships.length === relationships.length) {
                 relationshipPolarityGlyph = INLINKED_RELATIONSHIP_GLYPH;
