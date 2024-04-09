@@ -106,13 +106,15 @@ Views are dynamically-scoped collapsible hierarchical lists or "trees" of subgra
 
 For example, the main "Positions" view shows all logically hierarchical relationships (superordinate-subordinate, parent-child, classifier-classifications) regardless of semantics (e.g., a "child" note will look the same as a "classified" note).
 
-![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/e1989f7a-fe3c-4322-b811-f4cf24d305cc)
-
 Future plans include custom views and dynamically custom views, but, for now, view are predefined. 
 
 ### "Positions"
 
 All superordinate relationships of the current note, with superordinate relationships tracked as a chain of superordinates to their roots, and all subordinate relationships expanded into full subtrees (tracked to their leaves or until the specifed depth).
+
+
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/e1989f7a-fe3c-4322-b811-f4cf24d305cc)
+
 
 ### "Parallels"
 
