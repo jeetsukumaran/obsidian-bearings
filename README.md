@@ -64,27 +64,26 @@ Hovering over links opens up the Hover Editor (if installed).
 ### Default relationships
 
 
-| Name            | Category               | Focal note property    | Focal note role   | Linked note role  |
-|-----------------|------------------------|------------------------|-------------------|-------------------|
-| Parent          | superordinate          | `entry-parents`        | "child"           | "parent"          |
-| Child           | (implicit subordinate) | `entry-children`       | "parent"          | "child"           |
-|                 |                        |                        |                   |                   |
-| Classifier      | superordinate          | `entry-classifiers`    | "classification"  | "classifier"      |
-| Classification  | (implicit subordinate) | `entry-classifieds`    | "classifier"      | "classification"  |
-|                 |                        |                        |                   |                   |
-| Holding         | superordinate          | `entry-collections`    | "holding"         | "collection"      |
-| Collection      | (implicit subordinate) | `entry-holdings`       | "collection"      | "holding"         |
-|                 |                        |                        |                   |                   |
-| Source          | superordinate          | `source-authors`       | "source"          | "author"          |
-| Author          | (implicit subordinate) | `source-sources`       | "author"          | "source"          |
-|                 |                        |                        |                   |                   |
-| Collaborator    | superordinate          | `entry-collaborators`  | "production"      | "collaborator"    |
-| Production      | (implicit subordinate) | `entry-collaborations` | "collaborator"    | "production"      |
-|                 |                        |                        |                   |                   |
-| Bibliographical | coordinate             | `entry-bibliography`   | "reference"       | "bibliographical" |
-| Bibliographical | coordinate             | `entry-references`     | "bibliographical" | "reference"       |
-| Association     | coordinate             | `entry-associations`   | "associated"      | "associated"      |
-| Referral        | coordinate             | `entry-referral`       | "cross-reference" | "cross-reference" |
+| Name                        | Category               | Focal note property    | Focal note role   | Linked note role  |
+|-----------------------------|------------------------|------------------------|-------------------|-------------------|
+| Parent                      | superordinate          | `entry-parents`        | "child"           | "parent"          |
+| Child                       | (implicit subordinate) | `entry-children`       | "parent"          | "child"           |
+|                             |                        |                        |                   |                   |
+| Classifier                  | superordinate          | `entry-classifiers`    | "classification"  | "classifier"      |
+| Classification              | (implicit subordinate) | `entry-classifieds`    | "classifier"      | "classification"  |
+|                             |                        |                        |                   |                   |
+| Holding                     | superordinate          | `entry-collections`    | "holding"         | "collection"      |
+| Collection                  | (implicit subordinate) | `entry-holdings`       | "collection"      | "holding"         |
+|                             |                        |                        |                   |                   |
+| Source                      | superordinate          | `source-authors`       | "source"          | "author"          |
+| Author                      | (implicit subordinate) | `source-sources`       | "author"          | "source"          |
+|                             |                        |                        |                   |                   |
+| Collaborator                | superordinate          | `entry-collaborators`  | "production"      | "collaborator"    |
+| Production                  | (implicit subordinate) | `entry-collaborations` | "collaborator"    | "production"      |
+|                             |                        |                        |                   |                   |
+| Reference (bibliographical) | coordinate             | `entry-references`     |                   | "reference"       |
+| Association                 | coordinate             | `entry-associations`   | "associated"      | "associated"      |
+| Referral                    | coordinate             | `entry-referral`       | "cross-reference" | "cross-reference" |
 
 
 ### Custom relationships
