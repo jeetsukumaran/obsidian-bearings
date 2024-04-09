@@ -90,8 +90,14 @@ Hovering over links opens up the Hover Editor (if installed).
 
 You may add, delete, override the default relationships in the settings.
 
-If you define your own scheme, make sure your relationship has at least one of the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by the pre-defined "views" listed below (the "subordinate" category is implictly given by the inverted property link).
-Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/7877635a-2306-4927-97fa-cd1dfbb49ffa)
+
+
+> **IMPORTANT**
+> 
+> If you define your own scheme, make sure your relationship has at least one of the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by one of the pre-defined "views" listed below.
+> 
+> Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
 
 
 ## Views
@@ -99,8 +105,10 @@ Future plans include custom views, which will include support for custom categor
 Views are dynamically-scoped collapsible hierarchical lists or "trees" of subgraphs rooted at the current note, considering the union of connections under a particular set of relationshions.
 
 For example, the main "Positions" view shows all logically hierarchical relationships (superordinate-subordinate, parent-child, classifier-classifications) regardless of semantics (e.g., a "child" note will look the same as a "classified" note).
-Currently, views are predefined.
-Future plans include support for custom views as well as support for custom styling and iconography for different semantics (e.g., icons to distinguish between "parent" vs. "classifier").
+
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/e1989f7a-fe3c-4322-b811-f4cf24d305cc)
+
+Future plans include custom views and dynamically custom views, but, for now, view are predefined. 
 
 ### "Positions"
 
