@@ -22,8 +22,7 @@ Development Status :: 4 - Beta
 
 the framework now supports multiple two-way hierarchies (link "up" using a superordinate relationship, e.g. "`entry-parents`", or link "down" using a subordinate relationship, e.g. "`entry-children`"), as well as coordinate (non-hierarchical or "rhizomatic") relationships (e.g. "`entry-references`", "`entry-associated`").
 
-The following shows the metadata of a note that is supporting two "parent" projects, and itself has child notes.
-In addition various PyPI-like classifiers indicating the notes development status and topics etc. are given.
+The following hypothetical examples shows what might be possible: a note that is supporting two "parent" projects, and itself has child notesm and in addition has various PyPI-like classifiers indicating the notes development status and topics etc.
 
 ```
 entry-parents:
@@ -50,6 +49,7 @@ entry-references:
   - "[[sources/s/@cilantro2019]]"
 ```
 
+The following shows a "working" note from my own vault (and rather more conservatively indexed than the contrived example above).
 
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/727692a1-f3d8-416d-9fb6-e27405d52e59)
 
