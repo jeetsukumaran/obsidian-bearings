@@ -339,15 +339,15 @@
     position: absolute;
     font-size: calc(var(--bearings-font-base-size) - 0.2rem);
     left: calc( (-1 * var(--bearings-font-base-size)) - 0rem);
-    top: 0.17rem;
+    top: 0.40rem;
     width: var(--bearings-gutter-width);
     height: var(--bearings-gutter-width);
     /* left: -0.90rem; */
     display: flex;
-    align-items: center;
-    justify-content: start;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: 0;
-    opacity: 0.6;
+    opacity: 0.7;
     /* margin: 0; */
 }
 
@@ -371,7 +371,7 @@
 
 .bearings-entry-node-toggle-container {
     position: absolute;
-    top: -0.2rem;
+    top: 0;
     /* left: calc(-1 * var(--bearings-font-base-size)); */
     left: -1.05rem;
     width: var(--bearings-entry-node-toggle-container-size);
