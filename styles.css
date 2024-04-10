@@ -365,6 +365,11 @@
     overflow: clip;
 }
 
+.bearings-entry-node-relationship-cell {
+    position: relative;
+    top: -0.035rem;
+}
+
 /* }}} */
 
 /* Node toggle container {{{ */
