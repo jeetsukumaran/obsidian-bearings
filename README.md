@@ -1,12 +1,48 @@
 # Bearings
 
+
+## Introduction
+
 Your notegraph is traversed through links.
 
 Metadata is tracked by frontmatter properties.
 
 Bearings allows you to flow through the logical hallways, highways, and byways of your notegraph's semantic architectures constructed by combining these two mechanisms.
 
-Bearings provides multiplexed dynamically-scoped tree views of the logical hallways, highways, and byways of the architectures of your knowledgebase with semantic relationships defined by frontmatter metadata. Multiple hierarchies and non-hiearchies are supported simultaneously and concurrently.
+Bearings provides multiplexed dynamically-scoped tree views of the logical hallways, highways, and byways of the architectures of your knowledge-base, with the structure defined by multiple hierarchical or non-hierarchical semantic relationships between notes, with the logical structure of the relationship described by links listed under frontmatter metadata properties, and the semantics coming from concepts associated with those properties names.
+
+Initially inspired by categorizing my notes along the lines of the [classification system of the Python Package Index](https://pypi.org/classifiers/), i.e., with multiple concurrent hierarchies such as:
+
+```
+Topic :: Scientific/Engineering :: Artificial Life
+Topic :: Scientific/Engineering :: Bio-Informatics
+Intended Audience :: Science/Research
+Development Status :: 4 - Beta
+```
+
+the framework now supports multiple two-way hierarchies (link "up" using a superordinate relationship, e.g. "`entry-parents`", or link "down" using a subordinate relationship, e.g. "`entry-children`"), as well as coordinate (non-hierarchical or "rhizomatic") relationships (e.g. "`entry-references`", "`entry-associated`").
+
+The following shows the metadata of a note that is supporting two "parent" projects, and itself has child notes.
+In addition various PyPI-like classifiers indicating the notes development status and topics etc. are given.
+
+```
+entry-parents:
+  - "[[path/to/project1/project01-index]]"
+  - "[[path/to/project2/project02-index]]"
+entry-children:
+  - "[[path/to/project1/child-note-01]]"
+  - "[[path/to/project1/child-note-02]]"
+entry-classifiers:
+  - "[[00-classifiers/development/tasking/01-active]]"
+  - "[[00-classifiers/development/status/04-beta]]"
+  - "[[00-classifiers/development/phase/04-production-draft]]"
+  - "[[00-classifiers/feature/topic/bio-informatics]]"
+  - "[[00-classifiers/feature/topic/artificial-life]]"
+  - "[[00-classifiers/feature/subject/mathematics/combinatorics/graph-theory]]"
+  - "[[00-classifiers/feature/subject/mathematics/probability-theory-and-stochastic-processes/markov-processes]]"
+  - "[[00-classifiers/feature/subject/biology/G16.075_biological-evolution]]"
+```
+
 
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/727692a1-f3d8-416d-9fb6-e27405d52e59)
 
@@ -33,9 +69,8 @@ To test Beta builds of this plugin follow these steps:
 
 - Copy over `main.js`, `manifest.json` to your vault `${VAULT}/.obsidian/plugins/obsidian-bearings/` from [https://github.com/jeetsukumaran/obsidian-bearings/releases](https://github.com/jeetsukumaran/obsidian-bearings).
 
-## Overview
+## Usage
 
-Navigate your notegraph through tree-based views of links listed in frontmatter properties that define semantic and logical relationships between notes.
 
 Relationships can be either superordinate (e.g., superordinate/subordinates, parent/child, classifier/classified) or flat (e.g. coordinate, related, adjacent, see-also).
 
@@ -94,9 +129,9 @@ You may add, delete, override the default relationships in the settings.
 
 
 > **IMPORTANT**
-> 
+>
 > If you define your own scheme, make sure your relationship has at least one of the "superordinate" or the "coordinate" keyword in the category field, so that it gets picked up by one of the pre-defined "views" listed below.
-> 
+>
 > Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
 
 
@@ -106,7 +141,7 @@ Views are dynamically-scoped collapsible hierarchical lists or "trees" of subgra
 
 For example, the main "Positions" view shows all logically hierarchical relationships (superordinate-subordinate, parent-child, classifier-classifications) regardless of semantics (e.g., a "child" note will look the same as a "classified" note).
 
-Future plans include custom views and dynamically custom views, but, for now, view are predefined. 
+Future plans include custom views and dynamically custom views, but, for now, view are predefined.
 
 ### "Positions"
 
