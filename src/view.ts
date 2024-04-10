@@ -984,7 +984,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 }
             } else {
                 this.elements.entryNodeToggleContainer.classList.add("bearings-node-leaf");
-                let terminal: string = "⏺";
+                let terminal: string = "🠴";
                 this.elements.entryNodeToggleContainer.setText(terminal);
             }
         };
