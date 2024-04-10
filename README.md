@@ -41,6 +41,13 @@ entry-classifiers:
   - "[[00-classifiers/feature/subject/mathematics/combinatorics/graph-theory]]"
   - "[[00-classifiers/feature/subject/mathematics/probability-theory-and-stochastic-processes/markov-processes]]"
   - "[[00-classifiers/feature/subject/biology/G16.075_biological-evolution]]"
+entry-associated:
+  - "[[path/to/related/project3]]"
+  - "[[path/to/similar/note]]"
+entry-references:
+  - "[[sources/a/@avocado2024]]"
+  - "[[sources/b/@blueberry2021]]"
+  - "[[sources/s/@cilantro2019]]"
 ```
 
 
