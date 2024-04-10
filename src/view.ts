@@ -990,7 +990,17 @@ export class NavigationEntryFrame extends NavigationBase {
                 // let terminal: string = "🌢";
                 // let terminal: string = "☉";
                 // let terminal: string = "⪦";
-                let terminal: string = "⪧";
+                // let terminal: string = "⪧";
+                let terminal: string = "⏺";
+                // let terminal: string = "⨀";
+                // let terminal: string = "⨁";
+                // let terminal: string = "⟦";
+                // let terminal: string = "⟴";
+                // let terminal: string = "¶";
+                // let terminal: string = "§";
+                // let terminal: string = "⋇";
+                // let terminal: string = "⊛";
+                // let terminal: string = "⦿";
                 // let terminal: string = "🟘";
                 // let terminal: string = "⬡";
                 this.elements.entryNodeToggleContainer.setText(terminal);

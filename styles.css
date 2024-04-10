@@ -353,11 +353,11 @@
 .bearings-entry-node-terminal-container {
     padding: 0;
     margin: 0;
-    margin-left: 0px;
+    /* margin-left: 0px; */
     text-align: center;
-    width: 8px;
-    height: 8px;
-    border-radius: 8px;
+    /* width: 8px; */
+    /* height: 8px; */
+    /* border-radius: 8px; */
     /* opacity: 0.6; */
     /* background-color: var(--text-muted); */
     /* border: solid 1px var(--text-muted); */
