@@ -264,7 +264,7 @@ export class NavigationView extends NavigationBase {
         button.setClass("bearings-control-button");
         this.toggleOptionState[key] = initialValue;
         const setToggle = () => {
-            if (this.toggleOptionState) {
+            if (this.toggleOptionState[key]) {
                 button.setIcon(trueIcon);
                 button.setTooltip(trueToolTip);
                 // button.classList.add("bearings-toggle-is-true");
