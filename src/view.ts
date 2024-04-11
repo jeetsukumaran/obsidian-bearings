@@ -317,7 +317,7 @@ export class NavigationView extends NavigationBase {
 
         // Controls
         // let controlRow = headerLeft.createEl("div", {cls: [options.isCodeBlock ? "bearings-control-row" : "bearings-control-column"]});
-        let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-column"]});
+        let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-row"]});
         if (!options.isCodeBlock) {
             this.createToggleButton(
                 "isPinned",

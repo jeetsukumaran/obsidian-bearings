@@ -36,6 +36,7 @@
     background-color: var(--bearings-counter-shade-01);
     padding: 1rem;
     border-radius: 1rem;
+    /* border: solid 1px; */
 }
 
 .bearings-main-container .bearings-main-container-body {
