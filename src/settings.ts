@@ -155,7 +155,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
         };
     }
 
-    processInt(value: string): number | null {
+    processIntLimit(value: string): number | null {
         if (value && value === "") {
             return 0;
         }
@@ -164,10 +164,14 @@ export class BearingsSettingsTab extends PluginSettingTab {
         }
         const parsedValue = parseInt(value.trim());
         if (isNaN(parsedValue)) {
-            return 0;
+            return null;
         } else {
             return parsedValue;
         }
+    }
+
+    displayIntLimit(value: number | null): string {
+        return value === null ? "*" : value.toString();
     }
 
     createOptionsSetting(container: HTMLElement, options: any): void {
@@ -200,9 +204,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(container)
             .setName('Primary views discovery depth limit')
             .setDesc('Discovery (recursion) depth limit for primary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
-            .addText(text => text .setValue(options.discoveryDepthLimitPrimary?.toString() || "")
+            .addText(text => text.setValue(this.displayIntLimit(options.discoveryDepthLimitPrimary?.toString() || ""))
                 .onChange(async (value) => {
-                    options.discoveryDepthLimitPrimary = this.processInt(value);
+                    options.discoveryDepthLimitPrimary = this.processIntLimit(value);
                     await this.saveSettingsFn();
                 }));
 
@@ -210,10 +214,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(container)
             .setName('Secondary views discovery depth limit')
             .setDesc('Discovery (recursion) depth limit for secondary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
-            .addText(text => text
-                .setValue(options.discoveryDepthLimitSecondary?.toString() || "")
+            .addText(text => text.setValue(this.displayIntLimit(options.discoveryDepthLimitSecondary?.toString() || ""))
                 .onChange(async (value) => {
-                    options.discoveryDepthLimitSecondary = this.processInt(value);
+                    options.discoveryDepthLimitSecondary = this.processIntLimit(value);
                     await this.saveSettingsFn();
                 }));
 
@@ -221,9 +224,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(container)
             .setName('Default view subtree autoexpansion limit')
             .setDesc('How many levels deep should the subtree be open? This value restricts the depth of the subtree nodes that are open by default rather than showing it open to the full discovery or mapped limit. Set to "*" for no limit. Less is more here for mental bandwidth reasons :) ')
-            .addText(text => text .setValue(options.autoexpansionDepthLimitPrimary?.toString() || "")
+            .addText(text => text.setValue(this.displayIntLimit(options.autoexpansionDepthLimit?.toString() || ""))
                 .onChange(async (value) => {
-                    options.autoexpansionDepthLimit = this.processInt(value);
+                    options.autoexpansionDepthLimit = this.processIntLimit(value);
                     await this.saveSettingsFn();
                 }));
 
