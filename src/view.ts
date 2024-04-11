@@ -951,6 +951,7 @@ export class NavigationEntryFrame extends NavigationBase {
     async render(
         entryData: FileNavigationTreeNode,
         parentFileNode: FileNode | null = null,
+        defaultOpenDepthLimit: number | null = 2,
     ) {
         if (this.setupCallbackFn !== undefined) {
             this.setupCallbackFn(this, entryData);
@@ -962,7 +963,11 @@ export class NavigationEntryFrame extends NavigationBase {
         } else {
             // this.isOpen = this.isOpen ??
             //     (this.isFocalFile(entryData.value.filePath) ? this.isDefaultOpenFocalFile : this.isDefaultOpen );
-            this.isOpen = (this.isFocalFile(entryData.value.filePath) ? this.isDefaultOpenFocalFile : this.isDefaultOpen );
+            if (defaultOpenDepthLimit === null || defaultOpenDepthLimit > 0) {
+                this.isOpen = (this.isFocalFile(entryData.value.filePath) ? this.isDefaultOpenFocalFile : this.isDefaultOpen );
+            } else {
+                this.isOpen = false;
+            }
         }
         // let isNodeOpen: boolean =  (this._context.isOpenFocalFile || !this.isFocalFile(entryData.value.filePath));
         // this.isOpen = !this.isFocalFile(entryData.value.filePath);
@@ -1121,7 +1126,11 @@ export class NavigationEntryFrame extends NavigationBase {
                     this.parentViewFrame,
                 );
                 subview.setupCallbackFn = this.setupCallbackFn;
-                subview.render( childNode, entryData.value );
+                subview.render(
+                    childNode,
+                    entryData.value,
+                    defaultOpenDepthLimit === null ? null : defaultOpenDepthLimit - 1,
+                );
         });
 
 
