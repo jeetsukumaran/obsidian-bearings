@@ -632,12 +632,16 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
         if (this.isFocalFile(entryData.value.filePath)) {
             this.nFocalFileSeen = this.nFocalFileSeen + 1;
             // entryFrame.isPostFocalFile
+            entryFrame.isPostFocalFile = true;
+            console.log("OK");
         }
         if (!this.isFocalFileExpandedOnce && this.isFocalFile(entryData.value.filePath)) {
             this.isFocalFileExpandedOnce = true;
             isDefaultOpenFocalFile = true;
         }
-        if (!entryFrame.isPostFocalFile) {
+        console.log(entryFrame.isPostFocalFile);
+        if (!entryFrame.isPostFocalFile && !this.isFocalFile(entryData.value.filePath)) {
+            console.log("Setting it here for: " + entryData.value.filePath + ", waiting for: " + this._context._focalFilePath);
             entryFrame.options.isIgnoreDefaultOpenLimit = true;
         } else {
             entryFrame.options.isIgnoreDefaultOpenLimit = false;
@@ -882,23 +886,25 @@ export class NavigationEntryFrame extends NavigationBase {
             );
         }
         let subtreeDefaultOpenDepthLimit: number | null = defaultOpenDepthLimit === null ? null : defaultOpenDepthLimit - 1;
+        console.log("-00-");
         if (this.parentViewFrame.isForceOpen === true) {
             this.isOpen = true;
-            // subtreeDefaultOpenDepthLimit: defaultOpenDepthLimit;
+            console.log("x6");
         } else if (this.parentViewFrame.isForceOpen === false) {
             this.isOpen = false;
+            console.log("x5");
         } else {
             if (this.isFocalFile(entryData.value.filePath)) {
                 this.isOpen = this.isDefaultOpenFocalFile;
-            } else if (!this.options.isIgnoreDefaultOpenLimit) {
-                this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 1;
-            } else {
+                console.log("x3");
+            } else if (this.options.isIgnoreDefaultOpenLimit) {
                 this.isOpen = this.isDefaultOpen;
+                console.log("x2");
+            } else {
+                this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 1;
+                console.log("x1");
             }
         }
-        console.log("---");
-        console.log(this);
-        console.log(entryData);
         console.log(defaultOpenDepthLimit);
         console.log(subtreeDefaultOpenDepthLimit);
         console.log(this.isOpen);
@@ -1057,7 +1063,7 @@ export class NavigationEntryFrame extends NavigationBase {
                     this._context,
                     this.elements.entrySubcontent.createEl("div"),
                     this.parentViewFrame,
-                    this.isFocalFile(entryData.value.filePath),
+                    this.isFocalFile(entryData.value.filePath) || this.isPostFocalFile,
                 );
                 subview.setupCallbackFn = this.setupCallbackFn;
                 subview.render(
