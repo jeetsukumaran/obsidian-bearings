@@ -82,7 +82,7 @@ export default class BearingsPlugin extends Plugin {
                 // );
                 this.activeNavigators.push(navigationView)
                 let activeFilePath = app.workspace.getActiveFile()?.path || "";
-                navigationView.render(activeFilePath);
+                navigationView.render(activeFilePath, {});
             });
         this.addCommand({
             id: 'refresh-azimuths-catalog',

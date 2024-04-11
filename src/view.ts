@@ -232,7 +232,9 @@ export class NavigationView extends NavigationBase {
     isBypassFileChangeCheck: boolean = false;
 
     async refresh() {
-        this.render(this._context._focalFilePath, true);
+        this.render(this._context._focalFilePath, {
+            isForced: true,
+        });
         // this.render(this.app.workspace.getActiveFile()?.path || "", true);
     }
 
@@ -242,9 +244,9 @@ export class NavigationView extends NavigationBase {
 
     async render(
         targetFilePath: string,
-        isForce: boolean = false,
+        options: { [key: string]: boolean } = {},
     ) {
-        if (!isForce) {
+        if (!options.isForced) {
             if (this.isPinned) {
                 return true;
             }
