@@ -5,7 +5,6 @@
     --bearings-font-base-size: 0.8rem;
     --bearings-gutter-width: 0.8rem;
     --bearings-entry-node-toggle-container-size: calc(2 * var(--bearings-font-base-size));
-    --bearings-guideline-color:    #000000;
 }
 
 .theme-light {
@@ -17,6 +16,7 @@
     /* --bearings-node-leaf-color: #7890cc; */
     /* --bearings-node-leaf-color: #00000080; */
     --bearings-node-leaf-color: #aa88aa;
+    --bearings-guideline-color: #000000;
 }
 
 .theme-dark {
@@ -24,6 +24,7 @@
     --bearings-node-open-color: #00ff88cc;
     --bearings-node-closed-color: #ff8800cc;
     --bearings-node-leaf-color: #aaaa88;
+    --bearings-guideline-color: #ffffff;
 }
 
 
