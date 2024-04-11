@@ -343,62 +343,19 @@ export class NavigationView extends NavigationBase {
                 },
                 false,
             );
-
-            // // Div mocked as button
-            // let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
-            // let pinnedLabelContainer = controlCell.createEl("div", {cls: ["bearings-control-div-input-container"]})
-            // let pinnedLabel = pinnedLabelContainer.createEl("div", {cls: ["bearings-control-div-input-control", "bearings-control-div-input-toggle"]});
-            // const pinnedAction = (value: boolean) => {
-            //     this.isPinned = value;
-            //     if (this.isPinned) {
-            //         // pinnedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin"><line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>`;
-            //         setIcon(pinnedLabel, "pin");
-            //         pinnedLabel.addClass("bearings-toggle-is-true");
-            //         pinnedLabel.removeClass("bearings-toggle-is-false");
-            //     } else {
-            //         // pinnedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off"><line x1="2" x2="22" y1="2" y2="22"/><line x1="12" x2="12" y1="17" y2="22"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/></svg>`;
-            //         setIcon(pinnedLabel, "pin-off");
-            //         pinnedLabel.addClass("bearings-toggle-is-false");
-            //         pinnedLabel.removeClass("bearings-toggle-is-true");
-            //     }
-            // };
-            // // linkContainer.onclick( () => pinnedAction(!this.isPinned) );
-            // pinnedLabel.addEventListener('click', (event) => {
-            //     event.preventDefault();
-            //     this.isPinned = !this.isPinned;
-            //     pinnedAction(this.isPinned);
-            // });
-            // // pinnedToggle.setValue(this.isPinned)
-            // //     .onChange(async (value) => pinnedAction(value))
-            // pinnedAction(this.isPinned);
         } else {
-            // Div mocked as button
-            // let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
-            // let closedLabelContainer = controlCell.createEl("div", {cls: ["bearings-control-div-input-container"]})
-            // let closedLabel = closedLabelContainer.createEl("div", {cls: ["bearings-control-div-input-control", "bearings-control-div-input-toggle"]});
-            // const closedAction = (value: boolean) => {
-            //     this.isClosed = value;
-            //     if (this.isClosed) {
-            //         // closedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin"><line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>`;
-            //         setIcon(closedLabel, "maximize-2");
-            //         closedLabel.addClass("bearings-toggle-is-true");
-            //         closedLabel.removeClass("bearings-toggle-is-false");
-            //     } else {
-            //         // closedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off"><line x1="2" x2="22" y1="2" y2="22"/><line x1="12" x2="12" y1="17" y2="22"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/></svg>`;
-            //         setIcon(closedLabel, "minimize-2");
-            //         closedLabel.addClass("bearings-toggle-is-false");
-            //         closedLabel.removeClass("bearings-toggle-is-true");
-            //     }
-            // };
-            // linkContainer.onclick( () => closedAction(!this.isClosed) );
-            // closedLabel.addEventListener('click', (event) => {
-            //     event.preventDefault();
-            //     this.isClosed = !this.isClosed;
-            //     closedAction(this.isClosed);
-            // });
-            // closedToggle.setValue(this.isClosed)
-            //     .onChange(async (value) => closedAction(value))
-            // closedAction(this.isClosed);
+            this.createToggleButton(
+                "isClosed",
+                controlRow,
+                "chevron-right",
+                "chevron-down",
+                "Open the view",
+                "Close the view",
+                (value: boolean) => {
+                    this.isClosed = value;
+                },
+                false,
+            );
         }
             let headerLabel = headerLeft.createEl("div", {
                 cls: ["bearings-container-header-label"],
