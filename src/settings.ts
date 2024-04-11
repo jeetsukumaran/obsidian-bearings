@@ -31,8 +31,9 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     options: {
         // globalNamespacePrefix: "entry-", // string | null
         titleField: ["title", "entry-title"],
-        viewDepthLimitPrimary: 2,    // number | null
-        viewDepthLimitSecondary: 2,     // number | null
+        autoexpansionDepthLimit: 2,    // number | null
+        discoveryDepthLimitPrimary: 2,    // number | null
+        discoveryDepthLimitSecondary: 2,     // number | null
     },
     relationshipDefinitions: {
         "Parent": {
@@ -184,23 +185,34 @@ export class BearingsSettingsTab extends PluginSettingTab {
         // View Depth Limit Primary
         new Setting(container)
             .setName('Primary views discovery depth limit')
-            .setDesc('Depth limit for primary views: how many levels of links to follow when expanding subtrees. Set to "*" for no limit. Major determinant of performance in larger vaults.')
-            .addText(text => text .setValue(options.viewDepthLimitPrimary?.toString() || "")
+            .setDesc('Discovery (recursion) depth limit for primary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
+            .addText(text => text .setValue(options.discoveryDepthLimitPrimary?.toString() || "")
                 .onChange(async (value) => {
-                    options.viewDepthLimitPrimary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
+                    options.discoveryDepthLimitPrimary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
                     await this.saveSettingsFn();
                 }));
 
         // View Depth Limit Secondary
         new Setting(container)
             .setName('Secondary views discovery depth limit')
-            .setDesc('Depth limit for secondary views: how many levels of links to follow when expanding subtrees. Set to "*" for no limit. Major determinant of performance in larger vaults.')
+            .setDesc('Discovery (recursion) depth limit for secondary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
             .addText(text => text
-                .setValue(options.viewDepthLimitSecondary?.toString() || "")
+                .setValue(options.discoveryDepthLimitSecondary?.toString() || "")
                 .onChange(async (value) => {
-                    options.viewDepthLimitSecondary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
+                    options.discoveryDepthLimitSecondary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
                     await this.saveSettingsFn();
                 }));
+
+        // View Depth Limit Primary
+        new Setting(container)
+            .setName('Default view subtree autoexpansion limit')
+            .setDesc('How many levels deep should the subtree be open? This value restricts the depth of the subtree nodes that are open by default rather than showing it open to the full discovery or mapped limit. Set to "*" for no limit. Less is more here for mental bandwidth reasons :) ')
+            .addText(text => text .setValue(options.autoexpansionDepthLimitPrimary?.toString() || "")
+                .onChange(async (value) => {
+                    options.autoexpansionDepthLimitPrimary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
+                    await this.saveSettingsFn();
+                }));
+
     }
 
     createRelationshipDefinitionSetting(container: HTMLElement, relationshipName: string, definition: RelationshipDefinition): void {
