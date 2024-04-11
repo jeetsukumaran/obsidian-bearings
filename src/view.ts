@@ -304,14 +304,15 @@ export class NavigationView extends NavigationBase {
             return;
         }
         this.viewContainer = this.root.createEl("div", {
-            cls: ["bearings-container"]
+            cls: ["bearings-main-container"]
         });
+        this.viewContainer.classList.add("bearings-main-container-open");
 
         let viewHeaderContainer = this.viewContainer.createEl("div", {
-            cls: ["bearings-container-header"]
+            cls: ["bearings-main-container-header"]
         });
         let headerLeft = viewHeaderContainer.createEl("div", {
-            cls: ["bearings-container-header-left"],
+            cls: ["bearings-main-container-header-left"],
         });
 
         // Controls
@@ -352,28 +353,30 @@ export class NavigationView extends NavigationBase {
                 "Open the view",
                 "Close the view",
                 (value: boolean) => {
-                    this.isClosed = value;
+                    if (value) {
+                        this.viewContainer.classList.remove("bearings-main-container-closed");
+                        this.viewContainer.classList.add("bearings-main-container-open");
+                    } else {
+                        this.viewContainer.classList.add("bearings-main-container-closed");
+                        this.viewContainer.classList.remove("bearings-main-container-open");
+                    }
                 },
                 false,
             );
         }
             let headerLabel = headerLeft.createEl("div", {
-                cls: ["bearings-container-header-label"],
+                cls: ["bearings-main-container-header-label"],
                 text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
             });
 
             let headerRight = viewHeaderContainer.createEl("div", {
-                cls: ["bearings-container-header-right"],
+                cls: ["bearings-main-container-header-right"],
             });
 
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Contexts"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Centers"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Superordinates"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Provenances"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Polarities"});
+        let viewContainerBody = this.viewContainer.createEl("div", {cls: "bearings-main-container-body"})
         let ascenderViewFrame = new SuperordinateRelationshipsAscendersViewFrame(
             this._context,
-            this.viewContainer.createEl("div", {cls: "bearings-viewframe-container"}),
+            viewContainerBody.createEl("div", {cls: "bearings-viewframe-container"}),
             "Positions",
         );
         ascenderViewFrame.render();
@@ -381,34 +384,21 @@ export class NavigationView extends NavigationBase {
         // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Parallels"});
         let parallelsViewFrame = new ParallelRelationshipsViewFrame(
             this._context,
-            this.viewContainer.createEl("div", {cls: "bearings-viewframe-container"}),
+            viewContainerBody.createEl("div", {cls: "bearings-viewframe-container"}),
             "Parallels"
         );
         parallelsViewFrame.render();
 
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Extensions"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Expansions"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Subtrees"});
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Extensions"});
-        // let subordinateViewFrame = new SubordinateRelationshipsViewFrame(
-        //     this._context,
-        //     this.viewContainer.createEl("div", {cls: "bearings-viewframe-container"}),
-        //     "Expansions",
-        // );
-        // subordinateViewFrame.render();
-
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Referrals"});
         let coordinateViewFrame = new CoordinateRelationshipsViewFrame(
             this._context,
-            this.viewContainer.createEl("div", {cls: "bearings-viewframe-container"}),
+            viewContainerBody.createEl("div", {cls: "bearings-viewframe-container"}),
             "Referrals",
         );
         coordinateViewFrame.render();
 
-        // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Ventions"});
         let backlinkedViewFrame = new BacklinkedRelationshipsViewFrame(
             this._context,
-            this.viewContainer.createEl("div", {cls: "bearings-viewframe-container"}),
+            viewContainerBody.createEl("div", {cls: "bearings-viewframe-container"}),
             "Backlinks",
         );
         backlinkedViewFrame.render();

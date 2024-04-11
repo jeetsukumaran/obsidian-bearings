@@ -31,13 +31,26 @@
 
 /* Root container {{{ */
 
-.bearings-container {
+.bearings-main-container {
     font-size: var(--bearings-font-base-size);
+    background-color: var(--bearings-counter-shade-01);
+    padding: 1rem;
+    border-radius: 1rem;
 }
+
+.bearings-main-container .bearings-main-container-body {
+}
+
+.bearings-main-container.bearings-main-container-closed .bearings-main-container-body {
+    display: none;
+}
+
+/* }}} */
+
 
 /* Root container header {{{ */
 
-.bearings-container-header {
+.bearings-main-container-header {
     font-size: var(--bearings-font-base-size);
     display: flex;
     flex-direction: column;
@@ -49,7 +62,7 @@
     /* background-color: var(--background-secondary); */
 }
 
-.bearings-container-header-left {
+.bearings-main-container-header-left {
     padding: 0.5rem;
     font-weight: bold;
     border-radius: 0.4rem;
@@ -59,7 +72,7 @@
     align-items: center;
 }
 
-.bearings-container-header-label {
+.bearings-main-container-header-label {
     margin-left: 0.5rem;
     padding: 0.5rem;
     border: solid 0.5px;
@@ -134,16 +147,16 @@ input:disabled {
     width: 24px;
 }
 
-.bearings-container-header .bearings-control-button {
+.bearings-main-container-header .bearings-control-button {
     height: 20px;
     width: 20px;
 }
-.bearings-container-header .bearings-control-button svg {
+.bearings-main-container-header .bearings-control-button svg {
     height: 16px;
     width: 16px;
 }
 
-.bearings-container-header .bearings-control-div-input-container {
+.bearings-main-container-header .bearings-control-div-input-container {
     margin-top: 0.5rem;
     margin-left: 0.2rem;
     margin-right: 0.2rem;
