@@ -231,8 +231,11 @@ export class NavigationView extends NavigationBase {
     isPinned: boolean = false;
     isBypassFileChangeCheck: boolean = false;
 
-    async refresh() {
+    async refresh(
+        options: { [key: string]: boolean } = {},
+    ) {
         this.render(this._context._focalFilePath, {
+            ... options,
             isForced: true,
         });
         // this.render(this.app.workspace.getActiveFile()?.path || "", true);

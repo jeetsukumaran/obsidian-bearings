@@ -80,17 +80,19 @@ export default class BearingsPlugin extends Plugin {
                 //         display: NAVIGATOR_VIEW_TYPE,
                 //     }
                 // );
-                this.activeNavigators.push(navigationView)
                 let activeFilePath = app.workspace.getActiveFile()?.path || "";
                 navigationView.render(activeFilePath, {
                     isShowHeader: false,
                 });
+                this.activeNavigators.push(navigationView)
             });
         this.addCommand({
-            id: 'refresh-azimuths-catalog',
+            id: 'refresh-bearings-code-blocks',
             name: 'Refresh navigation code blocks',
             callback: () => {
-                this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh());
+                this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh({
+                    // isShowHeader: false,
+                }));
             }
         });
 
