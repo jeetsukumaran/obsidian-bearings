@@ -18,8 +18,6 @@ import {
     // FileSystemAdapter,
 } from "obsidian";
 
-import * as _path from "path"
-
 // function getVaultBasePath(): string {
 //     const adapter = app.vault.adapter;
 //     if (adapter instanceof FileSystemAdapter) {
@@ -106,7 +104,7 @@ async function createUniqueNote(
 
     do {
         const fileName = `Untitled${counter ? ` ${counter}` : ''}.md`;
-        newNotePath = path.join(directoryPath, fileName);
+        newNotePath = [directoryPath, fileName].join("/");
         counter++;
     } while (await app.vault.adapter.exists(newNotePath));
 
@@ -222,8 +220,6 @@ export function buildLinkCopyMenu(
     const normalizedLinkPath = normalizePath(linkPath);
     const internalPath = normalizedLinkPath.replace(/.md$/, "");
 
-    // const absolutePath = _path.join(getVaultBasePath(), normalizedLinkPath);
-
     const _appendToClipboard = async (value: string) => {
         try {
             const current = await navigator.clipboard.readText();
@@ -289,14 +285,6 @@ export function buildLinkCopyMenu(
             .setIcon("clipboard-x")
             .onClick(_clearClipboard)
     );
-
-    // menu.addItem((item) =>
-    //     item
-    //         .setTitle("Copy relative directory path")
-    //         .setIcon("documents")
-    //         // .onClick(() => _appendToClipboard(internalPath.endsWith(".md") ? internalPath : internalPath + ".md"))
-    //         .onClick(() => _appendToClipboard(_path.dirname(internalPath)))
-    // );
 
     menu.addItem((item) =>
         item
