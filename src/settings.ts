@@ -30,6 +30,7 @@ export interface BearingsSettingsData {
 export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     options: {
         // globalNamespacePrefix: "entry-", // string | null
+        titleField: ["title", "entry-title"],
         viewDepthLimitPrimary: 2,    // number | null
         viewDepthLimitSecondary: 2,     // number | null
     },
@@ -155,6 +156,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
 
     createOptionsSetting(container: HTMLElement, options: any): void {
+
         // Global Namespace Prefix
         // new Setting(container)
         //     .setName('Global Namespace Prefix')
@@ -166,25 +168,37 @@ export class BearingsSettingsTab extends PluginSettingTab {
         //             await this.saveSettingsFn();
         //         }));
 
+        // Title field
+        new Setting(container)
+            .setName('Title fields')
+            .setDesc('Comma-separated list of property names that will be used as the display text of each note.')
+            .addText(text => text
+                .setValue(options.titleField?.join(",") || "title, entry-title")
+                .setDisabled(true)
+                .onChange(async (value) => {
+                    options.titleField = value ? value.toString().split(",").map( (s:string) => s.trim() ) : ["title", "entry-title"];
+                    await this.saveSettingsFn();
+                })
+            );
+
         // View Depth Limit Primary
         new Setting(container)
-            .setName('View Depth Limit Primary')
-            .setDesc('Primary view depth limit, can be null for no limit.')
-            .addText(text => text
-                .setValue(options.viewDepthLimitPrimary?.toString() || "")
+            .setName('Primary views discovery depth limit')
+            .setDesc('Depth limit for primary views: how many levels of links to follow when expanding subtrees. Set to "*" for no limit. Major determinant of performance in larger vaults.')
+            .addText(text => text .setValue(options.viewDepthLimitPrimary?.toString() || "")
                 .onChange(async (value) => {
-                    options.viewDepthLimitPrimary = value ? parseInt(value) : null; // Parse to int, null if empty
+                    options.viewDepthLimitPrimary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
                     await this.saveSettingsFn();
                 }));
 
         // View Depth Limit Secondary
         new Setting(container)
-            .setName('View Depth Limit Secondary')
-            .setDesc('Secondary view depth limit, can be null for no limit.')
+            .setName('Secondary views discovery depth limit')
+            .setDesc('Depth limit for secondary views: how many levels of links to follow when expanding subtrees. Set to "*" for no limit. Major determinant of performance in larger vaults.')
             .addText(text => text
                 .setValue(options.viewDepthLimitSecondary?.toString() || "")
                 .onChange(async (value) => {
-                    options.viewDepthLimitSecondary = value ? parseInt(value) : null; // Parse to int, null if empty
+                    options.viewDepthLimitSecondary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
                     await this.saveSettingsFn();
                 }));
     }

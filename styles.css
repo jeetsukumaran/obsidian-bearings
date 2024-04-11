@@ -70,6 +70,15 @@
 
 /* }}} */
 
+/* General controls {{{ */
+
+input:disabled {
+    color: var(--text-faint);
+    background: var(--background-secondary);
+}
+
+/* }}} */
+
 /* Main entry controls {{{ */
 
 .bearings-control-row {
