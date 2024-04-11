@@ -181,18 +181,3 @@ The navigational views can be embedded into a note using the code block identifi
 ```
 ~~~
 
-![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/09348857-25d7-41c8-b564-56ba0fbf25f8)
-
-If you have an automated note creation system or note templates, something like this will embed a navigator on every note created.
-
-
-~~~
-> [!info]- Bearings
->
->
-> ```bearings-view
-> ```
-~~~
-
-![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/3ad40657-f204-4292-93cd-10296b7441b9)
-
