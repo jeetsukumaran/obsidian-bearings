@@ -82,11 +82,13 @@ export default class BearingsPlugin extends Plugin {
                 // );
                 this.activeNavigators.push(navigationView)
                 let activeFilePath = app.workspace.getActiveFile()?.path || "";
-                navigationView.render(activeFilePath, {});
+                navigationView.render(activeFilePath, {
+                    isShowHeader: false,
+                });
             });
         this.addCommand({
             id: 'refresh-azimuths-catalog',
-            name: 'Refresh catalog',
+            name: 'Refresh navigation code blocks',
             callback: () => {
                 this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh());
             }
