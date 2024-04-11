@@ -155,6 +155,20 @@ export class BearingsSettingsTab extends PluginSettingTab {
         };
     }
 
+    processInt(value: string): number | null {
+        if (value && value === "") {
+            return 0;
+        }
+        if (value === "*") {
+            return null;
+        }
+        const parsedValue = parseInt(value.trim());
+        if (isNaN(parsedValue)) {
+            return 0;
+        } else {
+            return parsedValue;
+        }
+    }
 
     createOptionsSetting(container: HTMLElement, options: any): void {
 
@@ -188,7 +202,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc('Discovery (recursion) depth limit for primary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
             .addText(text => text .setValue(options.discoveryDepthLimitPrimary?.toString() || "")
                 .onChange(async (value) => {
-                    options.discoveryDepthLimitPrimary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
+                    options.discoveryDepthLimitPrimary = this.processInt(value);
                     await this.saveSettingsFn();
                 }));
 
@@ -199,7 +213,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .addText(text => text
                 .setValue(options.discoveryDepthLimitSecondary?.toString() || "")
                 .onChange(async (value) => {
-                    options.discoveryDepthLimitSecondary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
+                    options.discoveryDepthLimitSecondary = this.processInt(value);
                     await this.saveSettingsFn();
                 }));
 
@@ -209,7 +223,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc('How many levels deep should the subtree be open? This value restricts the depth of the subtree nodes that are open by default rather than showing it open to the full discovery or mapped limit. Set to "*" for no limit. Less is more here for mental bandwidth reasons :) ')
             .addText(text => text .setValue(options.autoexpansionDepthLimitPrimary?.toString() || "")
                 .onChange(async (value) => {
-                    options.autoexpansionDepthLimitPrimary = value.trim() !== "*" ? parseInt(value) : null; // Parse to int, null if empty
+                    options.autoexpansionDepthLimit = this.processInt(value);
                     await this.saveSettingsFn();
                 }));
 
