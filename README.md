@@ -194,3 +194,9 @@ If you have an automated note creation system or note templates, something like 
 > ```
 ~~~
 
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/feae5995-fa03-480e-868b-5704fdf93967)
+
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/637940a5-604d-4623-b672-01792bc6979d)
+
+
+
