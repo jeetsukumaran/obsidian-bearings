@@ -181,3 +181,5 @@ The navigational views can be embedded into a note using the code block identifi
 ```
 ~~~
 
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/ea16e33c-a716-4093-b5cf-eb488e655f5e)
+
