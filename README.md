@@ -174,10 +174,10 @@ All inlinks/backlinks to this note.
 
 ## Code blocks
 
-The navigational views can be embedded into a note using the code block identifier "`bearings`"
+The navigational views can be embedded into a note using the code block identifier "`bearings-view`"
 
 ~~~
-```bearings
+```bearings-view
 ```
 ~~~
 
@@ -190,7 +190,7 @@ If you have an automated note creation system or note templates, something like 
 > [!info]- Bearings
 >
 >
-> ```bearings
+> ```bearings-view
 > ```
 ~~~
 
