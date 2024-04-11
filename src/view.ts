@@ -620,7 +620,8 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
     }
 
     getDefaultDiscoveryDepthLimit(): number | null {
-        return this._validateDepthLimitSetting(this._context.configuration.options.viewDepthLimitPrimary);
+
+        return this._validateDepthLimitSetting(this._context.configuration.options.discoveryDepthLimitPrimary);
     }
 
     setLocalOptions(
@@ -666,7 +667,7 @@ export class SubordinateRelationshipsViewFrame extends NavigationViewFrame {
     }
 
     getDefaultDiscoveryDepthLimit(): number | null {
-        return this._validateDepthLimitSetting(this._context.configuration.options.viewDepthLimitSecondary);
+        return this._validateDepthLimitSetting(this._context.configuration.options.discoveryDepthLimitSecondary);
     }
 
     generateResults():
@@ -690,7 +691,7 @@ export class SubordinateRelationshipsViewFrame extends NavigationViewFrame {
 export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
 
     getDefaultDiscoveryDepthLimit(): number | null {
-        return this._validateDepthLimitSetting(this._context.configuration.options.viewDepthLimitSecondary);
+        return this._validateDepthLimitSetting(this._context.configuration.options.discoveryDepthLimitSecondary);
     }
 
     setLocalOptions(
@@ -722,7 +723,7 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
 export class ParallelRelationshipsViewFrame extends NavigationViewFrame {
 
     getDefaultDiscoveryDepthLimit(): number | null {
-        return this._validateDepthLimitSetting(this._context.configuration.options.viewDepthLimitSecondary);
+        return this._validateDepthLimitSetting(this._context.configuration.options.discoveryDepthLimitSecondary);
     }
 
     setLocalOptions(
@@ -765,7 +766,7 @@ export class BacklinkedRelationshipsViewFrame extends NavigationViewFrame {
     // "My parent's children"
 
     getDefaultDiscoveryDepthLimit(): number | null {
-        return this._validateDepthLimitSetting(this._context.configuration.options.viewDepthLimitSecondary);
+        return this._validateDepthLimitSetting(this._context.configuration.options.discoveryDepthLimitSecondary);
     }
 
     generateResults():
