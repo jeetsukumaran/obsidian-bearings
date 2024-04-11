@@ -631,15 +631,16 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
         let isDefaultOpenFocalFile = false;
         if (this.isFocalFile(entryData.value.filePath)) {
             this.nFocalFileSeen = this.nFocalFileSeen + 1;
+            // entryFrame.isPostFocalFile
         }
         if (!this.isFocalFileExpandedOnce && this.isFocalFile(entryData.value.filePath)) {
             this.isFocalFileExpandedOnce = true;
             isDefaultOpenFocalFile = true;
         }
         if (!entryFrame.isPostFocalFile) {
-            this.isForceOpen = true;
+            entryFrame.options.isIgnoreDefaultOpenLimit = true;
         } else {
-            this.isForceOpen = null;
+            entryFrame.options.isIgnoreDefaultOpenLimit = false;
         }
         entryFrame.options.isHighlightFocalFile = true;
         entryFrame.options.isDefaultOpenFocalFile = isDefaultOpenFocalFile;
@@ -883,17 +884,24 @@ export class NavigationEntryFrame extends NavigationBase {
         let subtreeDefaultOpenDepthLimit: number | null = defaultOpenDepthLimit === null ? null : defaultOpenDepthLimit - 1;
         if (this.parentViewFrame.isForceOpen === true) {
             this.isOpen = true;
-            // do not count
-            subtreeDefaultOpenDepthLimit = subtreeDefaultOpenDepthLimit === null ? null : subtreeDefaultOpenDepthLimit + 1;
+            // subtreeDefaultOpenDepthLimit: defaultOpenDepthLimit;
         } else if (this.parentViewFrame.isForceOpen === false) {
             this.isOpen = false;
         } else {
             if (this.isFocalFile(entryData.value.filePath)) {
                 this.isOpen = this.isDefaultOpenFocalFile;
-            } else {
+            } else if (!this.options.isIgnoreDefaultOpenLimit) {
                 this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 1;
+            } else {
+                this.isOpen = this.isDefaultOpen;
             }
         }
+        console.log("---");
+        console.log(this);
+        console.log(entryData);
+        console.log(defaultOpenDepthLimit);
+        console.log(subtreeDefaultOpenDepthLimit);
+        console.log(this.isOpen);
         // let isNodeOpen: boolean =  (this._context.isOpenFocalFile || !this.isFocalFile(entryData.value.filePath));
         // this.isOpen = !this.isFocalFile(entryData.value.filePath);
         // this.isOpen = !this.isFocalFile(entryData.value.filePath);
