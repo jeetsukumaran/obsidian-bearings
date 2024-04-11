@@ -346,12 +346,12 @@ export class NavigationView extends NavigationBase {
             );
         } else {
             this.createToggleButton(
-                "isClosed",
+                "isOpen",
                 controlRow,
-                "chevron-right",
                 "chevron-down",
-                "Open the view",
+                "chevron-right",
                 "Close the view",
+                "Open the view",
                 (value: boolean) => {
                     if (value) {
                         this.viewContainer.classList.remove("bearings-main-container-closed");
@@ -361,7 +361,7 @@ export class NavigationView extends NavigationBase {
                         this.viewContainer.classList.remove("bearings-main-container-open");
                     }
                 },
-                false,
+                true,
             );
         }
             let headerLabel = headerLeft.createEl("div", {

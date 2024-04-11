@@ -53,7 +53,7 @@
 .bearings-main-container-header {
     font-size: var(--bearings-font-base-size);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-bottom: 0.8rem;
     border-radius: 0.4rem;
     /* background: var(--background-secondary-alt); */
@@ -79,6 +79,17 @@
     border-radius: 0.4rem;
     width: 100%;
 }
+
+.bearings-main-container-header-right {
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 
 /* }}} */
 
