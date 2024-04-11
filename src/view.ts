@@ -621,7 +621,6 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
     }
 
     getDefaultDiscoveryDepthLimit(): number | null {
-
         return this._validateDepthLimitSetting(this._context.configuration.options.discoveryDepthLimitPrimary);
     }
 
