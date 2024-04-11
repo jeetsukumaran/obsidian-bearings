@@ -633,15 +633,12 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
             this.nFocalFileSeen = this.nFocalFileSeen + 1;
             // entryFrame.isPostFocalFile
             entryFrame.isPostFocalFile = true;
-            console.log("OK");
         }
         if (!this.isFocalFileExpandedOnce && this.isFocalFile(entryData.value.filePath)) {
             this.isFocalFileExpandedOnce = true;
             isDefaultOpenFocalFile = true;
         }
-        console.log(entryFrame.isPostFocalFile);
         if (!entryFrame.isPostFocalFile && !this.isFocalFile(entryData.value.filePath)) {
-            console.log("Setting it here for: " + entryData.value.filePath + ", waiting for: " + this._context._focalFilePath);
             entryFrame.options.isIgnoreDefaultOpenLimit = true;
         } else {
             entryFrame.options.isIgnoreDefaultOpenLimit = false;
@@ -886,32 +883,19 @@ export class NavigationEntryFrame extends NavigationBase {
             );
         }
         let subtreeDefaultOpenDepthLimit: number | null = defaultOpenDepthLimit === null ? null : defaultOpenDepthLimit - 1;
-        console.log("-00-");
         if (this.parentViewFrame.isForceOpen === true) {
             this.isOpen = true;
-            console.log("x6");
         } else if (this.parentViewFrame.isForceOpen === false) {
             this.isOpen = false;
-            console.log("x5");
         } else {
             if (this.isFocalFile(entryData.value.filePath)) {
                 this.isOpen = this.isDefaultOpenFocalFile;
-                console.log("x3");
             } else if (this.options.isIgnoreDefaultOpenLimit) {
                 this.isOpen = this.isDefaultOpen;
-                console.log("x2");
             } else {
                 this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 1;
-                console.log("x1");
             }
         }
-        console.log(defaultOpenDepthLimit);
-        console.log(subtreeDefaultOpenDepthLimit);
-        console.log(this.isOpen);
-        // let isNodeOpen: boolean =  (this._context.isOpenFocalFile || !this.isFocalFile(entryData.value.filePath));
-        // this.isOpen = !this.isFocalFile(entryData.value.filePath);
-        // this.isOpen = !this.isFocalFile(entryData.value.filePath);
-        // if (this.isOpen)  = this.isOpen ?? true;
 
         this.elements.entryFrame = this.root.createEl("div", {
             cls: ["bearings-entry-frame"]

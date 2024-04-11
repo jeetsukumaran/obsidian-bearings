@@ -202,7 +202,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         // View Depth Limit Primary
         new Setting(container)
-            .setName('Primary views discovery depth limit')
+            .setName('Primary views subtree mapping depth limit')
             .setDesc('Discovery (recursion) depth limit for primary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
             .addText(text => text.setValue(this.displayIntLimit(options.discoveryDepthLimitPrimary?.toString() || ""))
                 .onChange(async (value) => {
@@ -212,7 +212,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         // View Depth Limit Secondary
         new Setting(container)
-            .setName('Secondary views discovery depth limit')
+            .setName('Secondary views subtree mapping depth limit')
             .setDesc('Discovery (recursion) depth limit for secondary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
             .addText(text => text.setValue(this.displayIntLimit(options.discoveryDepthLimitSecondary?.toString() || ""))
                 .onChange(async (value) => {
@@ -222,8 +222,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         // View Depth Limit Primary
         new Setting(container)
-            .setName('Default view subtree autoexpansion limit')
-            .setDesc('How many levels deep should the subtree be open? This value restricts the depth of the subtree nodes that are open by default rather than showing it open to the full discovery or mapped limit. Set to "*" for no limit. Less is more here for mental bandwidth reasons :) ')
+            .setName('Default view subtree node expansion limit')
+            .setDesc('This value restricts the depth of the subtree nodes that are open by default. Set to "*" to open to the full mapped or discovery limit. Less is more here for mental bandwidth reasons :) ')
             .addText(text => text.setValue(this.displayIntLimit(options.autoexpansionDepthLimit?.toString() || ""))
                 .onChange(async (value) => {
                     options.autoexpansionDepthLimit = this.processIntLimit(value);
