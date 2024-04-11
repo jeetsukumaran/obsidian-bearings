@@ -636,6 +636,11 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
             this.isFocalFileExpandedOnce = true;
             isDefaultOpenFocalFile = true;
         }
+        if (!entryFrame.isPostFocalFile) {
+            this.isForceOpen = true;
+        } else {
+            this.isForceOpen = null;
+        }
         entryFrame.options.isHighlightFocalFile = true;
         entryFrame.options.isDefaultOpenFocalFile = isDefaultOpenFocalFile;
         entryFrame.options.isDefaultOpen = true;
