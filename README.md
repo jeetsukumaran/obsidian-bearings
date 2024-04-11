@@ -186,10 +186,11 @@ The navigational views can be embedded into a note using the code block identifi
 If you have an automated note creation system or note templates, something like this will embed a dynamic navigator on every page.
 
 
+~~~
 > [!info]- Bearings
 >
-> ~~~
+>
 > ```bearings
 > ```
-> ~~~
+~~~
 
