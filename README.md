@@ -176,12 +176,20 @@ All inlinks/backlinks to this note.
 
 The navigational views can be embedded into a note using the code block identifier "`bearings`"
 
+~~~
+```bearings
 ```
-\`\`\`bearings
-\`\`\`
-```
+~~~
 
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/09348857-25d7-41c8-b564-56ba0fbf25f8)
 
+If you have an automated note creation system or note templates, something like this will embed a dynamic navigator on every page.
 
+
+> [!info]- Bearings
+>
+> ~~~
+> ```bearings
+> ```
+> ~~~
 
