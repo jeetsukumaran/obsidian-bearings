@@ -82,7 +82,7 @@ export default class BearingsPlugin extends Plugin {
                 // );
                 let activeFilePath = app.workspace.getActiveFile()?.path || "";
                 navigationView.render(activeFilePath, {
-                    isShowHeader: false,
+                    isCodeBlock: true,
                     isForce: true,
                 });
                 this.activeNavigators.push(navigationView)
@@ -92,7 +92,7 @@ export default class BearingsPlugin extends Plugin {
             name: 'Refresh navigation code blocks',
             callback: () => {
                 this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh({
-                    isShowHeader: false,
+                    isCodeBlock: true,
                     isForce: true,
                 }));
             }

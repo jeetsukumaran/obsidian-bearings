@@ -229,12 +229,14 @@ export class NavigationView extends NavigationBase {
 
     viewContainer: HTMLElement;
     isPinned: boolean = false;
+    isClosed: boolean = true;
     isBypassFileChangeCheck: boolean = false;
+    toggleOptionState: { [key: string]: boolean } = {};
 
     async refresh(
         options: { [key: string]: boolean } = {},
     ) {
-        this.render(this._context._focalFilePath, {
+        await this.render(this._context._focalFilePath, {
             ... options,
             isForced: true,
         });
@@ -243,6 +245,43 @@ export class NavigationView extends NavigationBase {
 
     get isFixed(): boolean {
         return false;
+    }
+
+    createToggleButton(
+        key: string,
+        controlRow: HTMLElement,
+        trueIcon: string,
+        falseIcon: string,
+        trueToolTip: string,
+        falseToolTip: string,
+        callbackAction: (value: boolean) => void,
+        initialValue: boolean,
+    ) {
+        let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
+        let button = new ButtonComponent(
+            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+        );
+        button.setClass("bearings-control-button");
+        this.toggleOptionState[key] = initialValue;
+        const setToggle = () => {
+            if (this.toggleOptionState) {
+                button.setIcon(trueIcon);
+                button.setTooltip(trueToolTip);
+                // button.classList.add("bearings-toggle-is-true");
+                // button.removeClass("bearings-toggle-is-false");
+            } else {
+                button.setIcon(falseIcon);
+                button.setTooltip(falseToolTip);
+                // button.removeClass("bearings-toggle-is-true");
+                // button.addClass("bearings-toggle-is-false");
+            }
+        };
+        setToggle();
+        button.onClick( () => {
+            this.toggleOptionState[key] = !this.toggleOptionState[key];
+            setToggle();
+            callbackAction(this.toggleOptionState[key]);
+        });
     }
 
     async render(
@@ -268,59 +307,99 @@ export class NavigationView extends NavigationBase {
             cls: ["bearings-container"]
         });
 
-        if (options.isShowHeader ?? true) {
+        let viewHeaderContainer = this.viewContainer.createEl("div", {
+            cls: ["bearings-container-header"]
+        });
+        let headerLeft = viewHeaderContainer.createEl("div", {
+            cls: ["bearings-container-header-left"],
+        });
 
-            let viewHeaderContainer = this.viewContainer.createEl("div", {
-                cls: ["bearings-container-header"]
-            });
-            let headerLeft = viewHeaderContainer.createEl("div", {
-                cls: ["bearings-container-header-left"],
-            });
+        // Controls
+        // let controlRow = headerLeft.createEl("div", {cls: [options.isCodeBlock ? "bearings-control-row" : "bearings-control-column"]});
+        let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-row"]});
 
-            // Controls
-            let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-column"]});
+        // Refresh button
+        let refreshButton = new ButtonComponent(
+            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+        );
+        refreshButton.setClass("bearings-control-button");
+        refreshButton.setIcon("rotate-ccw");
+        refreshButton.setTooltip("Refresh the view");
+        const refreshAction = () => {
+            this.refresh(options);
+        };
+        refreshButton.onClick( () => refreshAction() );
 
-            // Refresh button
-            let refreshButton = new ButtonComponent(
-                controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+        if (!options.isCodeBlock) {
+            this.createToggleButton(
+                "isPinned",
+                controlRow,
+                "pin-off",
+                "pin",
+                "Unpin the focal note",
+                "Pin the focal note",
+                (value: boolean) => {
+                    this.isPinned = value;
+                },
+                false,
             );
-            refreshButton.setClass("bearings-control-button");
-            refreshButton.setIcon("rotate-ccw");
-            refreshButton.setTooltip("Refresh the view");
-            const refreshAction = () => {
-                this.refresh();
-            };
-            refreshButton.onClick( () => refreshAction() );
 
+            // // Div mocked as button
+            // let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
+            // let pinnedLabelContainer = controlCell.createEl("div", {cls: ["bearings-control-div-input-container"]})
+            // let pinnedLabel = pinnedLabelContainer.createEl("div", {cls: ["bearings-control-div-input-control", "bearings-control-div-input-toggle"]});
+            // const pinnedAction = (value: boolean) => {
+            //     this.isPinned = value;
+            //     if (this.isPinned) {
+            //         // pinnedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin"><line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>`;
+            //         setIcon(pinnedLabel, "pin");
+            //         pinnedLabel.addClass("bearings-toggle-is-true");
+            //         pinnedLabel.removeClass("bearings-toggle-is-false");
+            //     } else {
+            //         // pinnedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off"><line x1="2" x2="22" y1="2" y2="22"/><line x1="12" x2="12" y1="17" y2="22"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/></svg>`;
+            //         setIcon(pinnedLabel, "pin-off");
+            //         pinnedLabel.addClass("bearings-toggle-is-false");
+            //         pinnedLabel.removeClass("bearings-toggle-is-true");
+            //     }
+            // };
+            // // linkContainer.onclick( () => pinnedAction(!this.isPinned) );
+            // pinnedLabel.addEventListener('click', (event) => {
+            //     event.preventDefault();
+            //     this.isPinned = !this.isPinned;
+            //     pinnedAction(this.isPinned);
+            // });
+            // // pinnedToggle.setValue(this.isPinned)
+            // //     .onChange(async (value) => pinnedAction(value))
+            // pinnedAction(this.isPinned);
+        } else {
             // Div mocked as button
-            let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
-            let pinnedLabelContainer = controlCell.createEl("div", {cls: ["bearings-control-div-input-container"]})
-            let pinnedLabel = pinnedLabelContainer.createEl("div", {cls: ["bearings-control-div-input-control", "bearings-control-div-input-toggle"]});
-            const pinnedAction = (value: boolean) => {
-                this.isPinned = value;
-                if (this.isPinned) {
-                    // pinnedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin"><line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>`;
-                    setIcon(pinnedLabel, "pin");
-                    pinnedLabel.addClass("bearings-toggle-is-true");
-                    pinnedLabel.removeClass("bearings-toggle-is-false");
-                } else {
-                    // pinnedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off"><line x1="2" x2="22" y1="2" y2="22"/><line x1="12" x2="12" y1="17" y2="22"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/></svg>`;
-                    setIcon(pinnedLabel, "pin-off");
-                    pinnedLabel.addClass("bearings-toggle-is-false");
-                    pinnedLabel.removeClass("bearings-toggle-is-true");
-                }
-            };
-            // linkContainer.onclick( () => pinnedAction(!this.isPinned) );
-            pinnedLabel.addEventListener('click', (event) => {
-                event.preventDefault();
-                this.isPinned = !this.isPinned;
-                pinnedAction(this.isPinned);
-            });
-            // pinnedToggle.setValue(this.isPinned)
-            //     .onChange(async (value) => pinnedAction(value))
-            pinnedAction(this.isPinned);
-
-
+            // let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
+            // let closedLabelContainer = controlCell.createEl("div", {cls: ["bearings-control-div-input-container"]})
+            // let closedLabel = closedLabelContainer.createEl("div", {cls: ["bearings-control-div-input-control", "bearings-control-div-input-toggle"]});
+            // const closedAction = (value: boolean) => {
+            //     this.isClosed = value;
+            //     if (this.isClosed) {
+            //         // closedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin"><line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>`;
+            //         setIcon(closedLabel, "maximize-2");
+            //         closedLabel.addClass("bearings-toggle-is-true");
+            //         closedLabel.removeClass("bearings-toggle-is-false");
+            //     } else {
+            //         // closedLabel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off"><line x1="2" x2="22" y1="2" y2="22"/><line x1="12" x2="12" y1="17" y2="22"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/></svg>`;
+            //         setIcon(closedLabel, "minimize-2");
+            //         closedLabel.addClass("bearings-toggle-is-false");
+            //         closedLabel.removeClass("bearings-toggle-is-true");
+            //     }
+            // };
+            // linkContainer.onclick( () => closedAction(!this.isClosed) );
+            // closedLabel.addEventListener('click', (event) => {
+            //     event.preventDefault();
+            //     this.isClosed = !this.isClosed;
+            //     closedAction(this.isClosed);
+            // });
+            // closedToggle.setValue(this.isClosed)
+            //     .onChange(async (value) => closedAction(value))
+            // closedAction(this.isClosed);
+        }
             let headerLabel = headerLeft.createEl("div", {
                 cls: ["bearings-container-header-label"],
                 text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
@@ -329,7 +408,6 @@ export class NavigationView extends NavigationBase {
             let headerRight = viewHeaderContainer.createEl("div", {
                 cls: ["bearings-container-header-right"],
             });
-        }
 
         // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Contexts"});
         // this.viewContainer.createEl("div", {cls: "bearings-viewframe-section-title", text: "Centers"});

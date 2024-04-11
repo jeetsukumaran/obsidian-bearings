@@ -43,7 +43,10 @@
     flex-direction: column;
     margin-bottom: 0.8rem;
     border-radius: 0.4rem;
-    background: var(--background-secondary-alt);
+    /* background: var(--background-secondary-alt); */
+    background-color: var(--bearings-counter-shade-01);
+    /* background-color: var(--background-primary-alt); */
+    /* background-color: var(--background-secondary); */
 }
 
 .bearings-container-header-left {
@@ -59,8 +62,6 @@
 .bearings-container-header-label {
     margin-left: 0.5rem;
     padding: 0.5rem;
-    /* background-color: var(--bearings-counter-shade-01); */
-    background-color: var(--background-secondary);
     border: solid 0.5px;
     border-radius: 0.4rem;
     width: 100%;
@@ -167,15 +168,14 @@ input:disabled {
 .bearings-control-div-input-control {
     padding: 0;
     margin: 0;
-    padding-top: 4px;
+    border: solid 1px;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
 }
 
 .bearings-toggle-is-false {
 }
 .bearings-toggle-is-true {
-    border: solid 1px black;
-    border-radius: 0.4rem;
-    background: var(--background-secondary);
 }
 
 .bearings-control-input-number-container {
