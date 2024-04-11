@@ -50,7 +50,7 @@ export default class BearingsPlugin extends Plugin {
 
         /* Code block */
         this.registerMarkdownCodeBlockProcessor(
-            "bearings-view",
+            "bearings",
             (source, el, ctx) => {
                 // source = source.trim();
                 // let trimmedSource = source.trim()
