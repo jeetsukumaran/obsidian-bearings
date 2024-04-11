@@ -80,7 +80,7 @@ export default class BearingsPlugin extends Plugin {
                 //         display: NAVIGATOR_VIEW_TYPE,
                 //     }
                 // );
-                let activeFilePath = app.workspace.getActiveFile()?.path || "";
+                let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
                 navigationView.render(activeFilePath, {
                     isCodeBlock: true,
                     isForce: true,
