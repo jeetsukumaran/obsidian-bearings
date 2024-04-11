@@ -33,15 +33,66 @@ import {
 import {
     VIEW_TYPE as NAVIGATOR_VIEW_TYPE,
     BearingsView,
+    NavigationContext,
+    NavigationView,
 } from "./view";
 
 export default class BearingsPlugin extends Plugin {
     configuration: BearingsConfiguration;
     dataService: DataService;
+    activeNavigators: NavigationView[] = [];
 
     async onload() {
+
+        /* Setup */
         await this.loadSettings();
         this.dataService = new DataService();
+
+        /* Code block */
+        this.registerMarkdownCodeBlockProcessor(
+            "bearings",
+            (source, el, ctx) => {
+                // source = source.trim();
+                // let trimmedSource = source.trim()
+                // if (!trimmedSource || trimmedSource === ":self:") {
+                //     source = inventorizeSelfSpec;
+                // } else if (trimmedSource === ":children:") {
+                //     source = inventorizeChildrenSpec;
+                // }
+                let root = el;
+                this.dataService.refresh()
+                let navigationContext = new NavigationContext(
+                    this.app,
+                    this.configuration,
+                    this.dataService,
+                    "",
+                    // true,
+                );
+                let navigationView = new NavigationView(
+                    navigationContext,
+                    root,
+                );
+                // let hoverSourceId = NAVIGATOR_VIEW_TYPE;
+                // this.registerHoverLinkSource(
+                //     hoverSourceId,
+                //     {
+                //         defaultMod: false, /* require ctrl key trigger */
+                //         display: NAVIGATOR_VIEW_TYPE,
+                //     }
+                // );
+                this.activeNavigators.push(navigationView)
+                let activeFilePath = app.workspace.getActiveFile()?.path || "";
+                navigationView.render(activeFilePath);
+            });
+        this.addCommand({
+            id: 'refresh-azimuths-catalog',
+            name: 'Refresh catalog',
+            callback: () => {
+                this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh());
+            }
+        });
+
+        /* Sidebar view */
         this.registerView(
             NAVIGATOR_VIEW_TYPE,
             (leaf) => new BearingsView(
@@ -61,6 +112,8 @@ export default class BearingsPlugin extends Plugin {
                 this.activateView();
             }
         });
+
+        /* File menu */
         this.registerEvent(
             this.app.workspace.on("file-menu", (menu, file) => {
                 buildLinkCopyMenu(menu, file.path)
@@ -73,12 +126,15 @@ export default class BearingsPlugin extends Plugin {
                 }
             })
         );
+
+        /* Settings */
 		this.addSettingTab(new BearingsSettingsTab(
             this.app,
             this,
             this.configuration,
             () => this.saveSettings(),
 		));
+
     }
 
     onunload() {
