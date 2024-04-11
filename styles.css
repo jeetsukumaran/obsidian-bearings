@@ -54,7 +54,8 @@
     font-size: var(--bearings-font-base-size);
     display: flex;
     flex-direction: row;
-    margin-bottom: 0.8rem;
+    justify-content: flex-start;
+    align-items: center;
     border-radius: 0.4rem;
     /* background: var(--background-secondary-alt); */
     background-color: var(--bearings-counter-shade-01);
@@ -73,9 +74,9 @@
 }
 
 .bearings-main-container-header-label {
-    margin-left: 0.5rem;
-    padding: 0.5rem;
-    border: solid 0.5px;
+    /* margin-left: 0.5rem; */
+    /* padding: 0.5rem; */
+    /* border: solid 0.5px; */
     border-radius: 0.4rem;
     width: 100%;
 }

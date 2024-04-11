@@ -317,20 +317,7 @@ export class NavigationView extends NavigationBase {
 
         // Controls
         // let controlRow = headerLeft.createEl("div", {cls: [options.isCodeBlock ? "bearings-control-row" : "bearings-control-column"]});
-        let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-row"]});
-
-        // Refresh button
-        let refreshButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
-        );
-        refreshButton.setClass("bearings-control-button");
-        refreshButton.setIcon("rotate-ccw");
-        refreshButton.setTooltip("Refresh the view");
-        const refreshAction = () => {
-            this.refresh(options);
-        };
-        refreshButton.onClick( () => refreshAction() );
-
+        let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-column"]});
         if (!options.isCodeBlock) {
             this.createToggleButton(
                 "isPinned",
@@ -364,14 +351,41 @@ export class NavigationView extends NavigationBase {
                 true,
             );
         }
-            let headerLabel = headerLeft.createEl("div", {
-                cls: ["bearings-main-container-header-label"],
-                text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
-            });
 
-            let headerRight = viewHeaderContainer.createEl("div", {
-                cls: ["bearings-main-container-header-right"],
-            });
+        // Refresh button
+        let refreshButton = new ButtonComponent(
+            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+        );
+        refreshButton.setClass("bearings-control-button");
+        refreshButton.setIcon("rotate-ccw");
+        refreshButton.setTooltip("Refresh the view");
+        const refreshAction = () => {
+            this.refresh(options);
+        };
+        refreshButton.onClick( () => refreshAction() );
+
+        let headerRight = viewHeaderContainer.createEl("div", {
+            cls: ["bearings-main-container-header-right"],
+        });
+        let headerLabel = headerRight.createEl("div", {
+            cls: ["bearings-main-container-header-label"],
+            text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
+        });
+
+
+        // // Refresh button
+        // let controlRowRight = headerRight.createEl("div", {cls: ["bearings-control-row"]});
+        // let refreshButton = new ButtonComponent(
+        //     controlRowRight.createEl("div", {cls: [ "bearings-control-cell", ]})
+        // );
+        // refreshButton.setClass("bearings-control-button");
+        // refreshButton.setIcon("rotate-ccw");
+        // refreshButton.setTooltip("Refresh the view");
+        // const refreshAction = () => {
+        //     this.refresh(options);
+        // };
+        // refreshButton.onClick( () => refreshAction() );
+
 
         let viewContainerBody = this.viewContainer.createEl("div", {cls: "bearings-main-container-body"})
         let ascenderViewFrame = new SuperordinateRelationshipsAscendersViewFrame(
