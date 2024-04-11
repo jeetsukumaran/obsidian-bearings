@@ -53,6 +53,8 @@ The following shows a "working" note from my own vault (and rather more conserva
 
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/727692a1-f3d8-416d-9fb6-e27405d52e59)
 
+> The icononology and colors are currently fixed.
+> Future plans include customization.
 
 ## Installation
 
