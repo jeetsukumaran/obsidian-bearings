@@ -544,6 +544,7 @@ abstract class NavigationViewFrame extends NavigationBase {
     viewPort: HTMLElement;
     title: string;
     _discoveryDepthLimit: number | null;
+    _autoexpansionDepthLimit: number | null;
     isDefaultOpen: boolean = false;
     isForceOpen: boolean | null = null;
 
@@ -580,9 +581,22 @@ abstract class NavigationViewFrame extends NavigationBase {
         return this._discoveryDepthLimit;
     }
 
+    get autoexpansionDepthLimit(): number | null {
+        if (this._autoexpansionDepthLimit === undefined) {
+            this._autoexpansionDepthLimit = this.getDefaultDiscoveryDepthLimit();
+        }
+        return this._autoexpansionDepthLimit;
+    }
+
+
     getDefaultDiscoveryDepthLimit(): number | null {
         return 2;
     }
+
+    getDefaultAutoexpansionDepthLimit(): number | null {
+        return 2;
+    }
+
 
     setLocalOptions(
         entryFrame: NavigationEntryFrame,
@@ -633,16 +647,24 @@ abstract class NavigationViewFrame extends NavigationBase {
             },
             "Depth",
         );
-        // let discoveryDepthLimitInput = getControlCell().createEl("input", {
-        //     type: "number",
-        //     cls: "bearings-control-number"
-        // });
-        // let minRange = "0";
-        // let maxRange = "20";
-        // let initialValue = "20";
-        // discoveryDepthLimitInput.setAttribute("min", minRange);
-        // discoveryDepthLimitInput.setAttribute("max", maxRange);
-        // discoveryDepthLimitInput.setAttribute("step", "1");
+
+        // let autoexpansionDepthLimitInput = new InputNumberComponent(
+        //     getControlCell(),
+        //     -1,
+        //     10,
+        //     this.autoexpansionDepthLimit === null ? -1 : this.autoexpansionDepthLimit,
+        //     (value: number | null) => {
+        //         if (value === null || value < 0) {
+        //             this._autoexpansionDepthLimit = null;
+        //         } else {
+        //             this._autoexpansionDepthLimit = value;
+        //         }
+        //         // this.render();
+        //         nodeExpandAllAction();
+        //     },
+        //     "Depth",
+        // );
+
 
         let nodeCollapseAllButton = new ButtonComponent(getControlCell());
         nodeCollapseAllButton.setClass("bearings-control-button");
@@ -686,6 +708,7 @@ abstract class NavigationViewFrame extends NavigationBase {
                 viewEntry.render(
                     entryData,
                     results.parentFileNode || undefined,
+                    this.autoexpansionDepthLimit,
                 );
             });
     }
@@ -951,7 +974,7 @@ export class NavigationEntryFrame extends NavigationBase {
     async render(
         entryData: FileNavigationTreeNode,
         parentFileNode: FileNode | null = null,
-        defaultOpenDepthLimit: number | null = 2,
+        defaultOpenDepthLimit: number | null,
     ) {
         if (this.setupCallbackFn !== undefined) {
             this.setupCallbackFn(this, entryData);
