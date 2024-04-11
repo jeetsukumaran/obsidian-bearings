@@ -472,18 +472,18 @@ abstract class NavigationViewFrame extends NavigationBase {
 
     get autoexpansionDepthLimit(): number | null {
         if (this._autoexpansionDepthLimit === undefined) {
-            this._autoexpansionDepthLimit = this.getDefaultDiscoveryDepthLimit();
+            this._autoexpansionDepthLimit = this.getDefaultAutoexpansionDepthLimit();
         }
         return this._autoexpansionDepthLimit;
     }
 
 
     getDefaultDiscoveryDepthLimit(): number | null {
-        return 2;
+        return this._context.configuration.options.discoveryDepthLimitPrimary;
     }
 
     getDefaultAutoexpansionDepthLimit(): number | null {
-        return 2;
+        return this._context.configuration.options.autoexpansionDepthLimit;
     }
 
 
@@ -892,8 +892,9 @@ export class NavigationEntryFrame extends NavigationBase {
                 this.isOpen = this.isDefaultOpenFocalFile;
             } else if (this.options.isIgnoreDefaultOpenLimit) {
                 this.isOpen = this.isDefaultOpen;
+                subtreeDefaultOpenDepthLimit = defaultOpenDepthLimit;
             } else {
-                this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 1;
+                this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 0;
             }
         }
 
