@@ -104,16 +104,32 @@ export default class BearingsPlugin extends Plugin {
                 this.dataService,
             )
         );
+
         this.addRibbonIcon("radar", "Open the navigator", () => {
             this.activateView();
         });
+
         this.addCommand({
             id: 'open-bearings-navigator',
-            name: 'Navigate your vault using multihierarchical semantic relationship links',
+            name: 'Open sidebar semantic navigation view',
             callback: () => {
                 this.activateView();
             }
         });
+
+        this.addCommand({
+            id: 'toggle-bearings-navigator',
+            name: 'Toggle sidebar semantic navigation views',
+            callback: () => {
+                if (this.app.workspace.rightSplit.collapsed) {
+                    // this.app.workspace.rightSplit.expand();
+                    this.activateView();
+                } else {
+                    this.app.workspace.rightSplit.collapse();
+                }
+            }
+        });
+
 
         /* File menu */
         this.registerEvent(
