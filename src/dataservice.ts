@@ -7,8 +7,7 @@ import {
    RelationshipDefinition,
 } from "./settings";
 
-import * as _path from "path"
-let getFileBaseName = ( (value: string) => _path.parse(value).base )
+let getFileBaseName = (value: string) => value.split('\\')?.pop()?.split('/').pop() || value;
 
 // ** Dataview **
 // Available at `app.plugins.plugins.dataview.api` or as global `DataviewAPI`)

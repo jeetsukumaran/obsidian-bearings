@@ -22,8 +22,6 @@ import {
     normalizePath,
 } from "obsidian";
 
-import * as _path from "path";
-
 
 import {
     DataService,

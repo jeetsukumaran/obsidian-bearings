@@ -10,8 +10,6 @@ import {
 	Setting
 } from 'obsidian';
 
-import * as _path from "path";
-
 export type RelationshipDefinition = {
     designatedPropertyName?: string;
     invertedRelationshipPropertyName?: string;
