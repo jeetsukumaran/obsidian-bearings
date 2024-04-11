@@ -880,15 +880,18 @@ export class NavigationEntryFrame extends NavigationBase {
                 entryData,
             );
         }
+        let subtreeDefaultOpenDepthLimit: number | null = defaultOpenDepthLimit === null ? null : defaultOpenDepthLimit - 1;
         if (this.parentViewFrame.isForceOpen === true) {
             this.isOpen = true;
+            // do not count
+            subtreeDefaultOpenDepthLimit = subtreeDefaultOpenDepthLimit === null ? null : subtreeDefaultOpenDepthLimit + 1;
         } else if (this.parentViewFrame.isForceOpen === false) {
             this.isOpen = false;
         } else {
-            if (defaultOpenDepthLimit === null || defaultOpenDepthLimit > 0) {
-                this.isOpen = (this.isFocalFile(entryData.value.filePath) ? this.isDefaultOpenFocalFile : this.isDefaultOpen );
+            if (this.isFocalFile(entryData.value.filePath)) {
+                this.isOpen = this.isDefaultOpenFocalFile;
             } else {
-                this.isOpen = false;
+                this.isOpen = defaultOpenDepthLimit === null ? true : defaultOpenDepthLimit > 1;
             }
         }
         // let isNodeOpen: boolean =  (this._context.isOpenFocalFile || !this.isFocalFile(entryData.value.filePath));
@@ -1052,7 +1055,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 subview.render(
                     childNode,
                     entryData.value,
-                    defaultOpenDepthLimit === null ? null : defaultOpenDepthLimit - 1,
+                    subtreeDefaultOpenDepthLimit,
                 );
         });
 
