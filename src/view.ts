@@ -588,6 +588,7 @@ abstract class NavigationViewFrame extends NavigationBase {
                     this._context,
                     this.viewPort,
                     this,
+                    this.isFocalFile(entryData.value.filePath),
                 );
                 viewEntry.setupCallbackFn = (
                                              entryFrame: NavigationEntryFrame,
@@ -796,17 +797,20 @@ export class NavigationEntryFrame extends NavigationBase {
     options: { [key: string]: boolean } = {};
     setupCallbackFn: (entryFrame: NavigationEntryFrame, entryData: FileNavigationTreeNode) => void;
     parentViewFrame: NavigationViewFrame;
+    isPostFocalFile: boolean;
 
     constructor(
         navigationContext: NavigationContext,
         root: HTMLElement,
         parentViewFrame: NavigationViewFrame,
+        isPostFocalFile: boolean,
     ) {
         super(
             navigationContext,
             root,
         );
         this.parentViewFrame = parentViewFrame;
+        this.isPostFocalFile = isPostFocalFile;
     }
 
     // composeOpenIndicatorInnerHTML(): string {
@@ -867,15 +871,16 @@ export class NavigationEntryFrame extends NavigationBase {
         defaultOpenDepthLimit: number | null,
     ) {
         if (this.setupCallbackFn !== undefined) {
-            this.setupCallbackFn(this, entryData);
+            this.setupCallbackFn(
+                this,
+                entryData,
+            );
         }
         if (this.parentViewFrame.isForceOpen === true) {
             this.isOpen = true;
         } else if (this.parentViewFrame.isForceOpen === false) {
             this.isOpen = false;
         } else {
-            // this.isOpen = this.isOpen ??
-            //     (this.isFocalFile(entryData.value.filePath) ? this.isDefaultOpenFocalFile : this.isDefaultOpen );
             if (defaultOpenDepthLimit === null || defaultOpenDepthLimit > 0) {
                 this.isOpen = (this.isFocalFile(entryData.value.filePath) ? this.isDefaultOpenFocalFile : this.isDefaultOpen );
             } else {
@@ -1037,6 +1042,7 @@ export class NavigationEntryFrame extends NavigationBase {
                     this._context,
                     this.elements.entrySubcontent.createEl("div"),
                     this.parentViewFrame,
+                    this.isFocalFile(entryData.value.filePath),
                 );
                 subview.setupCallbackFn = this.setupCallbackFn;
                 subview.render(
