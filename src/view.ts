@@ -304,7 +304,10 @@ export class NavigationView extends NavigationBase {
             return;
         }
         this.viewContainer = this.root.createEl("div", {
-            cls: ["bearings-main-container"]
+            cls: [
+                "bearings-main-container",
+                options.isCodeBlock ? "bearings-container-codeblock" : "bearings-container-sidebar",
+            ]
         });
         this.viewContainer.classList.add("bearings-main-container-open");
 
@@ -996,10 +999,10 @@ export class NavigationEntryFrame extends NavigationBase {
             }
             if (relationshipPolarityGlyph) {
                 this.elements.relationshipsContainer = this.elements.entryGutterLeftHead.createEl("div", {
-                    cls: ["bearings-entry-node-relationships-container"],
+                    cls: ["bearings-entry-node-connection-container"],
                 });
                 let relEl = this.elements.relationshipsContainer.createEl("div", {
-                    cls: ["bearings-entry-node-relationship-cell"],
+                    cls: ["bearings-entry-node-connection-cell"],
                 });
                 relEl.innerText = relationshipPolarityGlyph;
             }

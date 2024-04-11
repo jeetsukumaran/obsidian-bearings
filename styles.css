@@ -4,7 +4,7 @@
 :root {
     --bearings-font-base-size: 0.8rem;
     --bearings-gutter-width: 0.8rem;
-    --bearings-entry-node-toggle-container-size: calc(2 * var(--bearings-font-base-size));
+    --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
 }
 
 .theme-light {
@@ -324,7 +324,10 @@ input:disabled {
 .bearings-entry-gutter-head {
     position: relative;
     width: var(--bearings-gutter-width);
-    height: 1rem;
+    height: var(--bearings-gutter-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .bearings-entry-gutter-tail {
@@ -357,21 +360,7 @@ input:disabled {
 
 /* Node relationship container {{{ */
 
-/* .bearings-entry-node-relationships-container { */
-/*     position: absolute; */
-/*     top: -0.45rem; */
-/*     left: calc(-1 * var(--bearings-font-base-size) + 0.4rem); */
-/*     font-size: 0.7rem; */
-/*     opacity: 0.5; */
-/*     /1* left: -0.90rem; *1/ */
-/*     display: flex; */
-/*     align-items: center; */
-/*     justify-content: center; */
-/*     padding: 0; */
-/*     /1* margin: 0; *1/ */
-/* } */
-
-.bearings-entry-node-relationships-container {
+.bearings-entry-node-connection-container {
     position: absolute;
     font-size: calc(var(--bearings-font-base-size) - 0.2rem);
     left: calc( (-1 * var(--bearings-font-base-size)) - 0rem);
@@ -379,9 +368,6 @@ input:disabled {
     width: var(--bearings-gutter-width);
     height: var(--bearings-gutter-width);
     /* left: -0.90rem; */
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
     padding: 0;
     opacity: 0.7;
     /* margin: 0; */
@@ -401,9 +387,7 @@ input:disabled {
     overflow: clip;
 }
 
-.bearings-entry-node-relationship-cell {
-    position: relative;
-    top: -0.035rem;
+.bearings-entry-node-connection-cell {
 }
 
 /* }}} */
@@ -412,9 +396,8 @@ input:disabled {
 
 .bearings-entry-node-toggle-container {
     position: absolute;
-    top: 0;
-    /* left: calc(-1 * var(--bearings-font-base-size)); */
-    left: -1.05rem;
+    top: 0.46rem;
+    left: -0.65rem;
     width: var(--bearings-entry-node-toggle-container-size);
     height: var(--bearings-entry-node-toggle-container-size);
     display: flex;
@@ -422,6 +405,11 @@ input:disabled {
     justify-content: center;
     padding: 0;
     margin: 0;
+}
+
+.bearings-main-container.bearings-container-codeblock .bearings-entry-node-toggle-container {
+    top: 0.38rem;
+    left: -0.65rem;
 }
 
 /* .bearings-entry-node-toggle-container { */
