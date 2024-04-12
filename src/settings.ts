@@ -120,11 +120,11 @@ export class BearingsSettingsTab extends PluginSettingTab {
     display(): void {
         const { containerEl } = this;
         containerEl.empty();
-        containerEl.createEl('h2', { text: 'Bearings Settings' });
+        containerEl.createEl('h2', { text: 'Settings' });
 
         // Options Section
         const optionsDiv = containerEl.createDiv();
-        optionsDiv.createEl('h3', { text: `Global options` });
+        new Setting(optionsDiv).setName("Options").setHeading();
         this.createOptionsSetting(optionsDiv, this.pluginConfiguration.options)
 
         containerEl.createDiv().createEl('h3', { text: `Relationship definitions` });
