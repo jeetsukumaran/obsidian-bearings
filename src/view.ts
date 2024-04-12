@@ -217,7 +217,8 @@ export class NavigationBase extends Component implements MarkdownRenderChild {
         element: HTMLElement,
         sourcePath: string = "",
     ) {
-        MarkdownRenderer.renderMarkdown(
+        MarkdownRenderer.render(
+            this._context.app,
             text,
             element,
             sourcePath,
