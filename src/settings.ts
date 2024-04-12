@@ -135,6 +135,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
         });
 
         // Add New Relationship Definition Button
+        new Setting(containerEl).setName("Manage relationships").setHeading();
         const addDefinitionButton = containerEl.createEl('button', { text: 'New relationship definition' });
         addDefinitionButton.onclick = () => {
             new AddRelationshipDefinitionModal(this.app, (definitionName, definition) => {
