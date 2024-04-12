@@ -110,6 +110,7 @@ export type RelationshipLinkedPathDataType = {
     isInlink: boolean,
 };
 export type FilePathNodeMapType = Map<FilePathType, FileNode>;
+export type PathAliasesMapType = { [filePath: string]: string[] };
 
 
 export class DataService {
@@ -289,7 +290,7 @@ export class FileNode {
 
     public readDesignatedPropertyPaths(
         propertyName: string,
-        pathAliases?: { [filePath: string]: string},
+        pathAliases?: PathAliasesMapType,
     ): string[] {
         const propertyValue = this.fileData[propertyName] || "";
         if (!propertyValue) {
@@ -301,8 +302,11 @@ export class FileNode {
         return propertyValue
             .filter((item: any) => item?.path)
             .map( (item: any) => {
-                if (pathAliases) {
-                    pathAliases[item.path] = item.display || "";
+                if (pathAliases && item.display) {
+                    if (!pathAliases[item.path]) {
+                        pathAliases[item.path] = [];
+                    }
+                    pathAliases[item.path].push(item.display)
                 }
                 return item.path
             })
@@ -365,12 +369,12 @@ export class FileNode {
         designatedRelationshipKey: string,
         inlinkedRelationshipKey: string,
         filePathNodeMap: FilePathNodeMapType,
+        pathAliases: PathAliasesMapType,
         isInvertLinkPolarity: boolean = false,
     ): FilePathType[] {
 
         let linkedNotesystemPaths: FilePathType[] = [];
         if (designatedRelationshipKey) {
-            let pathAliases: { [filePath: string]: string } = {};
             let outlinkedPaths: string[] = this.readDesignatedPropertyPaths(
                 designatedRelationshipKey,
                 pathAliases,
@@ -420,10 +424,12 @@ export class FileNode {
             relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
                 let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
                 let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
+                let pathAliases: PathAliasesMapType = {};
                 let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                     designatedRelationshipKey,
                     invertedRelationshipKey,
                     filePathNodeMap,
+                    pathAliases,
                     false,
                 );
                 linkedNotesystemPaths.forEach( (propertyLinkedPath: string) => {
@@ -432,7 +438,7 @@ export class FileNode {
                         let connectedSuperordinateChains: SuperordinateChains;
                         let linkedNoteSystemNode = filePathNodeMap.get(propertyLinkedPath);
                         if (linkedNoteSystemNode === undefined) {
-                            linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                            linkedNoteSystemNode = this.createNew(propertyLinkedPath, pathAliases[propertyLinkedPath] ? pathAliases[propertyLinkedPath][0] : undefined);
                             filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
                             connectedSuperordinateChains = linkedNoteSystemNode.superordinateChains(
                                 label,
@@ -487,10 +493,12 @@ export class FileNode {
             // but from the focal note's perspective, the relationship is subordinate
             let invertedInvertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
             let invertedDesignatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
+            let pathAliases: PathAliasesMapType = {};
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 invertedInvertedRelationshipKey,
                 invertedDesignatedRelationshipKey,
                 filePathNodeMap,
+                pathAliases,
                 true,
             );
             let subordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
@@ -513,7 +521,8 @@ export class FileNode {
                     let linkedNoteSystemNode = filePathNodeMap.get(propertyLinkedPath);
                     if (linkedNoteSystemNode === undefined) {
                         // no: build new subordinate
-                        linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                        // linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                        linkedNoteSystemNode = this.createNew(propertyLinkedPath, pathAliases[propertyLinkedPath] ? pathAliases[propertyLinkedPath][0] : undefined);
                     } else {
                         // yes: we do not wanto to explore further down this subtree's children;
                         // - We *could*, recursive loops are trapped, but this seems a bit too much
@@ -553,10 +562,12 @@ export class FileNode {
             // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
             let inlinkedRelationshipKey: string = designatedRelationshipKey;
             // let invertedRelationshipKey: string = "";
+            let pathAliases: PathAliasesMapType = {};
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 designatedRelationshipKey,
                 inlinkedRelationshipKey,
                 filePathNodeMap,
+                pathAliases,
                 true,
             );
             linkedNotesystemPaths.forEach( (propertyLinkedPath: string) => {
@@ -587,7 +598,8 @@ export class FileNode {
                     let linkedNoteSystemNode = filePathNodeMap.get(propertyLinkedPath);
                     if (linkedNoteSystemNode === undefined) {
                         // no: build new subordinate
-                        linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                        // linkedNoteSystemNode = this.createNew(propertyLinkedPath);
+                        linkedNoteSystemNode = this.createNew(propertyLinkedPath, pathAliases[propertyLinkedPath] ? pathAliases[propertyLinkedPath][0] : undefined);
                     } else {
                         recurseLimitDepth = -1;
                     }
