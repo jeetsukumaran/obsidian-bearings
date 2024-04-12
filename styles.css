@@ -395,6 +395,7 @@ input:disabled {
 /* Node toggle container {{{ */
 
 .bearings-entry-node-toggle-container {
+    cursor: pointer;
     position: absolute;
     top: 0.46rem;
     left: -0.65rem;

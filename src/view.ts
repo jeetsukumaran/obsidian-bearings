@@ -985,6 +985,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 this.elements.entryNodeToggleContainer.setText(terminal);
             }
         };
+
         this.elements.entryNodeToggleContainer.addEventListener('click', () => {
             this.isOpen = !this.isOpen;
             setIndicator()
