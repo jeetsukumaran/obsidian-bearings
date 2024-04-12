@@ -127,11 +127,11 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(optionsDiv).setName("Options").setHeading();
         this.createOptionsSetting(optionsDiv, this.pluginConfiguration.options)
 
-        containerEl.createDiv().createEl('h3', { text: `Relationship definitions` });
+        // containerEl.createDiv().createEl('h3', { text: `Relationship definitions` });
+        new Setting(containerEl).setName("Relationship definitions").setHeading();
         Object.entries(this.pluginConfiguration.relationshipDefinitions).forEach(([relationshipName, definition]) => {
-            const settingDiv = containerEl.createDiv();
-            settingDiv.createEl('h4', { text: `${relationshipName}` });
-            this.createRelationshipDefinitionSetting(settingDiv, relationshipName, definition);
+            const settingDiv = new Setting(containerEl).setName(relationshipName).setHeading();
+            this.createRelationshipDefinitionSetting(containerEl, relationshipName, definition);
         });
 
         // Add New Relationship Definition Button
