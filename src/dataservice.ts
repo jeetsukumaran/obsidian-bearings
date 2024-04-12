@@ -313,36 +313,6 @@ export class FileNode {
     ): string[] {
         return this.readInlinkedPropertyPathsFromVault(propertyName);
     }
-
-    // readInvertedRelationshipPropertyPathsFromInlinks(
-    //     propertyName: string,
-    // ): string[] {
-    //     // slower than a vault wide search strangely ...
-    //     let invertedRelationshipPropertyPaths: string[] = [];
-    //     this.inlinkedFilePaths().map( (filePath: string) => this.dataService.readFileNodeDataRecords(filePath) )
-    //         .forEach( (fileNodeRecords: FileNodeDataRecords) => {
-    //             const fileNodePropertyValues = fileNodeRecords?.[propertyName];
-    //             if (fileNodePropertyValues && Array.isArray(fileNodePropertyValues)) {
-    //                 fileNodePropertyValues.forEach( (pagePropertyItem: FileNodeDataType) => {
-    //                     if (pagePropertyItem && pagePropertyItem.path === this.filePath) {
-    //                         let subscriberFilePath: string = fileNodeRecords.file?.path
-    //                         if (subscriberFilePath) {
-    //                             // if (!this.pathFilter || !this.pathFilter.excludedPathPatternSet.has(subscriberFilePath)) {
-    //                             // Convention is that link aliases reflect what the target node is to the in-linking node.
-    //                             // We use the display text when linking out, but when linking in it would incorrectly apply to
-    //                             // to the inlinking node
-    //                             // let displayText: string = pagePropertyItem.display
-    //                             let displayText = "";
-    //                             invertedRelationshipPropertyPaths.push( subscriberFilePath )
-    //                             // }
-    //                         }
-    //                     }
-    //                 })
-    //             }
-    //         })
-    //     return invertedRelationshipPropertyPaths
-    // }
-
     readInlinkedPropertyPathsFromVault(
         propertyName: string,
     ): string[] {
@@ -648,38 +618,6 @@ export class FileNode {
         }
     }
 
-    propertyLinks(propertyName: string,): FileNode[] {
-        // const pagePropertyValue = this.page?.[propertyName];
-        const pagePropertyValue = this.fileData[propertyName]
-        if (!pagePropertyValue) {
-            return [];
-        }
-        if (Array.isArray(pagePropertyValue)) {
-            return pagePropertyValue
-                .filter( (value: FileNodeDataType) => value && value.path )
-                .map( (value: FileNodeDataType) => {
-                    if (value.path === this.filePath) {
-                        return this;
-                    } else {
-                        return this.newFileNode(value.path, value.display);
-                    }
-                });
-        } else {
-            return [];
-        }
-    }
-
-    newFileNode(
-        filePath: string,
-        displayText: string | null,
-    ) {
-        return new FileNode(
-            filePath,
-            this.dataService,
-            displayText,
-        )
-    }
-
     inlinkedFilePaths(): string[] {
         const inlinks: Link[] = this.fileData?.file?.inlinks || [];
         return inlinks.map( (link: Link) => link.path );
@@ -693,7 +631,7 @@ export class FileNode {
         const inlinks: Link[] = this.fileData?.file?.inlinks?.array() || [];
         return inlinks
             .filter( (link: Link) => link.path && link.path != this.filePath )
-            .map( (link: Link) => this.newFileNode(link.path, link.display) );
+            .map( (link: Link) => this.createNew(link.path, link.display) );
     }
 
     get indexEntryText(): string {
