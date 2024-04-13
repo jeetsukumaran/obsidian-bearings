@@ -34,6 +34,11 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         discoveryDepthLimitSecondary: 2,     // number | null
     },
     relationshipDefinitions: {
+        "Up": {
+            designatedPropertyName: "entry-up",
+            invertedRelationshipPropertyName: "entry-down",
+            categories: ["superordinate"],
+        },
         "Parent": {
             designatedPropertyName: "entry-parents",
             invertedRelationshipPropertyName: "entry-children",
