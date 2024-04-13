@@ -108,7 +108,13 @@ export class BearingsView extends ItemView {
     }
 
     computeActiveFilePath(): string {
-        return this.plugin.app.workspace.getActiveFile()?.path || "";
+        let activeFilePath = this.plugin.app.workspace.getActiveFile()?.path || "";
+        if (!activeFilePath || activeFilePath === "") {
+            if (this.configuration.options.inactiveFileFocalNote) {
+                activeFilePath = this.configuration.options.inactiveFileFocalNote;
+            }
+        }
+        return activeFilePath;
     }
 
     getViewType() {
