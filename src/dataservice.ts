@@ -98,7 +98,12 @@ export type FilePathType = string;
 
 // export class FileNavigationTreeNode extends TreeNode<FileNode> {
 
+//     sort_key(other: FileNavigationTreeNode): number {
+//         return this.value.sort_key(other.value);
+//     }
+
 // }
+
 export type FileNavigationTreeNode = TreeNode<FileNode>;
 
 export type SuperordinateChains = {
@@ -253,6 +258,11 @@ export class FileNode {
         this.fileBaseName = getFileBaseName(filePath);
         this.fileData = this.dataService.readFileNodeDataRecords(filePath) || {};
         this.displayText = displayText;
+    }
+
+    public createNewFileNavigationTreeNode(): FileNavigationTreeNode {
+        // return new FileNavigationTreeNode(this);
+        return new TreeNode<FileNode>(this);
     }
 
     protected _memoize(
@@ -465,7 +475,8 @@ export class FileNode {
             });
             if (results.rootNodes.length === 0 || results.leafNodes.length === 0) {
                 // let fileNavigationTreeNode = new FileNavigationTreeNode();
-                let fileNavigationTreeNode = new TreeNode<FileNode>(this);
+                // let fileNavigationTreeNode = new TreeNode<FileNode>(this);
+                let fileNavigationTreeNode = this.createNewFileNavigationTreeNode()
                 results.rootNodes.push(fileNavigationTreeNode);
                 results.leafNodes.push(fileNavigationTreeNode);
             }
@@ -484,7 +495,8 @@ export class FileNode {
         limitDepth: number | null = null,
         filePathNodeMap: FilePathNodeMapType,
     ): FileNavigationTreeNode {
-        let subtreeRoot = new TreeNode<FileNode>(this);
+        // let subtreeRoot = new TreeNode<FileNode>(this);
+        let subtreeRoot = this.createNewFileNavigationTreeNode();
         if (limitDepth != null && limitDepth < 0) {
             return subtreeRoot;
         }
@@ -552,7 +564,8 @@ export class FileNode {
         limitDepth: number | null = null,
         filePathNodeMap: FilePathNodeMapType,
     ): FileNavigationTreeNode {
-        let subtreeRoot = new TreeNode<FileNode>(this);
+        // let subtreeRoot = new TreeNode<FileNode>(this);
+        let subtreeRoot = this.createNewFileNavigationTreeNode();
         if (limitDepth != null && limitDepth < 0) {
             return subtreeRoot;
         }
