@@ -333,9 +333,15 @@ export class NavigationView extends NavigationBase {
             cls: ["bearings-main-container-header-left"],
         });
 
+        let headerRight = viewHeaderContainer.createEl("div", {
+            cls: ["bearings-main-container-header-right"],
+        });
+
+        let controlsSide = headerLeft;
+        let mainSide = headerRight;
+
         // Controls
-        // let controlRow = headerLeft.createEl("div", {cls: [options.isCodeBlock ? "bearings-control-row" : "bearings-control-column"]});
-        let controlRow = headerLeft.createEl("div", {cls: ["bearings-control-row"]});
+        let controlRow = controlsSide.createEl("div", {cls: ["bearings-control-row"]});
         if (!options.isCodeBlock) {
             this.createToggleButton(
                 "isPinned",
@@ -382,10 +388,11 @@ export class NavigationView extends NavigationBase {
         };
         refreshButton.onClick( () => refreshAction() );
 
-        let headerRight = viewHeaderContainer.createEl("div", {
-            cls: ["bearings-main-container-header-right"],
-        });
-        let headerLabel = headerRight.createEl("div", {
+
+
+
+
+        let headerLabel = mainSide.createEl("div", {
             cls: ["bearings-main-container-header-label"],
             text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
         });
