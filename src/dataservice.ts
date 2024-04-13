@@ -119,11 +119,13 @@ export type PathAliasesMapType = { [filePath: string]: string[] };
 
 
 export class DataService {
+    app: App;
     _dataviewApi: DataviewApi;
     _vaultFileRecords: FileNodeDataRecords[] = [];
     _isDataviewUnavailableMessageSent: boolean = false;
 
-    constructor() {
+    constructor(app: App) {
+        this.app = app;
         this.refresh();
     }
 
@@ -272,6 +274,10 @@ export class FileNode {
     public createNewFileNavigationTreeNode(): FileNavigationTreeNode {
         // return new FileNavigationTreeNode(this);
         return new TreeNode<FileNode>(this);
+    }
+
+    async isExists(): Promise<boolean> {
+        return this.dataService.app.vault.getAbstractFileByPath(this.filePath) !== null;
     }
 
     protected _memoize(
