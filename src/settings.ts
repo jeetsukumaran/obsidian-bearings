@@ -32,6 +32,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         autoexpansionDepthLimit: 2,    // number | null
         discoveryDepthLimitPrimary: 2,    // number | null
         discoveryDepthLimitSecondary: 2,     // number | null
+        inactiveFileFocalNote: "", // string
     },
     relationshipDefinitions: {
         "Up": {
@@ -193,10 +194,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
         //             await this.saveSettingsFn();
         //         }));
 
-        // Title field
         new Setting(container)
             .setName('Title fields')
-            .setDesc('Comma-separated list of property names that will be used as the display text of each note.')
+            .setDesc('Comma-separated list of property names that will be used as the display text of each note. Custom values not yet supported.')
             .addText(text => text
                 .setValue(options.titleField?.join(",") || "title, entry-title")
                 .setDisabled(true)
@@ -206,7 +206,6 @@ export class BearingsSettingsTab extends PluginSettingTab {
                 })
             );
 
-        // View Depth Limit Primary
         new Setting(container)
             .setName('Primary views subtree mapping depth limit')
             .setDesc('Discovery (recursion) depth limit for primary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
@@ -216,7 +215,6 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     await this.saveSettingsFn();
                 }));
 
-        // View Depth Limit Secondary
         new Setting(container)
             .setName('Secondary views subtree mapping depth limit')
             .setDesc('Discovery (recursion) depth limit for secondary views: how many levels of links to follow when mapping subtrees of the focal note. Set to "*" for no limit. Major determinant of performance in larger, more densely connected vaults.')
@@ -226,13 +224,22 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     await this.saveSettingsFn();
                 }));
 
-        // View Depth Limit Primary
         new Setting(container)
             .setName('Default view subtree node expansion limit')
             .setDesc('This value restricts the depth of the subtree nodes that are open by default. Set to "*" to open to the full mapped or discovery limit. Less is more here for mental bandwidth reasons :) ')
             .addText(text => text.setValue(this.displayIntLimit(options.autoexpansionDepthLimit?.toString() || ""))
                 .onChange(async (value) => {
                     options.autoexpansionDepthLimit = this.processIntLimit(value);
+                    await this.saveSettingsFn();
+                }));
+
+        new Setting(container)
+            .setName('Default focal note')
+            .setDesc('Path of note to assume as focal note if there is no active file.')
+            .addText(text => text
+                .setValue(options.inactiveFileFocalNote || "")
+                .onChange(async (value) => {
+                    options.inactiveFileFocalNote = value;
                     await this.saveSettingsFn();
                 }));
 
