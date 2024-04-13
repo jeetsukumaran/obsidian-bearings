@@ -234,8 +234,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
                 }));
 
         new Setting(container)
-            .setName('Default focal note')
-            .setDesc('Path of note to assume as focal note if there is no active file.')
+            .setName('Default focal note path')
+            .setDesc('Path of note to assume as focal note if there is no active file. Provide the full absolute path from the root of the vault, e.g. "00-indexes/root-index.md".')
             .addText(text => text
                 .setValue(options.inactiveFileFocalNote || "")
                 .onChange(async (value) => {

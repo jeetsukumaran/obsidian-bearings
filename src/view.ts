@@ -112,6 +112,12 @@ export class BearingsView extends ItemView {
         if (!activeFilePath || activeFilePath === "") {
             if (this.configuration.options.inactiveFileFocalNote) {
                 activeFilePath = this.configuration.options.inactiveFileFocalNote;
+                if (activeFilePath) {
+                    activeFilePath = activeFilePath.replace(/^\[\[/,"").replace(/\]\]/, "");
+                    if (!activeFilePath.endsWith(".md")) {
+                        activeFilePath = activeFilePath + ".md";
+                    }
+                }
             }
         }
         return activeFilePath;
