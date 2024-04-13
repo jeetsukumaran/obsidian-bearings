@@ -31,7 +31,11 @@ export class TreeNode<T> {
         this._children = [ ... newChildren];
     }
 
-    // Applies a function to this node's value.
+    public sortChildren(sortFn: (a: TreeNode<T>, b: TreeNode<T>) => number): TreeNode<T> {
+        this._children.sort(sortFn);
+        return this;
+    }
+
     public applyToValue(func: (value: T) => T): void {
         this.value = func(this.value);
     }

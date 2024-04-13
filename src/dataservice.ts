@@ -204,7 +204,10 @@ export class DataService {
             relationshipDefinitions,
             limitDepth,
             filePathNodeMap,
-        );
+        )
+        // .sortChildren( (a: FileNavigationTreeNode, b: FileNavigationTreeNode) => {
+        //     return a.value.sort_key(b.value);
+        // });
     }
 
     coordinateSubtrees(
@@ -219,11 +222,17 @@ export class DataService {
         let startFileNode = filePathNodeMap.get(filePath) || this.getFileNode(filePath);
         filePathNodeMap.set(filePath, startFileNode) // not tested
         return startFileNode.coordinateSubtrees(
-            "standard",
-            relationshipDefinitions,
-            limitDepth,
-            filePathNodeMap,
-        );
+                "standard",
+                relationshipDefinitions,
+                limitDepth,
+                filePathNodeMap)
+            // .sortChildren( (a: FileNavigationTreeNode, b: FileNavigationTreeNode) => {
+            //     return a.value.sort_key(b.value);
+            // });
+
+            // .sort( (a: FileNavigationTreeNode, b: FileNavigationTreeNode) => {
+            //     return a.value.sort_key(b.value);
+            // });
     }
 
     getFileNode(filePath: string): FileNode {
