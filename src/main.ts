@@ -115,7 +115,7 @@ export default class BearingsPlugin extends Plugin {
 
         this.addCommand({
             id: 'open-bearings-navigator',
-            name: 'Open sidebar semantic navigation view',
+            name: 'Open sidebar navigator',
             callback: () => {
                 this.activateView();
             }
@@ -123,7 +123,7 @@ export default class BearingsPlugin extends Plugin {
 
         this.addCommand({
             id: 'toggle-bearings-navigator',
-            name: 'Toggle sidebar semantic navigation views',
+            name: 'Toggle sidebar navigator',
             callback: () => {
                 if (this.app.workspace.rightSplit.collapsed) {
                     // this.app.workspace.rightSplit.expand();
