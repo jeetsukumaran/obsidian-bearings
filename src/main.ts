@@ -89,7 +89,7 @@ export default class BearingsPlugin extends Plugin {
             });
         this.addCommand({
             id: 'refresh-bearings-code-blocks',
-            name: 'Refresh navigation code blocks',
+            name: 'Navigation code blocks: refresh',
             callback: () => {
                 this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh({
                     isCodeBlock: true,
@@ -115,7 +115,7 @@ export default class BearingsPlugin extends Plugin {
 
         this.addCommand({
             id: 'open-bearings-navigator',
-            name: 'Open sidebar navigator',
+            name: 'Sidebar navigator: open',
             callback: () => {
                 this.activateView();
             }
@@ -123,7 +123,7 @@ export default class BearingsPlugin extends Plugin {
 
         this.addCommand({
             id: 'toggle-bearings-navigator',
-            name: 'Toggle sidebar navigator',
+            name: 'Sidebar navigator: toggle',
             callback: () => {
                 if (this.app.workspace.rightSplit.collapsed) {
                     // this.app.workspace.rightSplit.expand();
