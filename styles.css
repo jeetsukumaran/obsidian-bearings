@@ -466,17 +466,18 @@ input:disabled {
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
-    border: dotted 0.8px;
-    border: solid 1px var(--bearings-node-leaf-color);
+    border: dotted 2px var(--bearings-node-leaf-color);
 }
 
 .bearings-entry-head-link-container.bearings-node-closed {
     background-color: var(--bearings-counter-shade-01);
     /* border: dotted 0.5px var(--bearings-node-closed-color); */
+    /* border-bottom: 2px dotted; */
+    /* border-radius: 0.0rem; */
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry.bearings-node-closed {
-    border: solid 1px var(--bearings-node-leaf-color);
+    border: dotted 2px var(--bearings-node-leaf-color);
 }
 
 
