@@ -346,8 +346,10 @@ export class NavigationView extends NavigationBase {
             this.createToggleButton(
                 "isPinned",
                 controlRow,
-                "pin-off",
-                "pin",
+                "circle-dot",
+                "circle-dot-dashed",
+                // "radius",
+                // "refresh-ccw-dot",
                 "Unpin the focal note",
                 "Pin the focal note",
                 (value: boolean) => {
