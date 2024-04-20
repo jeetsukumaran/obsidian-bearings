@@ -468,21 +468,23 @@ input:disabled {
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
-    /* border: dotted 2px var(--bearings-node-leaf-color); */
-    border: dotted 2px var(--bearings-node-leaf-color);
+    /* border: dotted 1px var(--bearings-node-leaf-color); */
+    border: solid 1px var(--bearings-node-leaf-color);
+    /* border: solid 0.5px; */
 }
 
 .bearings-entry-head-link-container.bearings-node-closed {
     /* background-color: var(--bearings-counter-shade-02); */
     /* border: dotted 0.5px var(--bearings-node-closed-color); */
-    /* border-bottom: dotted 2px var(--bearings-node-closed-color); */
-    border-bottom: dotted 2px;
+    /* border-bottom: dotted 1px var(--bearings-node-closed-color); */
+    border-bottom: dotted 1px;
     /* border-bottom: 2px dotted; */
     border-radius: 0.0rem;
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry.bearings-node-closed {
-    border: dotted 2px var(--bearings-node-leaf-color);
+    /* border: dotted 1px var(--bearings-node-leaf-color); */
+    border: dotted 1px;
 }
 
 
