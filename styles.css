@@ -2,8 +2,8 @@
 /* Root {{{ */
 
 :root {
-    --bearings-font-base-size: 0.9rem;
-    --bearings-gutter-width: 1rem;
+    --bearings-font-base-size: 0.8rem;
+    --bearings-gutter-width: 0.8rem;
     --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
 }
 
@@ -512,10 +512,9 @@ input:disabled {
 
 .bearings-entry-head-content.bearings-node-closed {
     /* border: dotted 1px; */
-    padding-bottom: 0.1rem;
-    border-bottom: dotted 2px;
-    margin-bottom: 0.1rem;
+    border-bottom: dotted 2px var(--bearings-node-closed-color);
     border-radius: 0;
+    margin: 0;
 }
 
 /* }}} */
@@ -528,8 +527,8 @@ input:disabled {
     display: flex;
     flex-direction: row;
     /* border: solid 1px; */
-    margin-bottom: 0.25rem;
-    margin-top: 0.15rem;
+    margin-bottom: 0.3rem;
+    margin-top: 0.0rem;
 }
 
 .bearings-entry-glyph-bar-container.is-empty {
