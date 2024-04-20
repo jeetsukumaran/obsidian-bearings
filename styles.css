@@ -526,7 +526,8 @@ input:disabled {
     /* border: solid 1px; */
     border-radius: 0.4rem;
     font-size: 0.6rem;
-    margin: 0.3rem;
+    margin-bottom: 0;
+    margin-top: 0.15rem;
 }
 
 .bearings-entry-glyph-bar-container.is-empty {
