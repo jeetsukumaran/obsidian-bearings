@@ -475,7 +475,8 @@ input:disabled {
 .bearings-entry-head-link-container.bearings-node-closed {
     /* background-color: var(--bearings-counter-shade-02); */
     /* border: dotted 0.5px var(--bearings-node-closed-color); */
-    border-bottom: dotted 2px var(--bearings-node-closed-color);
+    /* border-bottom: dotted 2px var(--bearings-node-closed-color); */
+    border-bottom: dotted 2px;
     /* border-bottom: 2px dotted; */
     border-radius: 0.0rem;
 }
