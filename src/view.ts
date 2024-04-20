@@ -1158,35 +1158,15 @@ export class NavigationEntryFrame extends NavigationBase {
         });
         // Defaults needed here as data.json created under previous API will not be populated
         // with these newer fields.
-        let nodeGlyphs: string[] = [];
         let nodeGlyphFields = this._context.configuration.options?.glyphField || ["glyphs", "entry-glyphs"];
-        nodeGlyphFields.forEach( (propertyKey: string) => {
-            let fieldValues: string[] =
-                (entryData.value.fileData[propertyKey] || [])
-                .map( (fieldValue: FileNodeDataType) => {
-                    if (fieldValue.path !== undefined) {
-                        let referencedGlyphPath = fieldValue.path;
-                        let referencedGlyphPage: FileNodeDataRecords = this._context.dataService.readFileNodeDataRecords(referencedGlyphPath) || {};
-                        return "s";
-                    } else {
-                        return fieldValue.toString();
-                    }
-                });
-            nodeGlyphs.push( ... fieldValues);
-        });
-
-        nodeGlyphs.forEach(iconCode => {
-            const iconCell = this.elements.entryGlyphBox.createEl("div", {
+        entryData.value.readGlyphs(nodeGlyphFields).forEach(glyphCode => {
+            const glyphCell = this.elements.entryGlyphBox.createEl("div", {
                 cls: ["bearings-entry-glyph-bar-cell"]
             });
-
-            if (iconCode.startsWith(':') && iconCode.endsWith(':')) {
-                const iconName = iconCode.slice(1, -1);
-                // TODO: build the icon
-                // iconCell.innerHTML = iconSVG;
+            if (false && glyphCode.startsWith(':') && glyphCode.endsWith(':')) {
+                const glyphName = glyphCode.slice(1, -1);
             } else {
-                // If not an icon code, add the string directly
-                iconCell.textContent = iconCode;
+                glyphCell.textContent = glyphCode;
             }
         });
     }

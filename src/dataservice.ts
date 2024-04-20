@@ -646,6 +646,28 @@ export class FileNode {
         return subtreeRoot;
     }
 
+    @Cacheable("propertyNames")
+    readGlyphs(
+        propertyNames: string[],
+    ): string[] {
+        let nodeGlyphs: string[] = [];
+        propertyNames.forEach( (propertyKey: string) => {
+            let fieldValues: string[] =
+                (this.fileData[propertyKey] || [])
+                .map( (fieldValue: FileNodeDataType) => {
+                    if (fieldValue.path !== undefined) {
+                        let referencedGlyphPath = fieldValue.path;
+                        let referencedGlyphPage: FileNodeDataRecords = this.dataService.readFileNodeDataRecords(referencedGlyphPath) || {};
+                        return "s";
+                    } else {
+                        return fieldValue.toString();
+                    }
+                });
+            nodeGlyphs.push( ... fieldValues);
+        });
+        return nodeGlyphs;
+    }
+
     readPropertyStringList(key: string,): string[] {
         const propertyValue = this.fileData[key] || ""
         if (!propertyValue) {
