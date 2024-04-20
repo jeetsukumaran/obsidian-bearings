@@ -1162,16 +1162,17 @@ export class NavigationEntryFrame extends NavigationBase {
         entryData.value.readGlyphs(
             nodeGlyphFields,
             null,
-        ).forEach(glyphCode => {
-            const glyphCell = this.elements.entryGlyphBox.createEl("div", {
-                cls: ["bearings-entry-glyph-bar-cell"]
+            )
+            .forEach(glyphCode => {
+                const glyphCell = this.elements.entryGlyphBox.createEl("div", {
+                    cls: ["bearings-entry-glyph-bar-cell"]
+                });
+                if (false && glyphCode.startsWith(':') && glyphCode.endsWith(':')) {
+                    const glyphName = glyphCode.slice(1, -1);
+                } else {
+                    glyphCell.textContent = glyphCode;
+                }
             });
-            if (false && glyphCode.startsWith(':') && glyphCode.endsWith(':')) {
-                const glyphName = glyphCode.slice(1, -1);
-            } else {
-                glyphCell.textContent = glyphCode;
-            }
-        });
     }
 
 }
