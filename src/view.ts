@@ -1158,8 +1158,13 @@ export class NavigationEntryFrame extends NavigationBase {
         });
         // Defaults needed here as data.json created under previous API will not be populated
         // with these newer fields.
+        let glyphFilePathNodeMap = new Map<FilePathType, FileNode>();
         let nodeGlyphFields = this._context.configuration.options?.glyphField || ["glyphs", "entry-glyphs"];
-        entryData.value.readGlyphs(nodeGlyphFields).forEach(glyphCode => {
+        entryData.value.readGlyphs(
+            nodeGlyphFields,
+            null,
+            glyphFilePathNodeMap,
+        ).forEach(glyphCode => {
             const glyphCell = this.elements.entryGlyphBox.createEl("div", {
                 cls: ["bearings-entry-glyph-bar-cell"]
             });

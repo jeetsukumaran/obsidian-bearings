@@ -123,6 +123,7 @@ export class DataService {
     _dataviewApi: DataviewApi;
     _vaultFileRecords: FileNodeDataRecords[] = [];
     _isDataviewUnavailableMessageSent: boolean = false;
+    _glyphFilePathNodeMap: FilePathNodeMapType;
 
     constructor(app: App) {
         this.app = app;
@@ -142,12 +143,20 @@ export class DataService {
         return this._dataviewApi;
     }
 
+    get glyphFilePathNodeMap(): FilePathNodeMapType {
+        if (this._glyphFilePathNodeMap === undefined) {
+            this._glyphFilePathNodeMap = new Map<FilePathType, FileNode>();
+        }
+        return this._glyphFilePathNodeMap;
+    }
+
     readFileNodeDataRecords(filePath: string): FileNodeDataRecords | undefined {
         return this.dataviewApi?.page(filePath)
     }
 
     refresh(): FileNodeDataRecords[] {
         this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
+        this._glyphFilePathNodeMap = new Map<FilePathType, FileNode>();
         return this._vaultFileRecords;
     }
 
@@ -649,21 +658,31 @@ export class FileNode {
     @Cacheable("propertyNames")
     readGlyphs(
         propertyNames: string[],
+        limitDepth: number | null = null,
+        filePathNodeMap: FilePathNodeMapType,
     ): string[] {
         let nodeGlyphs: string[] = [];
+        if (limitDepth != null && limitDepth < 0) {
+            return nodeGlyphs;
+        }
         propertyNames.forEach( (propertyKey: string) => {
-            let fieldValues: string[] =
                 (this.fileData[propertyKey] || [])
-                .map( (fieldValue: FileNodeDataType) => {
+                .forEach( (fieldValue: FileNodeDataType) => {
                     if (fieldValue.path !== undefined) {
                         let referencedGlyphPath = fieldValue.path;
-                        let referencedGlyphPage: FileNodeDataRecords = this.dataService.readFileNodeDataRecords(referencedGlyphPath) || {};
-                        return "s";
+                        let recurseLimitDepth: number | null = limitDepth === null ? null : limitDepth -1;
+                        let referencedGlyphNode = filePathNodeMap.get(referencedGlyphPath);
+                        if (referencedGlyphNode === undefined) {
+                            referencedGlyphNode = this.createNew(referencedGlyphPath, undefined);
+                        } else {
+                            recurseLimitDepth = -1;
+                        }
+                        filePathNodeMap.set(referencedGlyphPath, referencedGlyphNode);
+                        nodeGlyphs.push(fieldValue.toString());
                     } else {
-                        return fieldValue.toString();
+                        nodeGlyphs.push(fieldValue.toString());
                     }
                 });
-            nodeGlyphs.push( ... fieldValues);
         });
         return nodeGlyphs;
     }
