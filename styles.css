@@ -476,11 +476,6 @@ input:disabled {
 }
 
 .bearings-entry-head-link-container.bearings-node-closed {
-    /* border: dotted 0.5px var(--bearings-node-closed-color); */
-    /* border-bottom: dotted 1px var(--bearings-node-closed-color); */
-    border-bottom: dotted 1px;
-    /* border-bottom: 2px dotted; */
-    border-radius: 0.0rem;
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry.bearings-node-closed {
@@ -515,6 +510,14 @@ input:disabled {
     flex-direction: column;
 }
 
+.bearings-entry-head-content.bearings-node-closed {
+    /* border: dotted 1px; */
+    padding-bottom: 0.1rem;
+    border-bottom: dotted 2px;
+    margin-bottom: 0.1rem;
+    border-radius: 0;
+}
+
 /* }}} */
 
 /* Entry glyphs {{{ */
@@ -525,8 +528,7 @@ input:disabled {
     display: flex;
     flex-direction: row;
     /* border: solid 1px; */
-    border-radius: 0.4rem;
-    margin-bottom: 0;
+    margin-bottom: 0.25rem;
     margin-top: 0.15rem;
 }
 
