@@ -1154,13 +1154,26 @@ export class NavigationEntryFrame extends NavigationBase {
         this.elements.entryGlyphBox = root.createEl("div", {
             cls: ["bearings-entry-glyph-bar-container"]
         });
-        let nodeGlyphs: string[] = [
-            ":scroll-text:",
-            "🦉",
-            "🦬",
-            "🦣",
-            "🦓",
-        ];
+        // Defaults needed here as data.json created under previous API will not be populated
+        // with these newer fields.
+        let nodeGlyphs: string[] = [];
+        let nodeGlyphFields = this._context.configuration.options?.glyphField || ["glyphs", "entry-glyphs"];
+        nodeGlyphFields.forEach( (propertyKey: string) => {
+            const fieldValue: string[] = entryData.value.fileData[propertyKey] || [];
+            nodeGlyphs.push( ... fieldValue);
+        });
+
+        // let nodeGlyphs: string[] = this._context.configuration.options?.glyphField?.forEach( (propertyKey: string) => {
+        // });
+
+        // let nodeGlyphs: string[] = [
+        //     ":scroll-text:",
+        //     "🦉",
+        //     "🦬",
+        //     "🦣",
+        //     "🦓",
+        // ];
+
         nodeGlyphs.forEach(iconCode => {
             const iconCell = this.elements.entryGlyphBox.createEl("div", {
                 cls: ["bearings-entry-glyph-bar-cell"]

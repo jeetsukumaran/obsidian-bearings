@@ -29,6 +29,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     options: {
         // globalNamespacePrefix: "entry-", // string | null
         titleField: ["title", "entry-title"],
+        glyphField: ["glyphs", "entry-glyphs"],
         autoexpansionDepthLimit: 2,    // number | null
         discoveryDepthLimitPrimary: 2,    // number | null
         discoveryDepthLimitSecondary: 2,     // number | null
