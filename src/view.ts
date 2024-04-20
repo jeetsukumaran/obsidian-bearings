@@ -1161,6 +1161,9 @@ export class NavigationEntryFrame extends NavigationBase {
         let nodeGlyphFields = this._context.configuration.options?.glyphField || ["glyphs", "entry-glyphs"];
         let glyphs: string[] = Array
             .from(new Set<string>(entryData.value.readGlyphs( nodeGlyphFields, null,)))
+        if (glyphs.length === 0) {
+            this.elements.entryGlyphBox.classList.add("is-empty");
+        }
         glyphs.forEach(glyphCode => {
                 const glyphCell = this.elements.entryGlyphBox.createEl("div", {
                     cls: ["bearings-entry-glyph-bar-cell"]
