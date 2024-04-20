@@ -544,15 +544,14 @@ input:disabled {
 }
 
 .bearings-entry-glyph-bar-cell {
-    padding: 0;
+    padding: 0.25rem;
     margin: 0;
     position: relative;
     background: var(--bearings-glyph-background);
     border: solid 1px var(--bearings-counter-shade-08);
-    font-size: calc(0.8 * var(--bearings-font-base-size));
-    height: calc(1.5 * var(--bearings-gutter-width));
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
+    font-size: calc(0.65 * var(--bearings-font-base-size));
+    font-weight: 700;
+    height: calc(1.4 * var(--bearings-gutter-width));
     margin-right: 0.2rem;
     border-radius: 0.4rem;
     display: flex;
