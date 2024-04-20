@@ -507,7 +507,7 @@ input:disabled {
 
 .bearings-entry-head-content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .bearings-entry-head-content.bearings-node-closed {
