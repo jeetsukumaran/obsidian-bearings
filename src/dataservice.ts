@@ -659,7 +659,6 @@ export class FileNode {
     readGlyphs(
         propertyNames: string[],
         limitDepth: number | null = null,
-        filePathNodeMap: FilePathNodeMapType,
     ): string[] {
         let nodeGlyphs: string[] = [];
         if (limitDepth != null && limitDepth < 0) {
@@ -671,14 +670,14 @@ export class FileNode {
                     if (fieldValue.path !== undefined) {
                         let referencedGlyphPath = fieldValue.path;
                         let recurseLimitDepth: number | null = limitDepth === null ? null : limitDepth -1;
-                        let referencedGlyphNode = filePathNodeMap.get(referencedGlyphPath);
+                        let referencedGlyphNode = this.dataService.glyphFilePathNodeMap.get(referencedGlyphPath);
                         if (referencedGlyphNode === undefined) {
                             referencedGlyphNode = this.createNew(referencedGlyphPath, undefined);
                         } else {
                             recurseLimitDepth = -1;
                         }
-                        filePathNodeMap.set(referencedGlyphPath, referencedGlyphNode);
-                        nodeGlyphs.push(fieldValue.toString());
+                        this.dataService.glyphFilePathNodeMap.set(referencedGlyphPath, referencedGlyphNode);
+                        nodeGlyphs.push(... referencedGlyphNode.readGlyphs(propertyNames, recurseLimitDepth));
                     } else {
                         nodeGlyphs.push(fieldValue.toString());
                     }
