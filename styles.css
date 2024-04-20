@@ -525,18 +525,22 @@ input:disabled {
     flex-direction: row;
     /* border: solid 1px; */
     border-radius: 0.4rem;
-    background-color: var(--bearings-counter-shade-02);
     font-size: 0.6rem;
-    width: 100%;
 }
 
 .bearings-entry-glyph-bar-cell {
     padding: 0;
     margin: 0;
     position: relative;
-    /* width: 0.5rem; */
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
+    background-color: var(--bearings-counter-shade-02);
+    font-size: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.2rem;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* }}} */
