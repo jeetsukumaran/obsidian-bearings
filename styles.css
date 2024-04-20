@@ -2,14 +2,15 @@
 /* Root {{{ */
 
 :root {
-    --bearings-font-base-size: 0.8rem;
-    --bearings-gutter-width: 0.8rem;
+    --bearings-font-base-size: 0.9rem;
+    --bearings-gutter-width: 1rem;
     --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
 }
 
 .theme-light {
+    --bearings-middle-grey: #aaaaaa88;
     --bearings-counter-shade-01: #00000010;
-    --bearings-counter-shade-02: #00000020;
+    --bearings-counter-shade-08: #00000088;
     /* --bearings-node-open-color: #008844; */
     --bearings-node-open-color: #00aa88;
     --bearings-node-closed-color: #dd6644;
@@ -21,8 +22,9 @@
 }
 
 .theme-dark {
+    --bearings-middle-grey: #22222288;
     --bearings-counter-shade-01: #ffffff10;
-    --bearings-counter-shade-02: #ffffff20;
+    --bearings-counter-shade-08: #ffffff88;
     --bearings-node-open-color: #00ff88cc;
     --bearings-node-closed-color: #ff8800cc;
     --bearings-node-leaf-color: #aaaa88;
@@ -421,7 +423,7 @@ input:disabled {
 /* } */
 .bearings-entry-node-toggle-container {
     color: var(--text-muted);
-    font-size: 0.8rem;
+    font-size: var(--bearings-font-base-size);
     margin-left: 0.2rem;
     opacity: 1.0;
 }
@@ -474,7 +476,6 @@ input:disabled {
 }
 
 .bearings-entry-head-link-container.bearings-node-closed {
-    /* background-color: var(--bearings-counter-shade-02); */
     /* border: dotted 0.5px var(--bearings-node-closed-color); */
     /* border-bottom: dotted 1px var(--bearings-node-closed-color); */
     border-bottom: dotted 1px;
@@ -525,7 +526,6 @@ input:disabled {
     flex-direction: row;
     /* border: solid 1px; */
     border-radius: 0.4rem;
-    font-size: 0.6rem;
     margin-bottom: 0;
     margin-top: 0.15rem;
 }
@@ -538,13 +538,14 @@ input:disabled {
     padding: 0;
     margin: 0;
     position: relative;
-    background-color: var(--bearings-counter-shade-02);
-    font-size: 0.5rem;
-    height: 1rem;
+    background: var(--bearings-middle-grey);
+    border: solid 1px var(--bearings-counter-shade-08);
+    font-size: calc(0.8 * var(--bearings-font-base-size));
+    height: calc(1.5 * var(--bearings-gutter-width));
     padding-left: 0.2rem;
     padding-right: 0.2rem;
     margin-right: 0.2rem;
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
