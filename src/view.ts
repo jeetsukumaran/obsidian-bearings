@@ -265,8 +265,8 @@ export class NavigationView extends NavigationBase {
     createToggleButton(
         key: string,
         controlRow: HTMLElement,
-        trueIcon: string,
-        falseIcon: string,
+        trueGlyph: string,
+        falseGlyph: string,
         trueToolTip: string,
         falseToolTip: string,
         callbackAction: (value: boolean) => void,
@@ -280,12 +280,12 @@ export class NavigationView extends NavigationBase {
         this.toggleOptionState[key] = initialValue;
         const setToggle = () => {
             if (this.toggleOptionState[key]) {
-                button.setIcon(trueIcon);
+                button.setIcon(trueGlyph);
                 button.setTooltip(trueToolTip);
                 // button.classList.add("bearings-toggle-is-true");
                 // button.removeClass("bearings-toggle-is-false");
             } else {
-                button.setIcon(falseIcon);
+                button.setIcon(falseGlyph);
                 button.setTooltip(falseToolTip);
                 // button.removeClass("bearings-toggle-is-true");
                 // button.addClass("bearings-toggle-is-false");
@@ -1052,6 +1052,12 @@ export class NavigationEntryFrame extends NavigationBase {
 
         this.elements.entryHeadContent = this.elements.entryHead.createEl("div", { cls: "bearings-entry-head-content"});
 
+        this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-icon-row"});
+        this.renderGlyphs(
+            this.elements.entryGlyphRow,
+            entryData,
+        );
+
         this.elements.entryHeadLinkContainer = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-link-container"});
         this.renderEntryLink(
             this.elements.entryHeadLinkContainer,
@@ -1141,20 +1147,22 @@ export class NavigationEntryFrame extends NavigationBase {
 
     }
 
-    renderIcons() {
-        this.elements.entryIconBox = this.elements.entryGutterLeftHead.createEl("div", {
+    renderGlyphs(
+        root: HTMLElement,
+        entryData: FileNavigationTreeNode,
+    ) {
+        this.elements.entryGlyphBox = root.createEl("div", {
             cls: ["bearings-entry-glyph-bar-container"]
         });
-        // this.elements.entryIconBox.innerText = "∧"
-        let nodeIcons: string[] = [
+        let nodeGlyphs: string[] = [
             ":scroll-text:",
             "🦉",
             "🦬",
             "🦣",
             "🦓",
         ];
-        nodeIcons.forEach(iconCode => {
-            const iconCell = this.elements.entryIconBox.createEl("div", {
+        nodeGlyphs.forEach(iconCode => {
+            const iconCell = this.elements.entryGlyphBox.createEl("div", {
                 cls: ["bearings-entry-glyph-bar-cell"]
             });
 
