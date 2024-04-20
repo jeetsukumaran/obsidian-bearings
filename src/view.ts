@@ -1053,8 +1053,8 @@ export class NavigationEntryFrame extends NavigationBase {
         // }
 
         this.elements.entryHeadContent = this.elements.entryHead.createEl("div", { cls: "bearings-entry-head-content"});
-        this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-icon-row"});
         this.elements.entryHeadLinkContainer = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-link-container"});
+        this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-icon-row"});
 
         this.renderEntryLink(
             this.elements.entryHeadLinkContainer,
@@ -1159,11 +1159,9 @@ export class NavigationEntryFrame extends NavigationBase {
         // Defaults needed here as data.json created under previous API will not be populated
         // with these newer fields.
         let nodeGlyphFields = this._context.configuration.options?.glyphField || ["glyphs", "entry-glyphs"];
-        entryData.value.readGlyphs(
-            nodeGlyphFields,
-            null,
-            )
-            .forEach(glyphCode => {
+        let glyphs: string[] = Array
+            .from(new Set<string>(entryData.value.readGlyphs( nodeGlyphFields, null,)))
+        glyphs.forEach(glyphCode => {
                 const glyphCell = this.elements.entryGlyphBox.createEl("div", {
                     cls: ["bearings-entry-glyph-bar-cell"]
                 });
