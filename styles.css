@@ -8,7 +8,7 @@
 }
 
 .theme-light {
-    --bearings-middle-grey: #cccccc88;
+    --bearings-glyph-background: #ffffff20;
     --bearings-counter-shade-01: #00000010;
     --bearings-counter-shade-08: #00000088;
     /* --bearings-node-open-color: #008844; */
@@ -22,7 +22,7 @@
 }
 
 .theme-dark {
-    --bearings-middle-grey: #22222288;
+    --bearings-glyph-background: #22222288;
     --bearings-counter-shade-01: #ffffff10;
     --bearings-counter-shade-08: #ffffff88;
     --bearings-node-open-color: #00ff88cc;
@@ -547,7 +547,7 @@ input:disabled {
     padding: 0;
     margin: 0;
     position: relative;
-    background: var(--bearings-middle-grey);
+    background: var(--bearings-glyph-background);
     border: solid 1px var(--bearings-counter-shade-08);
     font-size: calc(0.8 * var(--bearings-font-base-size));
     height: calc(1.5 * var(--bearings-gutter-width));
