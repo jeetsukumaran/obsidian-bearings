@@ -26,8 +26,10 @@ import {
 import {
     DataService,
     RelationshipLinkedPathDataType,
+    FileNodeDataRecords,
     FileNavigationTreeNode,
     FileNode,
+    FileNodeDataType,
     FilePathType,
     FilePathNodeMapType,
 } from "./dataservice";
@@ -1159,8 +1161,18 @@ export class NavigationEntryFrame extends NavigationBase {
         let nodeGlyphs: string[] = [];
         let nodeGlyphFields = this._context.configuration.options?.glyphField || ["glyphs", "entry-glyphs"];
         nodeGlyphFields.forEach( (propertyKey: string) => {
-            const fieldValue: string[] = entryData.value.fileData[propertyKey] || [];
-            nodeGlyphs.push( ... fieldValue);
+            let fieldValues: string[] =
+                (entryData.value.fileData[propertyKey] || [])
+                .map( (fieldValue: FileNodeDataType) => {
+                    if (fieldValue.path !== undefined) {
+                        let referencedGlyphPath = fieldValue.path;
+                        let referencedGlyphPage: FileNodeDataRecords = this._context.dataService.readFileNodeDataRecords(referencedGlyphPath) || {};
+                        return "s";
+                    } else {
+                        return fieldValue.toString();
+                    }
+                });
+            nodeGlyphs.push( ... fieldValues);
         });
 
         nodeGlyphs.forEach(iconCode => {
