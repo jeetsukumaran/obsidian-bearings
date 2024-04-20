@@ -525,7 +525,7 @@ input:disabled {
     position: relative;
     /* top: 0.1rem; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     /* border: solid 1px; */
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
