@@ -1163,17 +1163,6 @@ export class NavigationEntryFrame extends NavigationBase {
             nodeGlyphs.push( ... fieldValue);
         });
 
-        // let nodeGlyphs: string[] = this._context.configuration.options?.glyphField?.forEach( (propertyKey: string) => {
-        // });
-
-        // let nodeGlyphs: string[] = [
-        //     ":scroll-text:",
-        //     "🦉",
-        //     "🦬",
-        //     "🦣",
-        //     "🦓",
-        // ];
-
         nodeGlyphs.forEach(iconCode => {
             const iconCell = this.elements.entryGlyphBox.createEl("div", {
                 cls: ["bearings-entry-glyph-bar-cell"]
