@@ -527,8 +527,13 @@ input:disabled {
     display: flex;
     flex-direction: row;
     /* border: solid 1px; */
+    margin-bottom: 0.0rem;
+    margin-top: 0.2rem;
+}
+
+.bearings-entry-glyph-bar-container.bearings-node-closed {
+    margin-top: 0;
     margin-bottom: 0.3rem;
-    margin-top: 0.0rem;
 }
 
 .bearings-entry-glyph-bar-container.is-empty {
