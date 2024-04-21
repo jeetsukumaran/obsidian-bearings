@@ -534,6 +534,7 @@ input:disabled {
     margin-top: 0.2rem;
     margin-left: 0.2rem;
     min-width: 0;
+    overflow: clip;
 }
 
 .bearings-entry-glyph-bar-container.bearings-node-closed {
