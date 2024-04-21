@@ -10,6 +10,7 @@
 .theme-light {
     --bearings-glyph-background: #ffffff20;
     --bearings-counter-shade-01: #00000010;
+    --bearings-counter-shade-04: #00000044;
     --bearings-counter-shade-08: #00000088;
     /* --bearings-node-open-color: #008844; */
     --bearings-node-open-color: #00aa88;
@@ -24,6 +25,7 @@
 .theme-dark {
     --bearings-glyph-background: #22222288;
     --bearings-counter-shade-01: #ffffff10;
+    --bearings-counter-shade-04: #ffffff44;
     --bearings-counter-shade-08: #ffffff88;
     --bearings-node-open-color: #00ff88cc;
     --bearings-node-closed-color: #ff8800cc;
@@ -548,12 +550,11 @@ input:disabled {
     margin: 0;
     position: relative;
     background: var(--bearings-glyph-background);
-    border: solid 1px var(--bearings-counter-shade-08);
+    border: solid 1px var(--bearings-counter-shade-04);
     font-size: calc(0.65 * var(--bearings-font-base-size));
-    font-weight: 700;
     height: calc(1.4 * var(--bearings-gutter-width));
     margin-right: 0.2rem;
-    border-radius: 0.4rem;
+    border-radius: 0.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
