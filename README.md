@@ -1,15 +1,18 @@
 # Bearings
 
-
-## Introduction
-
 Your notegraph is traversed through links.
 
 Metadata is tracked by frontmatter properties.
 
 Bearings allows you to flow through the logical hallways, highways, and byways of your notegraph's semantic architectures constructed by combining these two mechanisms.
 
-Bearings provides multiplexed dynamically-scoped tree views of the logical hallways, highways, and byways of the architectures of your knowledge-base, with the structure defined by multiple hierarchical or non-hierarchical semantic relationships between notes, with the logical structure of the relationship described by links listed under frontmatter metadata properties, and the semantics coming from concepts associated with those properties names.
+### What it does
+
+Bearings provides dynamically-scoped expanding tree views of relationships between your notes.
+
+The semantics of the relationships are specified by a user-controlled vocabulary of YAML frontmatter property keys or names, while the structure of the relationships given by links listed under those named properties for a particular note.
+
+### Finding your bearings
 
 Initially inspired by categorizing my notes along the lines of the [classification system of the Python Package Index](https://pypi.org/classifiers/), i.e., with multiple concurrent hierarchies such as:
 
