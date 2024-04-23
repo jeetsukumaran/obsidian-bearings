@@ -403,7 +403,7 @@ input:disabled {
 .bearings-entry-node-toggle-container {
     cursor: pointer;
     position: absolute;
-    top: 0.46rem;
+    top: 0.42rem;
     left: -0.65rem;
     width: var(--bearings-entry-node-toggle-container-size);
     height: var(--bearings-entry-node-toggle-container-size);
@@ -419,21 +419,14 @@ input:disabled {
     left: -0.65rem;
 }
 
-/* .bearings-entry-node-toggle-container { */
-/*     color: var(--text-muted); */
-/*     opacity: 0.6; */
-/* } */
 .bearings-entry-node-toggle-container {
     color: var(--text-muted);
     font-size: var(--bearings-font-base-size);
-    margin-left: 0.2rem;
     opacity: 1.0;
-}
-.bearings-entry-node-toggle-container svg {
-    stroke-width: 3;
 }
 
 .bearings-entry-node-toggle-container.bearings-node-closed {
+    /* top: 0.42rem; */
     color: var(--bearings-node-closed-color);
 }
 
@@ -460,22 +453,37 @@ input:disabled {
 .bearings-entry-head {
     position: relative;
     top: 0.15rem;
-    left: -0.4rem;
+    left: -0.5rem;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
+.bearings-entry-head-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.bearings-entry-head-content.bearings-node-closed {
+    /* border: dotted 1px; */
+    border-bottom: dotted 2px var(--bearings-node-closed-color);
+    border-radius: 0;
+    margin: 0;
+}
+
 .bearings-entry-head-link-container {
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
+    padding: 0;
     border-radius: 0.4rem;
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
     /* border: dotted 1px var(--bearings-node-leaf-color); */
     border: solid 1px var(--bearings-node-leaf-color);
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
     /* border: solid 0.5px; */
 }
 
@@ -510,18 +518,6 @@ input:disabled {
     margin: 0;
 }
 
-.bearings-entry-head-content {
-    display: flex;
-    flex-direction: row;
-}
-
-.bearings-entry-head-content.bearings-node-closed {
-    /* border: dotted 1px; */
-    border-bottom: dotted 2px var(--bearings-node-closed-color);
-    border-radius: 0;
-    margin: 0;
-}
-
 /* }}} */
 
 /* Entry glyphs {{{ */
@@ -534,6 +530,7 @@ input:disabled {
     align-items: center;
     justify-content: flex-start;
     /* border: solid 1px; */
+    margin: 0;
     margin-top: 0.1rem;
     /* min-width: 0; */
     /* max-width: 2rem; */
@@ -554,7 +551,7 @@ input:disabled {
     padding: 0.25rem;
     margin: 0;
     position: relative;
-    background: var(--bearings-glyph-background);
+    /* background: var(--bearings-glyph-background); */
     border: solid 1px var(--bearings-counter-shade-04);
     font-size: calc(0.65 * var(--bearings-font-base-size));
     height: calc(1.4 * var(--bearings-gutter-width));
