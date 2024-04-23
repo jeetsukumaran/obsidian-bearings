@@ -370,7 +370,7 @@ input:disabled {
     position: absolute;
     font-size: calc(var(--bearings-font-base-size) - 0.2rem);
     left: calc( (-1 * var(--bearings-font-base-size)) - 0rem);
-    top: 0.40rem;
+    top: 0.38rem;
     width: var(--bearings-gutter-width);
     height: var(--bearings-gutter-width);
     /* left: -0.90rem; */
