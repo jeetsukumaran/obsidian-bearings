@@ -1053,18 +1053,20 @@ export class NavigationEntryFrame extends NavigationBase {
         // }
 
         this.elements.entryHeadContent = this.elements.entryHead.createEl("div", { cls: "bearings-entry-head-content"});
-        this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div");
+        // this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div");
         this.elements.entryHeadLinkContainer = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-link-container"});
 
+        this.renderGlyphs(
+            this.elements.entryHeadLinkContainer,
+            entryData,
+            ["bearings-entry-glyph-inline-container"],
+            ["bearings-entry-glyph-inline-cell"],
+        );
         this.renderEntryLink(
             this.elements.entryHeadLinkContainer,
             entryData,
         );
 
-        this.renderGlyphs(
-            this.elements.entryGlyphRow,
-            entryData,
-        );
 
         this.elements.entrySubcontent =  this.elements.entryMain.createEl("div", {
             cls: ["bearings-entry-subcontent"]
@@ -1152,9 +1154,11 @@ export class NavigationEntryFrame extends NavigationBase {
     renderGlyphs(
         root: HTMLElement,
         entryData: FileNavigationTreeNode,
+        containerClassNames: string[] = [],
+        cellClassNames: string[] = [],
     ) {
         this.elements.entryGlyphBox = root.createEl("div", {
-            cls: ["bearings-entry-glyph-bar-container"]
+            cls: containerClassNames,
         });
         // Defaults needed here as data.json created under previous API will not be populated
         // with these newer fields.
@@ -1166,7 +1170,7 @@ export class NavigationEntryFrame extends NavigationBase {
         }
         glyphs.forEach(glyphCode => {
                 const glyphCell = this.elements.entryGlyphBox.createEl("div", {
-                    cls: ["bearings-entry-glyph-bar-cell"]
+                    cls: cellClassNames,
                 });
                 if (false && glyphCode.startsWith(':') && glyphCode.endsWith(':')) {
                     const glyphName = glyphCode.slice(1, -1);

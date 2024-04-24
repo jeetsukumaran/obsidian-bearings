@@ -556,10 +556,12 @@ input:disabled {
     justify-content: center;
 }
 
-.bearings-entry-glyph-inline-cell {
+.bearings-entry-glyph-inline-container {
+    display: inline-block;
 }
 
-.bearings-entry-glyph-inline-container {
+.bearings-entry-glyph-inline-cell {
+    display: inline-block;
 }
 
 /* }}} */
