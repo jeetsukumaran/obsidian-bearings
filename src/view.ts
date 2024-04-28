@@ -736,6 +736,7 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
         let subtreeRoot = this._context.dataService.coordinateSubtrees(
             this.focalFilePath,
             this._context.configuration.coordinateRelationshipDefinitions(),
+            this._context.configuration.superordinateRelationshipDefinitions(),
             this.discoveryDepthLimit,
         )
 

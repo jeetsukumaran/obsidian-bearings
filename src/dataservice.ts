@@ -224,6 +224,7 @@ export class DataService {
     coordinateSubtrees(
         filePath: string,
         relationshipDefinitions: RelationshipDefinition[],
+        secondaryRelationshipDefinitions: RelationshipDefinition[],
         limitDepth: number | null = null,
         filePathNodeMap?: FilePathNodeMapType,
     ): FileNavigationTreeNode {
@@ -235,8 +236,10 @@ export class DataService {
         return startFileNode.coordinateSubtrees(
                 "standard",
                 relationshipDefinitions,
+                secondaryRelationshipDefinitions,
                 limitDepth,
-                filePathNodeMap)
+                filePathNodeMap,
+        )
             // .sortChildren( (a: FileNavigationTreeNode, b: FileNavigationTreeNode) => {
             //     return a.value.sort_key(b.value);
             // });
@@ -585,6 +588,7 @@ export class FileNode {
     coordinateSubtrees(
         label: string,
         relationshipDefinitions: RelationshipDefinition[],
+        secondaryRelationshipDefinitions: RelationshipDefinition[],
         limitDepth: number | null = null,
         filePathNodeMap: FilePathNodeMapType,
     ): FileNavigationTreeNode {
@@ -613,13 +617,25 @@ export class FileNode {
                     filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
 
                     // Expand coordinates
-                    let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
-                        label,
-                        relationshipDefinitions,
-                        -1, // will return terminal
-                        filePathNodeMap,
-                    );
-                    coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    if (false) {
+                        let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
+                            label,
+                            relationshipDefinitions,
+                            secondaryRelationshipDefinitions,
+                            -1, // will return terminal
+                            filePathNodeMap,
+                        );
+                        coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    }
+                    if (true) {
+                        let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
+                            label,
+                            secondaryRelationshipDefinitions,
+                            -1, // will return terminal
+                            filePathNodeMap,
+                        );
+                        coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    }
                     // // Expand children
                     // let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
                     //     label,
@@ -641,13 +657,25 @@ export class FileNode {
                         recurseLimitDepth = -1;
                     }
                     filePathNodeMap.set(propertyLinkedPath, linkedNoteSystemNode);
-                    let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
-                        label,
-                        relationshipDefinitions,
-                        recurseLimitDepth,
-                        filePathNodeMap,
-                    );
-                    coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    // if (false) {
+                    //     let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.coordinateSubtrees(
+                    //         label,
+                    //         relationshipDefinitions,
+                    //         secondaryRelationshipDefinitions,
+                    //         recurseLimitDepth,
+                    //         filePathNodeMap,
+                    //     );
+                    //     coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    // }
+                    if (true) {
+                        let treeChildNode: FileNavigationTreeNode = linkedNoteSystemNode.subordinateSubtrees(
+                            label,
+                            secondaryRelationshipDefinitions,
+                            recurseLimitDepth,
+                            filePathNodeMap,
+                        );
+                        coordinateFilePaths[propertyLinkedPath] = subtreeRoot.addChildNode(treeChildNode);
+                    }
 
                 }
             });
