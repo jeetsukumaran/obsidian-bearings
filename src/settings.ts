@@ -79,8 +79,8 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             ],
             "invertedRelationshipPropertyName": "entry-collections"
         },
-        "Association": {
-            "designatedPropertyName": "entry-associates",
+        "Links": {
+            "designatedPropertyName": "entry-links",
             "categories": [
                 "coordinate"
             ]
