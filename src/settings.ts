@@ -36,56 +36,82 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         inactiveFileFocalNote: "", // string
     },
     relationshipDefinitions: {
-        "Up": {
-            designatedPropertyName: "entry-up",
-            invertedRelationshipPropertyName: "entry-down",
-            categories: ["superordinate"],
-        },
         "Parent": {
-            designatedPropertyName: "entry-parents",
-            invertedRelationshipPropertyName: "entry-children",
-            categories: ["superordinate"],
+            "designatedPropertyName": "entry-parents",
+            "invertedRelationshipPropertyName": "entry-children",
+            "categories": [
+                "superordinate"
+            ]
         },
         "Classifier": {
-            designatedPropertyName: "entry-classifiers",
-            invertedRelationshipPropertyName: "entry-classifications",
-            categories: ["superordinate"],
+            "designatedPropertyName": "entry-classifiers",
+            "invertedRelationshipPropertyName": "entry-classifications",
+            "categories": [
+                "superordinate"
+            ]
         },
         "Collection": {
-            designatedPropertyName: "entry-collections",
-            invertedRelationshipPropertyName: "entry-holdings",
-            categories: ["superordinate"],
+            "designatedPropertyName": "entry-collections",
+            "invertedRelationshipPropertyName": "entry-items",
+            "categories": [
+                "superordinate"
+            ]
         },
         "Author": {
-            designatedPropertyName: "source-authors",
-            invertedRelationshipPropertyName: "source-references",
-            categories: ["superordinate"],
+            "designatedPropertyName": "source-authors",
+            "invertedRelationshipPropertyName": "entry-bibliography",
+            "categories": [
+                "superordinate"
+            ]
         },
         "Collaborator": {
-            designatedPropertyName: "entry-collaborators",
-            invertedRelationshipPropertyName: "entry-collaborations",
-            categories: ["superordinate"],
+            "designatedPropertyName": "entry-collaborators",
+            "invertedRelationshipPropertyName": "entry-collaborations",
+            "categories": [
+                "superordinate"
+            ]
         },
         "Reference (bibliographical)": {
-            designatedPropertyName: "entry-references",
-            categories: ["coordinate", "bibliographical"],
-        },
-        "Bibliography": {
-            designatedPropertyName: "entry-bibliography",
-            categories: ["coordinate", "bibliographical"],
+            "designatedPropertyName": "entry-bibliography",
+            "categories": [
+                "coordinate",
+                "bibliographical"
+            ],
+            "invertedRelationshipPropertyName": "entry-collections"
         },
         "Association": {
-            designatedPropertyName: "entry-associations",
-            categories: ["coordinate"],
+            "designatedPropertyName": "entry-associates",
+            "categories": [
+                "coordinate"
+            ]
         },
         "Referral": {
-            designatedPropertyName: "entry-referrals",
-            categories: ["coordinate"],
+            "designatedPropertyName": "entry-referrals",
+            "categories": [
+                "coordinate"
+            ]
         },
         "Attachment": {
-            designatedPropertyName: "entry-attachments",
-            categories: ["coordinate"],
+            "designatedPropertyName": "",
+            "categories": [
+                "superordinate"
+            ],
+            "invertedRelationshipPropertyName": "entry-attachments"
         },
+        "Holding": {
+            "designatedPropertyName": "",
+            "invertedRelationshipPropertyName": "source-holdings",
+            "categories": [
+                "superordinate"
+            ]
+        },
+        "Topic": {
+            "designatedPropertyName": "entry-topics",
+            "invertedRelationshipPropertyName": "entry-cases",
+            "categories": [
+                "superordinate"
+            ]
+        }
     }
 }
 
