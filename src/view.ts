@@ -1057,15 +1057,15 @@ export class NavigationEntryFrame extends NavigationBase {
         // this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div");
         this.elements.entryHeadLinkContainer = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-link-container"});
 
+        this.renderEntryLink(
+            this.elements.entryHeadLinkContainer,
+            entryData,
+        );
         this.renderGlyphs(
             this.elements.entryHeadLinkContainer,
             entryData,
             ["bearings-entry-glyph-inline-container"],
             ["bearings-entry-glyph-inline-cell"],
-        );
-        this.renderEntryLink(
-            this.elements.entryHeadLinkContainer,
-            entryData,
         );
 
 

@@ -564,7 +564,7 @@ input:disabled {
 
 .bearings-entry-glyph-inline-cell {
     display: inline-block;
-    margin-right: 0.2rem;
+    margin-left: 0.2rem;
 }
 
 /* }}} */
