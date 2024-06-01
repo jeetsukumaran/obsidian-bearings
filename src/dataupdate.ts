@@ -12,6 +12,8 @@ interface PropertyField {
     restoreButton: HTMLButtonElement;
 }
 
+export const PLUGIN_NAME = "Bearings";
+
 export class FrontMatterUpdateModal extends Modal {
     private file: TFile;
     private propertyFields: PropertyField[] = [];
@@ -94,16 +96,15 @@ export class FrontMatterUpdateModal extends Modal {
     }
 
     async updateFile(newFrontMatter: Record<string, string>) {
-        let content = await this.app.vault.read(this.file);
-        const frontMatterEndIndex = content.indexOf('---', 3);
-        let newFrontMatterString = '---\n';
-        for (const key in newFrontMatter) {
-            newFrontMatterString += `${key}: ${newFrontMatter[key]}\n`;
-        }
-        newFrontMatterString += '---\n';
-        content = newFrontMatterString + content.slice(frontMatterEndIndex + 3);
-        await this.app.vault.modify(this.file, content);
-        new Notice('Front matter updated.');
+        await this.app.fileManager.processFrontMatter(this.file, (frontmatter: { [key: string]: any }) => {
+            // Update each key in the new front matter data
+            for (const key in newFrontMatter) {
+                frontmatter[key] = newFrontMatter[key];
+            }
+            new Notice('Front matter updated.');
+        }).catch((error) => {
+            new Notice(`Failed to update front matter: ${error.message}`);
+        });
         this.close();
     }
 }
