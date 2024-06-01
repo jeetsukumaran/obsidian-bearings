@@ -12,7 +12,7 @@ interface PropertyField {
     restoreButton: HTMLButtonElement;
 }
 
-class FrontMatterUpdateModal extends Modal {
+export class FrontMatterUpdateModal extends Modal {
     private file: TFile;
     private propertyFields: PropertyField[] = [];
 

@@ -4,7 +4,12 @@ import {
     Menu,
     Notice,
     normalizePath,
+    TFile,
 } from "obsidian";
+
+import {
+    FrontMatterUpdateModal
+} from "./dataupdate"
 
 export function buildLinkTargetEditMenu(
     menu: Menu,
@@ -20,17 +25,23 @@ export function buildLinkTargetEditMenu(
         item
             .setTitle("Edit title display fields")
             .setIcon("edit")
-            // .onClick(() => app.workspace.openLinkText(linkPath, "", "tab")
-            .onClick(() => app.workspace.openLinkText(
-                linkPath,
-                linkPath,
-                "tab",
-                { active: true, }
-            )
-        )
+            .onClick(() => {
+                const normalizedPath = normalizePath(linkPath);
+                const file = app.vault.getAbstractFileByPath(normalizedPath);
+                if (file instanceof TFile) {
+                    const modal = new FrontMatterUpdateModal({
+                        app: app,
+                        path: normalizedPath,
+                        propertyNames: propertyFields,
+                    });
+                    modal.open();
+                } else {
+                    new Notice("File not found or the path is not a valid file.");
+                }
+            })
     );
-
 }
+
 
 export function buildLinkOpenMenu(
     menu: Menu,
