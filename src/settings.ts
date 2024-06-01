@@ -25,6 +25,11 @@ export interface BearingsSettingsData {
     };
 }
 
+export const DEFAULT_TITLE_FIELDS: string[] = [
+    "entry-title",
+    "title",
+];
+
 export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     options: {
         // globalNamespacePrefix: "entry-", // string | null
@@ -225,10 +230,10 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setName('Title fields')
             .setDesc('Comma-separated list of property names that will be used as the display text of each note. Custom values not yet supported.')
             .addText(text => text
-                .setValue(options.titleField?.join(",") || "title, entry-title")
-                .setDisabled(true)
+                .setValue((options.titleField || DEFAULT_TITLE_FIELDS).join(", "))
+                // .setDisabled(true)
                 .onChange(async (value) => {
-                    options.titleField = value ? value.toString().split(",").map( (s:string) => s.trim() ) : ["title", "entry-title"];
+                    options.titleField = (value ? value : DEFAULT_TITLE_FIELDS).toString().split(",").map( (s:string) => s.trim() );
                     await this.saveSettingsFn();
                 })
             );

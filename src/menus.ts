@@ -6,6 +6,32 @@ import {
     normalizePath,
 } from "obsidian";
 
+export function buildLinkTargetEditMenu(
+    menu: Menu,
+    app: App,
+    linkPath: string,
+    propertyFields: string[],
+    includePreSeparator = true,
+) {
+    if (includePreSeparator) {
+        menu.addSeparator();
+    }
+    menu.addItem((item) =>
+        item
+            .setTitle("Edit title display fields")
+            .setIcon("edit")
+            // .onClick(() => app.workspace.openLinkText(linkPath, "", "tab")
+            .onClick(() => app.workspace.openLinkText(
+                linkPath,
+                linkPath,
+                "tab",
+                { active: true, }
+            )
+        )
+    );
+
+}
+
 export function buildLinkOpenMenu(
     menu: Menu,
     app: App,

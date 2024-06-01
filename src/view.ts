@@ -35,12 +35,14 @@ import {
 } from "./dataservice";
 
 import {
+    DEFAULT_TITLE_FIELDS,
     BearingsConfiguration,
 } from "./settings";
 
 import {
     buildLinkCopyMenu,
     buildLinkOpenMenu,
+    buildLinkTargetEditMenu,
 } from "./menus"
 
 import {
@@ -1129,11 +1131,18 @@ export class NavigationEntryFrame extends NavigationBase {
             });
         });
         linkContainer.addEventListener('contextmenu', (event) => {
-            const menu = new Menu()
-            buildLinkOpenMenu(menu, this._context.app, linkPath)
-            buildLinkCopyMenu(menu, linkPath)
-            menu.showAtMouseEvent(event)
-        })
+            const menu = new Menu();
+            const titleFields: string[] = this._context.configuration.options?.titleField || DEFAULT_TITLE_FIELDS;
+            buildLinkOpenMenu(menu, this._context.app, linkPath);
+            buildLinkTargetEditMenu(
+                menu,
+                this._context.app,
+                linkPath,
+                titleFields,
+            );
+            buildLinkCopyMenu(menu, linkPath);
+            menu.showAtMouseEvent(event);
+        });
         linkContainer.addEventListener('click', (event) => {
             event.preventDefault();
             const app = this._context.app;
