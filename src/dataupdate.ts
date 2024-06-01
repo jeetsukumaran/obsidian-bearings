@@ -4,6 +4,7 @@ interface FrontMatterUpdateOptions {
     app: App;
     path: string;
     propertyNames: string[];
+    updateCallbackFn: () => Promise<void>;
 }
 
 interface PropertyField {
@@ -17,6 +18,7 @@ export const PLUGIN_NAME = "Bearings";
 export class FrontMatterUpdateModal extends Modal {
     private file: TFile;
     private propertyFields: PropertyField[] = [];
+    public updateCallbackFn: () => Promise<void>;
 
     constructor(options: FrontMatterUpdateOptions) {
         super(options.app);
@@ -26,6 +28,7 @@ export class FrontMatterUpdateModal extends Modal {
             this.close();
             return;
         }
+        this.updateCallbackFn = options.updateCallbackFn;
         this.loadProperties(options.propertyNames);
     }
 
@@ -82,6 +85,7 @@ export class FrontMatterUpdateModal extends Modal {
             }), {});
 
             await this.updateFile(newFrontMatter);
+            await this.updateCallbackFn();
         };
     }
 

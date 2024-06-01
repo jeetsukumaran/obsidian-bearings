@@ -163,6 +163,7 @@ export class BearingsView extends ItemView {
                 this.configuration,
                 this.dataService,
                 "",
+                this.refresh,
                 // true,
             );
             this.navigationView = new NavigationView(
@@ -184,6 +185,7 @@ export class NavigationContext {
     configuration: BearingsConfiguration;
     dataService: DataService;
     _focalFilePath: string;
+    updateCallbackFn: () => Promise<void>;
     // isOpenFocalFile: boolean = false;
 
     constructor(
@@ -191,12 +193,14 @@ export class NavigationContext {
         configuration: BearingsConfiguration,
         dataService: DataService,
         focalFilePath: string,
+        updateCallbackFn: () => Promise<void>,
         // isOpenFocalFile: boolean,
     ) {
         this.app = app;
         this.configuration = configuration;
         this.dataService = dataService;
         this._focalFilePath = focalFilePath;
+        this.updateCallbackFn = updateCallbackFn;
         // this.isOpenFocalFile = isOpenFocalFile;
     }
 
@@ -252,9 +256,22 @@ export class NavigationView extends NavigationBase {
     isBypassFileChangeCheck: boolean = false;
     toggleOptionState: { [key: string]: boolean } = {};
 
+    constructor(
+        navigationContext: NavigationContext,
+        root: HTMLElement,
+    ) {
+        super(
+            navigationContext,
+            root,
+        );
+        this._context.updateCallbackFn = this.refresh;
+    }
+
+
     async refresh(
         options: { [key: string]: boolean } = {},
     ) {
+        await this._context.dataService.refresh();
         await this.render(this._context._focalFilePath, {
             ... options,
             isForced: true,
@@ -1139,6 +1156,8 @@ export class NavigationEntryFrame extends NavigationBase {
                 this._context.app,
                 linkPath,
                 titleFields,
+                true,
+                this._context.updateCallbackFn,
             );
             buildLinkCopyMenu(menu, linkPath);
             menu.showAtMouseEvent(event);

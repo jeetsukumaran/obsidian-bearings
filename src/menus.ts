@@ -17,6 +17,7 @@ export function buildLinkTargetEditMenu(
     linkPath: string,
     propertyFields: string[],
     includePreSeparator = true,
+    updateCallbackFn: () => Promise<void>,
 ) {
     if (includePreSeparator) {
         menu.addSeparator();
@@ -33,6 +34,7 @@ export function buildLinkTargetEditMenu(
                         app: app,
                         path: normalizedPath,
                         propertyNames: propertyFields,
+                        updateCallbackFn: updateCallbackFn,
                     });
                     modal.open();
                 } else {

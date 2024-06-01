@@ -66,6 +66,7 @@ export default class BearingsPlugin extends Plugin {
                     this.configuration,
                     this.dataService,
                     "",
+                    this.codeBlockRefresh
                     // true,
                 );
                 let navigationView = new NavigationView(
@@ -90,12 +91,7 @@ export default class BearingsPlugin extends Plugin {
         this.addCommand({
             id: 'refresh-bearings-code-blocks',
             name: 'Navigation code blocks: refresh',
-            callback: () => {
-                this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh({
-                    isCodeBlock: true,
-                    isForce: true,
-                }));
-            }
+            callback: this.codeBlockRefresh,
         });
 
         /* Sidebar view */
@@ -177,6 +173,13 @@ export default class BearingsPlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(this.configuration);
+    }
+
+    async codeBlockRefresh() {
+        await this.activeNavigators.forEach( (nav: NavigationView) => nav.refresh({
+            isCodeBlock: true,
+            isForce: true,
+        }))
     }
 
     async activateView() {
