@@ -1,5 +1,4 @@
 
-/* Root {{{ */
 
 :root {
     --bearings-font-base-size: 0.8rem;
@@ -12,12 +11,8 @@
     --bearings-counter-shade-01: #00000010;
     --bearings-counter-shade-04: #00000044;
     --bearings-counter-shade-08: #00000088;
-    /* --bearings-node-open-color: #008844; */
     --bearings-node-open-color: #00aa88;
     --bearings-node-closed-color: #dd6644;
-    /* --bearings-node-leaf-color: #bb8888; */
-    /* --bearings-node-leaf-color: #7890cc; */
-    /* --bearings-node-leaf-color: #00000080; */
     --bearings-node-leaf-color: #aa88aa;
     --bearings-guideline-color: #000000;
 }
@@ -33,17 +28,11 @@
     --bearings-guideline-color: #ffffff;
 }
 
-
-/* }}} */
-
-/* Root container {{{ */
-
 .bearings-main-container {
     font-size: var(--bearings-font-base-size);
     background-color: var(--bearings-counter-shade-01);
     padding: 1rem;
     border-radius: 1rem;
-    /* border: solid 1px; */
 }
 
 .bearings-main-container .bearings-main-container-body {
@@ -53,10 +42,6 @@
     display: none;
 }
 
-/* }}} */
-
-
-/* Root container header {{{ */
 
 .bearings-main-container-header {
     font-size: var(--bearings-font-base-size);
@@ -65,10 +50,7 @@
     justify-content: flex-start;
     align-items: center;
     border-radius: 0.4rem;
-    /* background: var(--background-secondary-alt); */
     background-color: var(--bearings-counter-shade-01);
-    /* background-color: var(--background-primary-alt); */
-    /* background-color: var(--background-secondary); */
 }
 
 .bearings-main-container-header-left {
@@ -82,9 +64,6 @@
 }
 
 .bearings-main-container-header-label {
-    /* margin-left: 0.5rem; */
-    /* padding: 0.5rem; */
-    /* border: solid 0.5px; */
     border-radius: 0.4rem;
     width: 100%;
 }
@@ -99,21 +78,11 @@
     align-items: center;
 }
 
-
-/* }}} */
-
-/* }}} */
-
-/* General controls {{{ */
-
 input:disabled {
     color: var(--text-faint);
     background: var(--background-secondary);
 }
 
-/* }}} */
-
-/* Main entry controls {{{ */
 
 .bearings-control-row {
     position: relative;
@@ -181,7 +150,6 @@ input:disabled {
     margin-left: 0.2rem;
     margin-right: 0.2rem;
     border-radius: 1rem;
-    /* background-color: var(--bearings-counter-shade-01); */
 }
 
 .bearings-control-label {
@@ -245,8 +213,6 @@ input:disabled {
 }
 
 .bearings-control-button svg {
-    /* height: 8px; */
-    /* width: 8px; */
 }
 
 .bearings-viewframe-section-header .bearings-control-button {
@@ -260,7 +226,6 @@ input:disabled {
 }
 
 
-/* Viewframe {{{ */
 
 .bearings-viewframe {
     margin-top: var(--bearings-font-base-size);
@@ -293,9 +258,7 @@ input:disabled {
     justify-content: flex-end;
 }
 
-/* }}} */
 
-/* Viewport {{{ */
 
 .bearings-viewport {
     background-color: var(--background-primary);
@@ -304,9 +267,7 @@ input:disabled {
     padding: var(--bearings-font-base-size);
 }
 
-/* }}} */
 
-/* Entry frame {{{ */
 
 .bearings-entry-frame {
     display: flex;
@@ -319,9 +280,7 @@ input:disabled {
     margin-bottom: 0.1rem;
 }
 
-/* }}} */
 
-/* Entry frame gutter {{{ */
 
 .bearings-entry-gutter {
     position: relative;
@@ -344,9 +303,7 @@ input:disabled {
     display: flex;
 }
 
-/* }}} */
 
-/* Guidelines {{{ */
 
 .bearings-entry-guideline {
     position: absolute;
@@ -356,15 +313,12 @@ input:disabled {
     min-height: 0;
     height: calc(100% - 1rem);
     border-right: solid 1px var(--bearings-guideline-color);
-    /* border: solid 1px var(--bearings-guideline-color); */
     align-items: start;
     justify-content: center;
     opacity: 0.2;
 }
 
-/* }}} */
 
-/* Node relationship container {{{ */
 
 .bearings-entry-node-connection-container {
     position: absolute;
@@ -373,32 +327,21 @@ input:disabled {
     top: 0.38rem;
     width: var(--bearings-gutter-width);
     height: var(--bearings-gutter-width);
-    /* left: -0.90rem; */
     padding: 0;
     opacity: 0.7;
-    /* margin: 0; */
 }
 
 .bearings-entry-node-terminal-container {
     padding: 0;
     margin: 0;
-    /* margin-left: 0px; */
     text-align: center;
-    /* width: 8px; */
-    /* height: 8px; */
-    /* border-radius: 8px; */
-    /* opacity: 0.6; */
-    /* background-color: var(--text-muted); */
-    /* border: solid 1px var(--text-muted); */
     overflow: clip;
 }
 
 .bearings-entry-node-connection-cell {
 }
 
-/* }}} */
 
-/* Node toggle container {{{ */
 
 .bearings-entry-node-toggle-container {
     cursor: pointer;
@@ -426,7 +369,6 @@ input:disabled {
 }
 
 .bearings-entry-node-toggle-container.bearings-node-closed {
-    /* top: 0.42rem; */
     color: var(--bearings-node-closed-color);
 }
 
@@ -438,17 +380,13 @@ input:disabled {
     color: var(--bearings-node-leaf-color);
 }
 
-/* }}} */
 
-/* Main entry container {{{ */
 
 .bearings-entry-main {
     position: relative;
 }
 
-/* }}} */
 
-/* Entry head {{{ */
 
 .bearings-entry-head {
     position: relative;
@@ -466,7 +404,6 @@ input:disabled {
 }
 
 .bearings-entry-head-content.bearings-node-closed {
-    /* border: dotted 1px; */
     border-bottom: dotted 2px var(--bearings-node-closed-color);
     border-radius: 0;
     margin: 0;
@@ -478,27 +415,22 @@ input:disabled {
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
-    /* border: dotted 1px var(--bearings-node-leaf-color); */
     border: solid 1px var(--bearings-node-leaf-color);
     padding-left: 0.2rem;
     padding-right: 0.2rem;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
-    /* border: solid 0.5px; */
 }
 
 .bearings-entry-head-link-container.bearings-node-closed {
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry.bearings-node-closed {
-    /* border: dotted 1px var(--bearings-node-leaf-color); */
     border: dotted 1px;
 }
 
 
 .bearings-entry-head.bearings-node-closed::after {
-    /* content: "⋯"; */
-    /* content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-circle-arrow-out-up-right'%3E%3Cpath d='M22 12A10 10 0 1 1 12 2'/%3E%3Cpath d='M22 2 12 12'/%3E%3Cpath d='M16 2h6v6'/%3E%3C/svg%3E"); */
     position: absolute;
     top: 0.3rem;
     right: -0.6rem;
@@ -520,28 +452,20 @@ input:disabled {
     margin: 0;
 }
 
-/* }}} */
 
-/* Entry glyphs {{{ */
 
 .bearings-entry-glyph-bar-container {
     position: relative;
-    /* top: 0.1rem; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    /* border: solid 1px; */
     margin: 0;
     margin-top: 0.1rem;
-    /* min-width: 0; */
-    /* max-width: 2rem; */
     width: 1.5rem;
 }
 
 .bearings-entry-glyph-bar-container.bearings-node-closed {
-    /* margin-top: 0; */
-    /* margin-bottom: 0.3rem; */
 }
 
 .bearings-entry-glyph-bar-container.is-empty {
@@ -551,7 +475,6 @@ input:disabled {
 .bearings-entry-glyph-bar-cell {
     margin: 0;
     position: relative;
-    /* background: var(--bearings-glyph-background); */
     font-size: var(--bearings-font-base-size);
     display: flex;
     align-items: center;
@@ -567,10 +490,6 @@ input:disabled {
     margin-left: 0.2rem;
 }
 
-/* }}} */
-
-
-/* Entry subcontent {{{ */
 
 .bearings-entry-subcontent {
 }
@@ -580,6 +499,55 @@ input:disabled {
     border: dashed 2px;
 }
 
-/* }}} */
 
+.bearings-modal-data-entry-fileinfo {
+    background-color: var(--bearings-counter-shade-01);
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0.4rem;
+    padding: 1rem;
+}
 
+.bearings-modal-data-entry-label {
+    font-size: 0.8em;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.bearings-modal-data-entry-item-container{
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+}
+
+.bearings-modal-data-entry-value-box {
+    width: 100%;
+    margin-right: 0.4rem;
+}
+
+.bearings-modal-data-entry-text-area {
+    width: 100%;
+    height: 3rem;
+}
+
+.bearings-modal-data-entry-item-controls-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.bearings-modal-data-entry-controls-button {
+    width: 1rem;
+    height: 3rem;
+}
+
+.bearings-modal-footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bearings-modal-footer-button {
+    margin-left: 0.4rem;
+}
