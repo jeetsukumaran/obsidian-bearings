@@ -172,26 +172,28 @@ export class BearingsConfiguration {
         Object.keys(this.relationshipDefinitions).forEach( (key: string) => {
             const value: RelationshipDefinition = this.relationshipDefinitions[key];
             if (value.designatedPropertyName) {
+                let propertyName: string = value.designatedPropertyName;
                 let relName: string = key;
-                let prefix: string;
+                let description1: string;
                 if (relName) {
-                    prefix = `Add as ${relName}: `
+                    description1 = ` (designate as: '${relName}')`
                 } else {
-                    prefix = `Add link under: `
+                    description1 = ``
                 }
-                let fieldLabel: string = `${prefix}${value.designatedPropertyName}`
+                let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
                 outlinkFields[fieldLabel] = value.designatedPropertyName;
             }
             if (value.invertedRelationshipPropertyName) {
+                let propertyName: string = value.invertedRelationshipPropertyName;
                 let relName: string = value.invertedRelationshipLabel || "";
-                let prefix: string;
+                let description1: string;
                 if (relName) {
-                    prefix = `Add as ${relName}: `
+                    description1 = ` (designate as: '${relName}')`
                 } else {
-                    prefix = `Add link under: `
+                    description1 = ``
                 }
-                let fieldLabel: string = `${prefix}${value.invertedRelationshipPropertyName}`
-                inlinkFields[fieldLabel] = value.invertedRelationshipPropertyName;
+                let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
+                outlinkFields[fieldLabel] = value.invertedRelationshipPropertyName;
             }
         });
         return {
