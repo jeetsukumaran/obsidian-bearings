@@ -9,20 +9,22 @@ import {
 } from "obsidian";
 
 import {
+    BearingsConfiguration,
+} from "./settings";
+
+import {
     TitleUpdateModal,
     appendFrontmatterLists,
 } from "./dataupdate"
 
 export function buildLinkTargetEditMenu(
-    menu: Menu,
     app: App,
+    configuration: BearingsConfiguration,
+    menu: Menu,
     linkPath: string,
     focalFilePath: string,
-    titleFields: string[],
-    outlinkedFields: { [key: string]: string },
-    inlinkedFields: { [key: string]: string },
-    includePreSeparator = true,
     updateCallbackFn: () => Promise<void>,
+    includePreSeparator = true,
 ) {
     if (includePreSeparator) {
         menu.addSeparator();
@@ -38,7 +40,7 @@ export function buildLinkTargetEditMenu(
                     const modal = new TitleUpdateModal({
                         app: app,
                         path: normalizedPath,
-                        propertyNames: titleFields,
+                        propertyNames: configuration.titleFields,
                         updateCallbackFn: updateCallbackFn,
                     });
                     modal.open();

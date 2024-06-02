@@ -10,6 +10,11 @@ import {
 	Setting
 } from 'obsidian';
 
+import {
+    CacheManager,
+    Encache,
+} from './cache';
+
 export type RelationshipDefinition = {
     designatedPropertyName?: string;
     invertedRelationshipPropertyName?: string;
@@ -120,25 +125,66 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     }
 }
 
-export class BearingsConfiguration {
+export class BearingsConfiguration extends CacheManager {
+// export class BearingsConfiguration {
     options: {
         [name: string]: any;
     }
     relationshipDefinitions: { [name: string]: RelationshipDefinition };
 
     constructor(settingsData: BearingsSettingsData) {
+        super();
         this.relationshipDefinitions = {... settingsData.relationshipDefinitions};
         this.options = { ... settingsData.options };
     }
 
+    @Encache
     superordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
             .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "superordinate"  ));
     }
 
+    @Encache
     coordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
             .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "coordinate"  ));
+    }
+
+    @Encache
+    get titleFields(): string[] {
+        return this.options?.titleField || DEFAULT_TITLE_FIELDS;
+    }
+
+    @Encache
+    get linkFields() : {
+        "outlinkFields": { [key: string]: string },
+        "inlinkFields": { [key: string]: string },
+    } {
+        const outlinkFields: { [key: string]: string } = {};
+        const inlinkFields: { [key: string]: string } = {};
+        Object.keys(this.relationshipDefinitions).forEach( (key: string) => {
+            const value: RelationshipDefinition = this.relationshipDefinitions[key];
+            if (value.designatedPropertyName) {
+                outlinkFields[`${key}: ${value.designatedPropertyName}`] = value.designatedPropertyName;
+            }
+            if (value.invertedRelationshipPropertyName) {
+                inlinkFields[`${key}: ${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
+            }
+        });
+        return {
+            outlinkFields: outlinkFields,
+            inlinkFields: inlinkFields,
+        };
+    }
+
+    @Encache
+    get outlinkFields() : { [key: string]: string } {
+        return this.linkFields.outlinkFields;
+    }
+
+    @Encache
+    get inlinkFields() : { [key: string]: string } {
+        return this.linkFields.inlinkFields;
     }
 
 }

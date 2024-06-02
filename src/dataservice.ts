@@ -65,7 +65,7 @@ import {
     TreeNode,
 } from "./graph";
 
-function Cacheable(...keyParams: string[]) {
+export function Cacheable(...keyParams: string[]) {
     return function(target: any, propertyName: string, propertyDescriptor: PropertyDescriptor): PropertyDescriptor {
         const method = propertyDescriptor.value;
         propertyDescriptor.value = function (...args: any[]) {

@@ -28,6 +28,7 @@ import {
 
 import {
     buildLinkCopyMenu,
+    buildLinkTargetEditMenu,
 } from "./menus"
 
 import {
@@ -132,11 +133,27 @@ export default class BearingsPlugin extends Plugin {
 
 
         /* File menu */
+
         this.registerEvent(
             this.app.workspace.on("file-menu", (menu, file) => {
+                let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
+                if (activeFilePath) {
+                    buildLinkTargetEditMenu(
+                        this.app,
+                        this.configuration,
+                        menu,
+                        file.path,
+                        activeFilePath,
+                        async () => {},
+                        true,
+                    );
+                }
+
                 buildLinkCopyMenu(menu, file.path)
+
             })
         );
+
         this.registerEvent(
             this.app.workspace.on("editor-menu", (menu, editor, view) => {
                 if (menu && view?.file?.path) {
