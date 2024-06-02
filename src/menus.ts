@@ -50,67 +50,69 @@ export function buildLinkTargetEditMenu(
             })
     );
 
-    const outlinkFields = configuration.outlinkFields;
-    const inlinkFields = configuration.inlinkFields;
+    if (focalFilePath) {
+        const outlinkFields = configuration.outlinkFields;
+        const inlinkFields = configuration.inlinkFields;
 
-    if (Object.keys(outlinkFields).length > 0 && focalFilePath) {
-        menu.addItem((item) => {
-            const submenu = (item as any)
-                .setTitle("Add as outlinked relationship")
-                // .setIcon("git-pull-request-create")
-                .setIcon("git-branch-plus")
-                .setSubmenu();
-            Object.entries(outlinkFields).forEach(([label, value]) => {
-                submenu.addItem((subItem: MenuItem) => {
-                    subItem.setTitle(label)
-                        .onClick(async () => {
-                            const normalizedPath = normalizePath(focalFilePath);
-                            const file = app.vault.getAbstractFileByPath(normalizedPath);
-                            if (file instanceof TFile) {
-                                await appendFrontmatterLists(
-                                    app,
-                                    file,
-                                    value,
-                                    `[[${linkPath}]]`,
-                                );
-                                await updateCallbackFn(); // Callback to refresh views or data
-                            } else {
-                                new Notice("File not found or the path is not a valid file.");
-                            }
-                        });
+        if (Object.keys(outlinkFields).length > 0 && focalFilePath) {
+            menu.addItem((item) => {
+                const submenu = (item as any)
+                    .setTitle("Add as outlinked relationship")
+                    // .setIcon("git-pull-request-create")
+                    .setIcon("git-branch-plus")
+                    .setSubmenu();
+                Object.entries(outlinkFields).forEach(([label, value]) => {
+                    submenu.addItem((subItem: MenuItem) => {
+                        subItem.setTitle(label)
+                            .onClick(async () => {
+                                const normalizedPath = normalizePath(focalFilePath);
+                                const file = app.vault.getAbstractFileByPath(normalizedPath);
+                                if (file instanceof TFile) {
+                                    await appendFrontmatterLists(
+                                        app,
+                                        file,
+                                        value,
+                                        `[[${linkPath}]]`,
+                                    );
+                                    await updateCallbackFn(); // Callback to refresh views or data
+                                } else {
+                                    new Notice("File not found or the path is not a valid file.");
+                                }
+                            });
+                    });
                 });
             });
-        });
-    }
+        }
 
-    if (Object.keys(inlinkFields).length > 0 && focalFilePath) {
-        menu.addItem((item) => {
-            const submenu = (item as any)
-                .setTitle("Add as inlinked relationship")
-                // .setIcon("link")
-                .setIcon("git-pull-request-create-arrow")
-                .setSubmenu();
-            Object.entries(inlinkFields).forEach(([label, value]) => {
-                submenu.addItem((subItem: MenuItem) => {
-                    subItem.setTitle(label)
-                        .onClick(async () => {
-                            const normalizedPath = normalizePath(linkPath);
-                            const file = app.vault.getAbstractFileByPath(normalizedPath);
-                            if (file instanceof TFile) {
-                                await appendFrontmatterLists(
-                                    app,
-                                    file,
-                                    value,
-                                    `[[${focalFilePath}]]`,
-                                );
-                                await updateCallbackFn(); // Callback to refresh views or data
-                            } else {
-                                new Notice("File not found or the path is not a valid file.");
-                            }
-                        });
+        if (Object.keys(inlinkFields).length > 0 && focalFilePath) {
+            menu.addItem((item) => {
+                const submenu = (item as any)
+                    .setTitle("Add as inlinked relationship")
+                    // .setIcon("link")
+                    .setIcon("git-pull-request-create-arrow")
+                    .setSubmenu();
+                Object.entries(inlinkFields).forEach(([label, value]) => {
+                    submenu.addItem((subItem: MenuItem) => {
+                        subItem.setTitle(label)
+                            .onClick(async () => {
+                                const normalizedPath = normalizePath(linkPath);
+                                const file = app.vault.getAbstractFileByPath(normalizedPath);
+                                if (file instanceof TFile) {
+                                    await appendFrontmatterLists(
+                                        app,
+                                        file,
+                                        value,
+                                        `[[${focalFilePath}]]`,
+                                    );
+                                    await updateCallbackFn(); // Callback to refresh views or data
+                                } else {
+                                    new Notice("File not found or the path is not a valid file.");
+                                }
+                            });
+                    });
                 });
             });
-        });
+        }
     }
 }
 
