@@ -11,8 +11,9 @@ import {
 } from 'obsidian';
 
 import {
-    CacheManager,
-    Encache,
+    // CacheManager,
+    // Encache,
+    // EncacheFn,
 } from './cache';
 
 export type RelationshipDefinition = {
@@ -125,37 +126,33 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     }
 }
 
-export class BearingsConfiguration extends CacheManager {
-// export class BearingsConfiguration {
+// export class BearingsConfiguration extends CacheManager {
+export class BearingsConfiguration {
     options: {
         [name: string]: any;
     }
     relationshipDefinitions: { [name: string]: RelationshipDefinition };
 
     constructor(settingsData: BearingsSettingsData) {
-        super();
+        // super();
         this.relationshipDefinitions = {... settingsData.relationshipDefinitions};
         this.options = { ... settingsData.options };
     }
 
-    @Encache
     superordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
             .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "superordinate"  ));
     }
 
-    @Encache
     coordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
             .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "coordinate"  ));
     }
 
-    @Encache
     get titleFields(): string[] {
         return this.options?.titleField || DEFAULT_TITLE_FIELDS;
     }
 
-    @Encache
     get linkFields() : {
         "outlinkFields": { [key: string]: string },
         "inlinkFields": { [key: string]: string },
@@ -177,12 +174,10 @@ export class BearingsConfiguration extends CacheManager {
         };
     }
 
-    @Encache
     get outlinkFields() : { [key: string]: string } {
         return this.linkFields.outlinkFields;
     }
 
-    @Encache
     get inlinkFields() : { [key: string]: string } {
         return this.linkFields.inlinkFields;
     }

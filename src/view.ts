@@ -1148,21 +1148,21 @@ export class NavigationEntryFrame extends NavigationBase {
                 linktext: linkPath,
             });
         });
-        linkContainer.addEventListener('contextmenu', (event) => {
-            const menu = new Menu();
-            buildLinkTargetEditMenu(
-                this._context.app,
-                this._context.configuration,
-                menu,
-                linkPath,
-                this._context._focalFilePath,
-                this._context.updateCallbackFn,
-                true,
-            );
-            buildLinkOpenMenu(menu, this._context.app, linkPath);
-            buildLinkCopyMenu(menu, linkPath);
-            menu.showAtMouseEvent(event);
-        });
+        // linkContainer.addEventListener('contextmenu', (event) => {
+        //     const menu = new Menu();
+        //     buildLinkTargetEditMenu(
+        //         this._context.app,
+        //         this._context.configuration,
+        //         menu,
+        //         linkPath,
+        //         this._context._focalFilePath,
+        //         this._context.updateCallbackFn,
+        //         true,
+        //     );
+        //     buildLinkOpenMenu(menu, this._context.app, linkPath);
+        //     buildLinkCopyMenu(menu, linkPath);
+        //     menu.showAtMouseEvent(event);
+        // });
         linkContainer.addEventListener('click', (event) => {
             event.preventDefault();
             const app = this._context.app;
