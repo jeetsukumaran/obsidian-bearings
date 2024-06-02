@@ -37,6 +37,7 @@ import {
 import {
     DEFAULT_TITLE_FIELDS,
     BearingsConfiguration,
+    RelationshipDefinition,
 } from "./settings";
 
 import {
@@ -1150,6 +1151,17 @@ export class NavigationEntryFrame extends NavigationBase {
         linkContainer.addEventListener('contextmenu', (event) => {
             const menu = new Menu();
             const titleFields: string[] = this._context.configuration.options?.titleField || DEFAULT_TITLE_FIELDS;
+            const outlinkedFields: { [key: string]: string } = {};
+            const inlinkedFields: { [key: string]: string } = {};
+            Object.keys(this._context.configuration.relationshipDefinitions).forEach( (key: string) => {
+                const value: RelationshipDefinition = this._context.configuration.relationshipDefinitions[key];
+                if (value.designatedPropertyName) {
+                    outlinkedFields[`${key}: '${value.designatedPropertyName}`] = value.designatedPropertyName;
+                }
+                if (value.invertedRelationshipPropertyName) {
+                    outlinkedFields[`${key}: '${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
+                }
+            });
             buildLinkOpenMenu(menu, this._context.app, linkPath);
             buildLinkTargetEditMenu(
                 menu,
