@@ -65,7 +65,7 @@ export function buildLinkTargetEditMenu(
                                     app,
                                     file,
                                     value,
-                                    linkPath,
+                                    `[[${linkPath}]]`,
                                 );
                                 await updateCallbackFn(); // Callback to refresh views or data
                             } else {
