@@ -61,7 +61,7 @@ export function buildLinkTargetEditMenu(
             menu.addItem((item) => {
                 const submenu = (item as any)
                     // .setTitle("Add as outlinked relationship")
-                    .setTitle("Add relationship ...")
+                    .setTitle("Create relationship to ...")
                     // .setIcon("git-pull-request-create")
                     .setIcon("git-branch-plus")
                     .setSubmenu();
