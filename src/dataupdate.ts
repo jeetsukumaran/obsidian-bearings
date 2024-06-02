@@ -15,6 +15,45 @@ interface PropertyField {
 
 export const PLUGIN_NAME = "Bearings";
 
+export async function updateFrontmatterStrings(
+    app: App,
+    file: TFile,
+    newFrontMatter: Record<string, string>
+) {
+    await app.fileManager.processFrontMatter(file, (frontmatter: { [key: string]: any }) => {
+        // Update each key in the new front matter data
+        for (const key in newFrontMatter) {
+            frontmatter[key] = newFrontMatter[key];
+        }
+        new Notice('Front matter updated.');
+    }).catch((error) => {
+        new Notice(`Failed to update front matter: ${error.message}`);
+    });
+}
+
+export async function appendFrontmatterLists(
+    app: App,
+    file: TFile,
+    propertyName: string,
+    newItemValue: string,
+) {
+    await app.fileManager.processFrontMatter(file, (frontmatter: { [key: string]: any }) => {
+        // Update each key in the new front matter data
+        let currentValue = []
+        if (!frontmatter[propertyName]) {
+        } else if (!Array.isArray(frontmatter)) {
+            currentValue.push(frontmatter);
+        } else {
+            currentValue.push(... frontmatter);
+        }
+        currentValue.push(newItemValue)
+        frontmatter[propertyName] = [ ... new Set<string>(currentValue) ]
+        new Notice('Front matter updated.');
+    }).catch((error) => {
+        new Notice(`Failed to update front matter: ${error.message}`);
+    });
+}
+
 export class TitleUpdateModal extends Modal {
     private file: TFile;
     private propertyFields: PropertyField[] = [];
@@ -100,15 +139,7 @@ export class TitleUpdateModal extends Modal {
     }
 
     async updateFile(newFrontMatter: Record<string, string>) {
-        await this.app.fileManager.processFrontMatter(this.file, (frontmatter: { [key: string]: any }) => {
-            // Update each key in the new front matter data
-            for (const key in newFrontMatter) {
-                frontmatter[key] = newFrontMatter[key];
-            }
-            new Notice('Front matter updated.');
-        }).catch((error) => {
-            new Notice(`Failed to update front matter: ${error.message}`);
-        });
+        updateFrontmatterStrings(this.app, this.file, newFrontMatter);
         this.close();
     }
 }

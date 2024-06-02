@@ -10,12 +10,14 @@ import {
 
 import {
     TitleUpdateModal,
+    appendFrontmatterLists,
 } from "./dataupdate"
 
 export function buildLinkTargetEditMenu(
     menu: Menu,
     app: App,
     linkPath: string,
+    focalFilePath: string,
     titleFields: string[],
     outlinkedFields: { [key: string]: string },
     inlinkedFields: { [key: string]: string },
@@ -46,7 +48,7 @@ export function buildLinkTargetEditMenu(
             })
     );
 
-    if (Object.keys(outlinkedFields).length > 0) {
+    if (Object.keys(outlinkedFields).length > 0 && focalFilePath) {
         menu.addItem((item) => {
             const submenu = (item as any)
                 .setTitle("Add outlinked relationship")
@@ -56,12 +58,16 @@ export function buildLinkTargetEditMenu(
                 submenu.addItem((subItem: MenuItem) => {
                     subItem.setTitle(label)
                         .onClick(async () => {
-                            const normalizedPath = normalizePath(linkPath);
+                            const normalizedPath = normalizePath(focalFilePath);
                             const file = app.vault.getAbstractFileByPath(normalizedPath);
                             if (file instanceof TFile) {
-                                // Assuming you have a method to handle the relationship update
-                                // await updateRelationship(app, file, label, value);
-                                // await updateCallbackFn(); // Callback to refresh views or data
+                                await appendFrontmatterLists(
+                                    app,
+                                    file,
+                                    value,
+                                    linkPath,
+                                );
+                                await updateCallbackFn(); // Callback to refresh views or data
                             } else {
                                 new Notice("File not found or the path is not a valid file.");
                             }

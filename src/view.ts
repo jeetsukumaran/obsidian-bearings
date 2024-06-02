@@ -1167,6 +1167,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 menu,
                 this._context.app,
                 linkPath,
+                this._context._focalFilePath,
                 titleFields,
                 outlinkedFields,
                 inlinkedFields,
