@@ -2,6 +2,7 @@ import {
     App,
     PaneType,
     Menu,
+    MenuItem,
     Notice,
     normalizePath,
     TFile,
@@ -15,7 +16,9 @@ export function buildLinkTargetEditMenu(
     menu: Menu,
     app: App,
     linkPath: string,
-    propertyFields: string[],
+    titleFields: string[],
+    outlinkedFields: { [key: string]: string },
+    inlinkedFields: { [key: string]: string },
     includePreSeparator = true,
     updateCallbackFn: () => Promise<void>,
 ) {
@@ -33,7 +36,7 @@ export function buildLinkTargetEditMenu(
                     const modal = new TitleUpdateModal({
                         app: app,
                         path: normalizedPath,
-                        propertyNames: propertyFields,
+                        propertyNames: titleFields,
                         updateCallbackFn: updateCallbackFn,
                     });
                     modal.open();
@@ -42,6 +45,32 @@ export function buildLinkTargetEditMenu(
                 }
             })
     );
+
+    if (Object.keys(outlinkedFields).length > 0) {
+        menu.addItem((item) => {
+            const submenu = (item as any)
+                .setTitle("Add outlinked relationship")
+                .setIcon("link")
+                .setSubmenu();
+            Object.entries(outlinkedFields).forEach(([label, value]) => {
+                submenu.addItem((subItem: MenuItem) => {
+                    subItem.setTitle(label)
+                        .onClick(async () => {
+                            const normalizedPath = normalizePath(linkPath);
+                            const file = app.vault.getAbstractFileByPath(normalizedPath);
+                            if (file instanceof TFile) {
+                                // Assuming you have a method to handle the relationship update
+                                // await updateRelationship(app, file, label, value);
+                                // await updateCallbackFn(); // Callback to refresh views or data
+                            } else {
+                                new Notice("File not found or the path is not a valid file.");
+                            }
+                        });
+                });
+            });
+        });
+    }
+
 }
 
 

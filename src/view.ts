@@ -1156,10 +1156,10 @@ export class NavigationEntryFrame extends NavigationBase {
             Object.keys(this._context.configuration.relationshipDefinitions).forEach( (key: string) => {
                 const value: RelationshipDefinition = this._context.configuration.relationshipDefinitions[key];
                 if (value.designatedPropertyName) {
-                    outlinkedFields[`${key}: '${value.designatedPropertyName}`] = value.designatedPropertyName;
+                    outlinkedFields[`${key}: ${value.designatedPropertyName}`] = value.designatedPropertyName;
                 }
                 if (value.invertedRelationshipPropertyName) {
-                    inlinkedFields[`${key}: '${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
+                    inlinkedFields[`${key}: ${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
                 }
             });
             buildLinkOpenMenu(menu, this._context.app, linkPath);
@@ -1168,6 +1168,8 @@ export class NavigationEntryFrame extends NavigationBase {
                 this._context.app,
                 linkPath,
                 titleFields,
+                outlinkedFields,
+                inlinkedFields,
                 true,
                 this._context.updateCallbackFn,
             );
