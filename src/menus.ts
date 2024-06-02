@@ -60,7 +60,8 @@ export function buildLinkTargetEditMenu(
         if (Object.keys(outlinkFields).length > 0 && focalFilePath) {
             menu.addItem((item) => {
                 const submenu = (item as any)
-                    .setTitle("Add as outlinked relationship")
+                    // .setTitle("Add as outlinked relationship")
+                    .setTitle("Add relationship ...")
                     // .setIcon("git-pull-request-create")
                     .setIcon("git-branch-plus")
                     .setSubmenu();
@@ -90,7 +91,7 @@ export function buildLinkTargetEditMenu(
         if (Object.keys(inlinkFields).length > 0 && focalFilePath) {
             menu.addItem((item) => {
                 const submenu = (item as any)
-                    .setTitle("Add as inlinked relationship")
+                    .setTitle("Add inlinked relationship ...")
                     // .setIcon("link")
                     .setIcon("git-pull-request-create-arrow")
                     .setSubmenu();
@@ -119,16 +120,29 @@ export function buildLinkTargetEditMenu(
     }
 }
 
-
 export function buildLinkOpenMenu(
     menu: Menu,
     app: App,
     linkPath: string,
     includePreSeparator = true,
 ) {
-    if (includePreSeparator) {
-        menu.addSeparator();
-    }
+    menu.addItem((item) => {
+        const submenu = (item as any)
+        .setTitle("Open ...")
+        // .setIcon("git-pull-request-create")
+        .setIcon("scroll")
+        // .setIcon("file-input")
+        .setSubmenu();
+        buildLinkOpenSubmenu(submenu, app, linkPath);
+    });
+}
+
+
+export function buildLinkOpenSubmenu(
+    menu: Menu,
+    app: App,
+    linkPath: string,
+) {
     menu.addItem((item) =>
         item
             .setTitle("Open in new tab")
@@ -200,13 +214,13 @@ export function buildLinkCopyMenu(
     includePostSeparator = false,
 ) {
 
-    if (includePreSeparator) {
-        menu.addSeparator();
-    }
+    // if (includePreSeparator) {
+    //     menu.addSeparator();
+    // }
 
     menu.addItem((item) => {
         const submenu = (item as any)
-            .setTitle("Copy link")
+            .setTitle("Clipboard ...")
             // .setIcon("git-pull-request-create")
             .setIcon("clipboard-copy")
             .setSubmenu();
@@ -216,9 +230,9 @@ export function buildLinkCopyMenu(
         );
     });
 
-    if (includePostSeparator) {
-        menu.addSeparator();
-    }
+    // if (includePostSeparator) {
+    //     menu.addSeparator();
+    // }
 
 }
 
