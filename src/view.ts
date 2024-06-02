@@ -1159,7 +1159,7 @@ export class NavigationEntryFrame extends NavigationBase {
                     outlinkedFields[`${key}: '${value.designatedPropertyName}`] = value.designatedPropertyName;
                 }
                 if (value.invertedRelationshipPropertyName) {
-                    outlinkedFields[`${key}: '${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
+                    inlinkedFields[`${key}: '${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
                 }
             });
             buildLinkOpenMenu(menu, this._context.app, linkPath);
