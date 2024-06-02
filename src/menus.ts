@@ -52,7 +52,8 @@ export function buildLinkTargetEditMenu(
         menu.addItem((item) => {
             const submenu = (item as any)
                 .setTitle("Add outlinked relationship")
-                .setIcon("link")
+                // .setIcon("git-pull-request-create")
+                .setIcon("git-branch-plus")
                 .setSubmenu();
             Object.entries(outlinkedFields).forEach(([label, value]) => {
                 submenu.addItem((subItem: MenuItem) => {
@@ -77,6 +78,35 @@ export function buildLinkTargetEditMenu(
         });
     }
 
+    if (Object.keys(inlinkedFields).length > 0 && focalFilePath) {
+        menu.addItem((item) => {
+            const submenu = (item as any)
+                .setTitle("Add inlinked relationship")
+                // .setIcon("link")
+                .setIcon("git-pull-request-create-arrow")
+                .setSubmenu();
+            Object.entries(inlinkedFields).forEach(([label, value]) => {
+                submenu.addItem((subItem: MenuItem) => {
+                    subItem.setTitle(label)
+                        .onClick(async () => {
+                            const normalizedPath = normalizePath(linkPath);
+                            const file = app.vault.getAbstractFileByPath(normalizedPath);
+                            if (file instanceof TFile) {
+                                await appendFrontmatterLists(
+                                    app,
+                                    file,
+                                    value,
+                                    `[[${focalFilePath}]]`,
+                                );
+                                await updateCallbackFn(); // Callback to refresh views or data
+                            } else {
+                                new Notice("File not found or the path is not a valid file.");
+                            }
+                        });
+                });
+            });
+        });
+    }
 }
 
 
