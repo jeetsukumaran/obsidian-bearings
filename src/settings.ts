@@ -19,6 +19,7 @@ import {
 export type RelationshipDefinition = {
     designatedPropertyName?: string;
     invertedRelationshipPropertyName?: string;
+    invertedRelationshipLabel?: string;
     categories?: string[];
 }
 
@@ -50,6 +51,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Parent": {
             "designatedPropertyName": "entry-parents",
             "invertedRelationshipPropertyName": "entry-children",
+            "invertedRelationshipLabel": "Child",
             "categories": [
                 "superordinate"
             ]
@@ -57,6 +59,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Classifier": {
             "designatedPropertyName": "entry-classifiers",
             "invertedRelationshipPropertyName": "entry-classifications",
+            "invertedRelationshipLabel": "Classification",
             "categories": [
                 "superordinate"
             ]
@@ -64,6 +67,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Collection": {
             "designatedPropertyName": "entry-collections",
             "invertedRelationshipPropertyName": "entry-items",
+            "invertedRelationshipLabel": "Item",
             "categories": [
                 "superordinate"
             ]
@@ -71,6 +75,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Author": {
             "designatedPropertyName": "source-authors",
             "invertedRelationshipPropertyName": "entry-bibliography",
+            "invertedRelationshipLabel": "Bibliography",
             "categories": [
                 "superordinate"
             ]
@@ -78,17 +83,19 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Collaborator": {
             "designatedPropertyName": "entry-collaborators",
             "invertedRelationshipPropertyName": "entry-collaborations",
+            "invertedRelationshipLabel": "Collaborator",
             "categories": [
                 "superordinate"
             ]
         },
-        "Reference (bibliographical)": {
+        "Reference": {
             "designatedPropertyName": "entry-bibliography",
             "categories": [
                 "coordinate",
                 "bibliographical"
             ],
-            "invertedRelationshipPropertyName": "entry-collections"
+            "invertedRelationshipPropertyName": "entry-collections",
+            "invertedRelationshipLabel": "Bibliography",
         },
         "Links": {
             "designatedPropertyName": "entry-links",
@@ -107,18 +114,21 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "categories": [
                 "superordinate"
             ],
-            "invertedRelationshipPropertyName": "entry-attachments"
+            "invertedRelationshipPropertyName": "entry-attachments",
+            "invertedRelationshipLabel": "Attachment",
         },
         "Holding": {
             "designatedPropertyName": "",
             "invertedRelationshipPropertyName": "source-holdings",
+            "invertedRelationshipLabel": "Holding",
             "categories": [
                 "superordinate"
             ]
         },
         "Topic": {
             "designatedPropertyName": "entry-topics",
-            "invertedRelationshipPropertyName": "entry-cases",
+            "invertedRelationshipPropertyName": "entry-collections",
+            "invertedRelationshipLabel": "Collection",
             "categories": [
                 "superordinate"
             ]
@@ -166,6 +176,9 @@ export class BearingsConfiguration {
             }
             if (value.invertedRelationshipPropertyName) {
                 inlinkFields[`${key}: ${value.invertedRelationshipPropertyName}`] = value.invertedRelationshipPropertyName;
+            }
+            if (value.invertedRelationshipLabel) {
+                inlinkFields[`${key}: ${value.invertedRelationshipLabel}`] = value.invertedRelationshipLabel;
             }
         });
         return {
@@ -321,7 +334,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
     createRelationshipDefinitionSetting(container: HTMLElement, relationshipName: string, definition: RelationshipDefinition): void {
         new Setting(container)
             .setName('Designation property name')
-            .setDesc('The property name that the focal note will use to define this relationship in terms of other notes to itself.')
+            .setDesc("The property name that the focal note will use to define this relationship in terms of other notes to itself. E.g. Notes with a 'Parent' relationship to the focal note may be listed under the 'entry-parents' property of the focal note.")
             .addText(text => text
                 .setValue(definition.designatedPropertyName || "")
                 .onChange(async (value) => {
@@ -331,6 +344,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         new Setting(container)
             .setName('Inverted (inlinked) property name')
+            // .setDesc("The property name that the focal note will use to define this relationship in terms of other notes to itself. E.g. Notes with a 'Parent' relationship to the focal note may be listed under the 'entry-parents' property of the focal note.")
             .setDesc('The property name that the focal note will use to define the inverse of this relationship in terms of other notes to itself.')
             .addText(text => text
                 .setValue(definition.invertedRelationshipPropertyName || "")
@@ -338,6 +352,17 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     definition.invertedRelationshipPropertyName = value;
                     await this.saveSettingsFn();
                 }));
+
+        new Setting(container)
+            .setName('Inverted (inlinked) property name')
+            .setDesc('The description of the inverted relationship.')
+            .addText(text => text
+                .setValue(definition.invertedRelationshipLabel || "")
+                .onChange(async (value) => {
+                    definition.invertedRelationshipLabel = value;
+                    await this.saveSettingsFn();
+                }));
+
 
         new Setting(container)
             .setName('Categories')

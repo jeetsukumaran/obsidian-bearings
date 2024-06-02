@@ -56,7 +56,7 @@ export function buildLinkTargetEditMenu(
     if (Object.keys(outlinkFields).length > 0 && focalFilePath) {
         menu.addItem((item) => {
             const submenu = (item as any)
-                .setTitle("Add outlink relationship")
+                .setTitle("Add as outlinked relationship")
                 // .setIcon("git-pull-request-create")
                 .setIcon("git-branch-plus")
                 .setSubmenu();
@@ -86,7 +86,7 @@ export function buildLinkTargetEditMenu(
     if (Object.keys(inlinkFields).length > 0 && focalFilePath) {
         menu.addItem((item) => {
             const submenu = (item as any)
-                .setTitle("Add inlink relationship")
+                .setTitle("Add as inlinked relationship")
                 // .setIcon("link")
                 .setIcon("git-pull-request-create-arrow")
                 .setSubmenu();
