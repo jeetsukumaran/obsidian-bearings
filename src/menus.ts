@@ -199,9 +199,33 @@ export function buildLinkCopyMenu(
     includePreSeparator = true,
     includePostSeparator = false,
 ) {
-    const normalizedLinkPath = normalizePath(linkPath);
-    const internalPath = normalizedLinkPath.replace(/.md$/, "");
 
+    if (includePreSeparator) {
+        menu.addSeparator();
+    }
+
+    menu.addItem((item) => {
+        const submenu = (item as any)
+            .setTitle("Copy link")
+            // .setIcon("git-pull-request-create")
+            .setIcon("clipboard-copy")
+            .setSubmenu();
+        buildLinkCopySubmenu(
+            submenu,
+            linkPath,
+        );
+    });
+
+    if (includePostSeparator) {
+        menu.addSeparator();
+    }
+
+}
+
+export function buildLinkCopySubmenu(
+    menu: Menu,
+    linkPath: string,
+) {
     const _appendToClipboard = async (value: string) => {
         try {
             const current = await navigator.clipboard.readText();
@@ -223,9 +247,8 @@ export function buildLinkCopyMenu(
         }
     };
 
-    if (includePreSeparator) {
-        menu.addSeparator();
-    }
+    const normalizedLinkPath = normalizePath(linkPath);
+    const internalPath = normalizedLinkPath.replace(/.md$/, "");
 
     menu.addItem((item) =>
         item
@@ -255,10 +278,6 @@ export function buildLinkCopyMenu(
             .onClick(() => _appendToClipboard(`  - "[[${internalPath}]]"`))
     );
 
-    if (includePostSeparator) {
-        menu.addSeparator();
-    }
-
     menu.addItem((item) =>
         item
             .setTitle("Clear clipboard")
@@ -274,12 +293,6 @@ export function buildLinkCopyMenu(
             .setIcon("documents")
             .onClick(() => _appendToClipboard(internalPath))
     );
-
-    if (includePostSeparator) {
-        menu.addSeparator();
-    }
-
 }
-
 
 
