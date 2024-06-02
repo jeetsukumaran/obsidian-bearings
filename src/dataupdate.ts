@@ -15,7 +15,7 @@ interface PropertyField {
 
 export const PLUGIN_NAME = "Bearings";
 
-export class FrontMatterUpdateModal extends Modal {
+export class TitleUpdateModal extends Modal {
     private file: TFile;
     private propertyFields: PropertyField[] = [];
     public updateCallbackFn: () => Promise<void>;

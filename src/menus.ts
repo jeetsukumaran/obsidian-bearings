@@ -8,7 +8,7 @@ import {
 } from "obsidian";
 
 import {
-    FrontMatterUpdateModal
+    TitleUpdateModal,
 } from "./dataupdate"
 
 export function buildLinkTargetEditMenu(
@@ -30,7 +30,7 @@ export function buildLinkTargetEditMenu(
                 const normalizedPath = normalizePath(linkPath);
                 const file = app.vault.getAbstractFileByPath(normalizedPath);
                 if (file instanceof TFile) {
-                    const modal = new FrontMatterUpdateModal({
+                    const modal = new TitleUpdateModal({
                         app: app,
                         path: normalizedPath,
                         propertyNames: propertyFields,
