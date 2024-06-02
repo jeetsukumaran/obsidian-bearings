@@ -39,15 +39,16 @@ export async function appendFrontmatterLists(
 ) {
     await app.fileManager.processFrontMatter(file, (frontmatter: { [key: string]: any }) => {
         // Update each key in the new front matter data
-        let currentValue = []
-        if (!frontmatter[propertyName]) {
-        } else if (!Array.isArray(frontmatter)) {
-            currentValue.push(frontmatter);
+        let currentValue = frontmatter[propertyName];
+        let newValue = [];
+        if (!currentValue) {
+        } else if (!Array.isArray(currentValue)) {
+            newValue.push(currentValue);
         } else {
-            currentValue.push(... frontmatter);
+            newValue.push(... currentValue);
         }
-        currentValue.push(newItemValue)
-        frontmatter[propertyName] = [ ... new Set<string>(currentValue) ]
+        newValue.push(newItemValue)
+        frontmatter[propertyName] = [ ... new Set<string>(newValue) ]
         new Notice('Front matter updated.');
     }).catch((error) => {
         new Notice(`Failed to update front matter: ${error.message}`);
