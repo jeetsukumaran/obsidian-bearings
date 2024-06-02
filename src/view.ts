@@ -1151,11 +1151,11 @@ export class NavigationEntryFrame extends NavigationBase {
         linkContainer.addEventListener('contextmenu', (event) => {
             const menu = new Menu();
             buildLinkTargetEditMenu(
-                menu,
                 this._context.app,
+                this._context.configuration,
+                menu,
                 linkPath,
                 this._context._focalFilePath,
-                this.configuration,
                 this._context.updateCallbackFn,
                 true,
             );

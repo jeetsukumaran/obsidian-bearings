@@ -50,14 +50,17 @@ export function buildLinkTargetEditMenu(
             })
     );
 
-    if (Object.keys(outlinkedFields).length > 0 && focalFilePath) {
+    const outlinkFields = configuration.outlinkFields;
+    const inlinkFields = configuration.inlinkFields;
+
+    if (Object.keys(outlinkFields).length > 0 && focalFilePath) {
         menu.addItem((item) => {
             const submenu = (item as any)
-                .setTitle("Add outlinked relationship")
+                .setTitle("Add outlink relationship")
                 // .setIcon("git-pull-request-create")
                 .setIcon("git-branch-plus")
                 .setSubmenu();
-            Object.entries(outlinkedFields).forEach(([label, value]) => {
+            Object.entries(outlinkFields).forEach(([label, value]) => {
                 submenu.addItem((subItem: MenuItem) => {
                     subItem.setTitle(label)
                         .onClick(async () => {
@@ -80,14 +83,14 @@ export function buildLinkTargetEditMenu(
         });
     }
 
-    if (Object.keys(inlinkedFields).length > 0 && focalFilePath) {
+    if (Object.keys(inlinkFields).length > 0 && focalFilePath) {
         menu.addItem((item) => {
             const submenu = (item as any)
-                .setTitle("Add inlinked relationship")
+                .setTitle("Add inlink relationship")
                 // .setIcon("link")
                 .setIcon("git-pull-request-create-arrow")
                 .setSubmenu();
-            Object.entries(inlinkedFields).forEach(([label, value]) => {
+            Object.entries(inlinkFields).forEach(([label, value]) => {
                 submenu.addItem((subItem: MenuItem) => {
                     subItem.setTitle(label)
                         .onClick(async () => {
