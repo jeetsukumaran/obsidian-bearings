@@ -22,7 +22,6 @@ export function buildLinkTargetEditMenu(
     configuration: BearingsConfiguration,
     menu: Menu,
     linkPath: string,
-    focalFilePath: string,
     updateCallbackFn: () => Promise<void>,
     includePreSeparator = true,
 ) {
@@ -50,7 +49,11 @@ export function buildLinkTargetEditMenu(
             })
     );
 
-    if (focalFilePath) {
+    let focalFilePath: string = app.workspace.getActiveFile()?.path || "";
+    if (!focalFilePath) {
+        return;
+    }
+    if (true) {
         const outlinkFields = configuration.outlinkFields;
         const inlinkFields = configuration.inlinkFields;
 

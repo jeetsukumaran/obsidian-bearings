@@ -136,13 +136,12 @@ export default class BearingsPlugin extends Plugin {
 
         this.registerEvent(
             this.app.workspace.on("file-menu", (menu, file) => {
-                let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
+                // let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
                 buildLinkTargetEditMenu(
                     this.app,
                     this.configuration,
                     menu,
                     file.path,
-                    activeFilePath,
                     async () => {},
                     true,
                 );

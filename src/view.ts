@@ -1155,7 +1155,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 this._context.configuration,
                 menu,
                 linkPath,
-                this._context._focalFilePath,
+                // this._context._focalFilePath,
                 this._context.updateCallbackFn,
                 true,
             );
