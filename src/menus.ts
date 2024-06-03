@@ -78,15 +78,19 @@ export function buildLinkOpenMenu(
     linkPath: string,
     includePreSeparator = true,
 ) {
-    menu.addItem((item) => {
-        const submenu = (item as any)
-        .setTitle("Open ...")
-        // .setIcon("git-pull-request-create")
-        .setIcon("scroll")
-        // .setIcon("file-input")
-        .setSubmenu();
-        buildLinkOpenSubmenu(submenu, app, linkPath);
-    });
+    // menu.addItem((item) => {
+    //     const submenu = (item as any)
+    //     .setTitle("Open ...")
+    //     // .setIcon("git-pull-request-create")
+    //     .setIcon("scroll")
+    //     // .setIcon("file-input")
+    //     .setSubmenu();
+    //     buildLinkOpenSubmenu(submenu, app, linkPath);
+    // });
+    if (includePreSeparator) {
+        menu.addSeparator();
+    }
+    buildLinkOpenSubmenu(menu, app, linkPath);
 }
 
 
@@ -166,25 +170,27 @@ export function buildLinkCopyMenu(
     includePostSeparator = false,
 ) {
 
-    // if (includePreSeparator) {
-    //     menu.addSeparator();
-    // }
+    if (includePreSeparator) {
+        menu.addSeparator();
+    }
 
-    menu.addItem((item) => {
-        const submenu = (item as any)
-            .setTitle("Clipboard ...")
-            // .setIcon("git-pull-request-create")
-            .setIcon("clipboard-copy")
-            .setSubmenu();
-        buildLinkCopySubmenu(
-            submenu,
-            linkPath,
-        );
-    });
+    // menu.addItem((item) => {
+    //     const submenu = (item as any)
+    //         .setTitle("Clipboard ...")
+    //         // .setIcon("git-pull-request-create")
+    //         .setIcon("clipboard-copy")
+    //         .setSubmenu();
+    //     buildLinkCopySubmenu(
+    //         submenu,
+    //         linkPath,
+    //     );
+    // });
 
-    // if (includePostSeparator) {
-    //     menu.addSeparator();
-    // }
+    buildLinkCopySubmenu(menu, linkPath);
+
+    if (includePostSeparator) {
+        menu.addSeparator();
+    }
 
 }
 
