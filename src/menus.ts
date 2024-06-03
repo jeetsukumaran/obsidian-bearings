@@ -13,7 +13,8 @@ import {
 } from "./settings";
 
 import {
-    TitleUpdateModal,
+    UpdateDisplayTitleModal,
+    CreateRelationshipModal,
     appendFrontmatterLists,
 } from "./dataupdate"
 
@@ -36,7 +37,7 @@ export function buildLinkTargetEditMenu(
                 const normalizedPath = normalizePath(linkPath);
                 const file = app.vault.getAbstractFileByPath(normalizedPath);
                 if (file instanceof TFile) {
-                    const modal = new TitleUpdateModal({
+                    const modal = new UpdateDisplayTitleModal({
                         app: app,
                         path: normalizedPath,
                         propertyNames: configuration.titleFields,
@@ -53,9 +54,22 @@ export function buildLinkTargetEditMenu(
     if (!focalFilePath) {
         return;
     }
-    if (true) {
+    if (focalFilePath) {
+        menu.addItem((item) =>
+                     item
+                     .setTitle("Add relationship link ...")
+                     .setIcon("git-branch-plus")
+                     .onClick( () => {
+                         const modal = new CreateRelationshipModal(
+                             app,
+                             configuration,
+                             linkPath,
+                            );
+                         modal.open();
+                     }));
         const outlinkFields = configuration.outlinkFields;
         const inlinkFields = configuration.inlinkFields;
+
 
         if (Object.keys(outlinkFields).length > 0 && focalFilePath) {
             menu.addItem((item) => {

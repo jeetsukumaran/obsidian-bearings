@@ -1,4 +1,16 @@
-import { App, Modal, Notice, TFile } from 'obsidian';
+import {
+    App,
+    Modal,
+    SuggestModal,
+    FuzzySuggestModal,
+    Notice,
+    TFile
+} from 'obsidian';
+
+import {
+    RelationshipDefinition,
+    BearingsConfiguration,
+} from "./settings";
 
 interface FrontMatterUpdateOptions {
     app: App;
@@ -55,7 +67,103 @@ export async function appendFrontmatterLists(
     });
 }
 
-export class TitleUpdateModal extends Modal {
+export interface RelationshipLinkChoice {
+    designatedRelationshipName: string;
+    propertyName: string;
+    displayText: string;
+}
+
+export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkChoice> {
+
+    public linkPath: string;
+    public configuration: BearingsConfiguration;
+    // public updateCallbackFn: () => Promise<void>;
+
+    constructor(
+        app: App,
+        configuration: BearingsConfiguration,
+        linkPath: string,
+    ) {
+        super(app);
+        this.linkPath = linkPath;
+        this.configuration = configuration;
+        // this.updateCallbackFn = updateCallbackFn;
+    }
+
+    outlinkedRelationshipChoices(): RelationshipLinkChoice[] {
+        let result: RelationshipLinkChoice[] = []
+        Object.keys(this.configuration.relationshipDefinitions).forEach( (key: string) => {
+            const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
+            if (relDef.designatedPropertyName) {
+                let propertyName: string = relDef.designatedPropertyName;
+                let relName: string = key;
+                let description1: string;
+                if (relName) {
+                    description1 = ` (designate as: '${relName}')`
+                } else {
+                    description1 = ``
+                }
+                let displayText: string = `${propertyName}${description1}`
+                result.push({
+                    "designatedRelationshipName": relName,
+                    "propertyName": propertyName,
+                    "displayText": displayText,
+                })
+            }
+            if (relDef.invertedRelationshipPropertyName) {
+                let propertyName: string = relDef.invertedRelationshipPropertyName;
+                let relName: string = relDef.invertedRelationshipLabel || "";
+                let description1: string;
+                if (relName) {
+                    description1 = ` (designate as: '${relName}')`
+                } else {
+                    description1 = ``
+                }
+                let displayText: string = `${propertyName}${description1}`
+                result.push({
+                    "designatedRelationshipName": relName,
+                    "propertyName": propertyName,
+                    "displayText": displayText,
+                })
+            }
+        });
+        return result;
+    }
+
+
+    getItems(): RelationshipLinkChoice[] {
+        return this.outlinkedRelationshipChoices();
+    }
+
+    getItemText(relItem: RelationshipLinkChoice): string {
+        return relItem.displayText;
+    }
+
+    onChooseItem(relItem: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
+        new Notice(`Selected ${relItem.propertyName}`);
+    }
+
+  // // Returns all available suggestions.
+  // getSuggestions(query: string): RelationshipLinkChoice[] {
+  //   return ALL_BOOKS.filter((book) =>
+  //     book.title.toLowerCase().includes(query.toLowerCase())
+  //   );
+  // }
+
+  // // Renders each suggestion item.
+  // renderSuggestion(book: RelationshipLinkChoice, el: HTMLElement) {
+  //   el.createEl("div", { text: book.title });
+  //   el.createEl("small", { text: book.author });
+  // }
+
+  // // Perform action on the selected suggestion.
+  // onChooseSuggestion(book: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
+  //   new Notice(`Selected ${book.title}`);
+  // }
+
+}
+
+export class UpdateDisplayTitleModal extends Modal {
     private file: TFile;
     private propertyFields: PropertyField[] = [];
     public updateCallbackFn: () => Promise<void>;
