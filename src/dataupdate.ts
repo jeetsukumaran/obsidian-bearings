@@ -108,7 +108,7 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
                 let relName: string = key;
                 let description1: string;
                 if (relName) {
-                    description1 = ` (designate as: '${relName}')`
+                    description1 = ` (designate '${this.linkPath}' as: '${relName}')`
                 } else {
                     description1 = ``
                 }
@@ -124,7 +124,7 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
                 let relName: string = relDef.invertedRelationshipLabel || "";
                 let description1: string;
                 if (relName) {
-                    description1 = ` (designate as: '${relName}')`
+                    description1 = ` (designate '${this.linkPath}' as: '${relName}')`
                 } else {
                     description1 = ``
                 }
