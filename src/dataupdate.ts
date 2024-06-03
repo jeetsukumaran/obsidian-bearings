@@ -95,6 +95,10 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
         this.updateCallbackFn = updateCallbackFn;
     }
 
+    // async open() {
+    //     super.open();
+    // }
+
     outlinkedRelationshipChoices(): RelationshipLinkChoice[] {
         let result: RelationshipLinkChoice[] = []
         Object.keys(this.configuration.relationshipDefinitions).forEach( (key: string) => {
