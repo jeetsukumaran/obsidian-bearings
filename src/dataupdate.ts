@@ -160,24 +160,6 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
         }
     }
 
-  // // Returns all available suggestions.
-  // getSuggestions(query: string): RelationshipLinkChoice[] {
-  //   return ALL_BOOKS.filter((book) =>
-  //     book.title.toLowerCase().includes(query.toLowerCase())
-  //   );
-  // }
-
-  // // Renders each suggestion item.
-  // renderSuggestion(book: RelationshipLinkChoice, el: HTMLElement) {
-  //   el.createEl("div", { text: book.title });
-  //   el.createEl("small", { text: book.author });
-  // }
-
-  // // Perform action on the selected suggestion.
-  // onChooseSuggestion(book: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
-  //   new Notice(`Selected ${book.title}`);
-  // }
-
 }
 
 export class UpdateDisplayTitleModal extends Modal {
