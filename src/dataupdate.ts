@@ -4,7 +4,8 @@ import {
     SuggestModal,
     FuzzySuggestModal,
     Notice,
-    TFile
+    TFile,
+    normalizePath,
 } from 'obsidian';
 
 import {
@@ -75,19 +76,23 @@ export interface RelationshipLinkChoice {
 
 export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkChoice> {
 
+    public focalFilePath: string;
     public linkPath: string;
     public configuration: BearingsConfiguration;
-    // public updateCallbackFn: () => Promise<void>;
+    public updateCallbackFn: () => Promise<void>;
 
     constructor(
         app: App,
         configuration: BearingsConfiguration,
+        focalFilePath: string,
         linkPath: string,
+        updateCallbackFn: () => Promise<void>,
     ) {
         super(app);
+        this.focalFilePath = focalFilePath;
         this.linkPath = linkPath;
         this.configuration = configuration;
-        // this.updateCallbackFn = updateCallbackFn;
+        this.updateCallbackFn = updateCallbackFn;
     }
 
     outlinkedRelationshipChoices(): RelationshipLinkChoice[] {
@@ -130,7 +135,6 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
         return result;
     }
 
-
     getItems(): RelationshipLinkChoice[] {
         return this.outlinkedRelationshipChoices();
     }
@@ -139,8 +143,21 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
         return relItem.displayText;
     }
 
-    onChooseItem(relItem: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
-        new Notice(`Selected ${relItem.propertyName}`);
+    async onChooseItem(relItem: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
+        // new Notice(`Selected ${relItem.propertyName}`);
+        const normalizedPath = normalizePath(this.focalFilePath);
+        const file = app.vault.getAbstractFileByPath(normalizedPath);
+        if (file instanceof TFile) {
+            await appendFrontmatterLists(
+                app,
+                file,
+                relItem.propertyName,
+                `[[${this.linkPath}]]`,
+            );
+            await this.updateCallbackFn(); // Callback to refresh views or data
+        } else {
+            new Notice("File not found or the path is not a valid file.");
+        }
     }
 
   // // Returns all available suggestions.

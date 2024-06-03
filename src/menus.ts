@@ -57,13 +57,15 @@ export function buildLinkTargetEditMenu(
     if (focalFilePath) {
         menu.addItem((item) =>
                      item
-                     .setTitle("Add relationship link ...")
+                     .setTitle("Add relationship link to ...")
                      .setIcon("git-branch-plus")
                      .onClick( () => {
                          const modal = new CreateRelationshipModal(
                              app,
                              configuration,
+                             focalFilePath,
                              linkPath,
+                             updateCallbackFn,
                             );
                          modal.open();
                      }));
