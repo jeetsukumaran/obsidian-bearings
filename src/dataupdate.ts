@@ -105,11 +105,12 @@ export class CreateRelationshipModal extends Modal {
             return;
         }
 
-        this.contentEl.createEl('h3', { text: "Bearings relationship choices", cls: 'bearings-modal-data-entry-heading-title' });
-        this.contentEl.createEl('hr');
+        this.contentEl.createEl('h3', { text: "Add relationship", cls: 'bearings-modal-data-entry-heading-title' });
+        this.contentEl.createEl('div', {text: "Focal file source"});
         this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
-        this.contentEl.createEl('hr');
-
+        this.contentEl.createEl('div', {text: "Linked file target"});
+        this.contentEl.createEl('div', { text: this.linkPath, cls: 'bearings-modal-data-entry-fileinfo' });
+        this.contentEl.createEl('div', {text: "Property name of relationship link"});
         const relationshipChoices = this.outlinkedRelationshipChoices();
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         this.selectBox.className = 'bearings-modal-data-entry-select-box';
