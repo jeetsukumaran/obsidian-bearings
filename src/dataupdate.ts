@@ -105,12 +105,12 @@ export class CreateRelationshipModal extends Modal {
             return;
         }
 
-        this.contentEl.createEl('h3', { text: "Add relationship", cls: 'bearings-modal-data-entry-heading-title' });
-        this.contentEl.createEl('div', {text: "Focal file source", cls: 'bearings-modal-data-entry-item-label'});
+        this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
+        this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
         this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
         this.contentEl.createEl('div', {text: "Linked file target", cls: 'bearings-modal-data-entry-item-label'});
         this.contentEl.createEl('div', { text: this.linkPath, cls: 'bearings-modal-data-entry-fileinfo' });
-        this.contentEl.createEl('div', {text: "Property name of relationship link", cls: 'bearings-modal-data-entry-item-label'});
+        this.contentEl.createEl('div', {text: "Relationship property name", cls: 'bearings-modal-data-entry-item-label'});
         const relationshipChoices = this.outlinkedRelationshipChoices();
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         this.selectBox.className = 'bearings-modal-data-entry-select-box';
@@ -314,10 +314,9 @@ export class UpdateDisplayTitleModal extends Modal {
         const fileContents = await this.app.vault.read(this.file);
         const frontMatter = this.app.metadataCache.getFileCache(this.file)?.frontmatter;
 
-        this.contentEl.createEl('h3', { text: "Bearings display title fields", cls: 'bearings-modal-data-entry-heading-title' });
-        this.contentEl.createEl('hr');
+        this.contentEl.createEl('h3', { text: "Edit display title field", cls: 'bearings-modal-data-entry-heading-title' });
+        this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
         this.contentEl.createEl('div', { text: this.file.path, cls: 'bearings-modal-data-entry-fileinfo' } );
-        this.contentEl.createEl('hr');
         propertyNames.forEach(propertyName => {
             const modalContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-outer-container' });
             modalContainer.createEl('label', { text: propertyName, cls: 'bearings-modal-data-entry-item-label' });
