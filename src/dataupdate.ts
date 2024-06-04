@@ -314,13 +314,12 @@ export class UpdateDisplayTitleModal extends Modal {
         const fileContents = await this.app.vault.read(this.file);
         const frontMatter = this.app.metadataCache.getFileCache(this.file)?.frontmatter;
 
-        this.contentEl.createEl('h3', { text: "Edit display title field", cls: 'bearings-modal-data-entry-heading-title' });
+        this.contentEl.createEl('h3', { text: "Edit display title fields", cls: 'bearings-modal-data-entry-heading-title' });
         this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
         this.contentEl.createEl('div', { text: this.file.path, cls: 'bearings-modal-data-entry-fileinfo' } );
         propertyNames.forEach(propertyName => {
             const modalContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-outer-container' });
-            modalContainer.createEl('label', { text: propertyName, cls: 'bearings-modal-data-entry-item-label' });
-
+            modalContainer.createEl('label', { text: `Property: '${propertyName}'`, cls: 'bearings-modal-data-entry-item-label' });
             const fieldEntryContainer = modalContainer.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
             const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
             const textArea = valueBox.createEl('textarea', {

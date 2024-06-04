@@ -31,7 +31,7 @@ export function buildLinkTargetEditMenu(
     }
     menu.addItem((item) =>
         item
-            .setTitle("Edit title display fields")
+            .setTitle("Edit display title fields")
             .setIcon("edit")
             .onClick(() => {
                 const normalizedPath = normalizePath(linkPath);
