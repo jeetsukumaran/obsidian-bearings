@@ -74,12 +74,12 @@ export interface RelationshipLinkChoice {
     displayText: string;
 }
 
-export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkChoice> {
-
+export class CreateRelationshipModal extends Modal {
     public focalFilePath: string;
     public linkPath: string;
     public configuration: BearingsConfiguration;
     public updateCallbackFn: () => Promise<void>;
+    private selectBox: HTMLSelectElement;
 
     constructor(
         app: App,
@@ -93,15 +93,40 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
         this.linkPath = linkPath;
         this.configuration = configuration;
         this.updateCallbackFn = updateCallbackFn;
+        this.selectBox = document.createElement('select');
+        this.loadProperties();
     }
 
-    // async open() {
-    //     super.open();
-    // }
+    async loadProperties() {
+        const file = this.app.vault.getAbstractFileByPath(this.focalFilePath);
+        if (!file || !(file instanceof TFile)) {
+            new Notice('File not found or the path is not a valid file.');
+            this.close();
+            return;
+        }
+
+        this.contentEl.createEl('h3', { text: "Bearings relationship choices", cls: 'bearings-modal-data-entry-heading-title' });
+        this.contentEl.createEl('hr');
+        this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
+        this.contentEl.createEl('hr');
+
+        const relationshipChoices = this.outlinkedRelationshipChoices();
+        const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
+        this.selectBox.className = 'bearings-modal-data-entry-select-box';
+        relationshipChoices.forEach(choice => {
+            const optionEl = this.selectBox.createEl('option', {
+                text: choice.displayText,
+                value: choice.propertyName,
+            });
+        });
+        selectContainer.appendChild(this.selectBox);
+
+        this.addFooterButtons();
+    }
 
     outlinkedRelationshipChoices(): RelationshipLinkChoice[] {
-        let result: RelationshipLinkChoice[] = []
-        Object.keys(this.configuration.relationshipDefinitions).forEach( (key: string) => {
+        let result: RelationshipLinkChoice[] = [];
+        Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
             if (relDef.designatedPropertyName) {
                 let propertyName: string = relDef.designatedPropertyName;
@@ -117,7 +142,7 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
                     "designatedRelationshipName": relName,
                     "propertyName": propertyName,
                     "displayText": displayText,
-                })
+                });
             }
             if (relDef.invertedRelationshipPropertyName) {
                 let propertyName: string = relDef.invertedRelationshipPropertyName;
@@ -133,38 +158,139 @@ export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkC
                     "designatedRelationshipName": relName,
                     "propertyName": propertyName,
                     "displayText": displayText,
-                })
+                });
             }
         });
         return result;
     }
 
-    getItems(): RelationshipLinkChoice[] {
-        return this.outlinkedRelationshipChoices();
+    addFooterButtons() {
+        const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
+        this.addCancelButton(footer);
+
+        const saveButton = this.addFooterButton('Save', 'bearings-modal-footer-button', footer);
+        saveButton.onclick = async () => {
+            const selectedProperty = this.selectBox.value;
+            const normalizedPath = normalizePath(this.focalFilePath);
+            const file = this.app.vault.getAbstractFileByPath(normalizedPath);
+            if (file instanceof TFile) {
+                await appendFrontmatterLists(
+                    this.app,
+                    file,
+                    selectedProperty,
+                    `[[${this.linkPath}]]`,
+                );
+                await this.updateCallbackFn(); // Callback to refresh views or data
+            } else {
+                new Notice("File not found or the path is not a valid file.");
+            }
+            this.close();
+        };
     }
 
-    getItemText(relItem: RelationshipLinkChoice): string {
-        return relItem.displayText;
+    addCancelButton(footer: HTMLElement) {
+        const cancelButton = this.addFooterButton('Cancel', 'bearings-modal-footer-button', footer);
+        cancelButton.onclick = () => this.close();
     }
 
-    async onChooseItem(relItem: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
-        // new Notice(`Selected ${relItem.propertyName}`);
-        const normalizedPath = normalizePath(this.focalFilePath);
-        const file = app.vault.getAbstractFileByPath(normalizedPath);
-        if (file instanceof TFile) {
-            await appendFrontmatterLists(
-                app,
-                file,
-                relItem.propertyName,
-                `[[${this.linkPath}]]`,
-            );
-            await this.updateCallbackFn(); // Callback to refresh views or data
-        } else {
-            new Notice("File not found or the path is not a valid file.");
-        }
+    addFooterButton(text: string, className: string, footer: HTMLElement): HTMLButtonElement {
+        const btn = footer.createEl('button', { text, cls: className });
+        return btn;
     }
-
 }
+
+
+// export class CreateRelationshipModal extends FuzzySuggestModal<RelationshipLinkChoice> {
+
+//     public focalFilePath: string;
+//     public linkPath: string;
+//     public configuration: BearingsConfiguration;
+//     public updateCallbackFn: () => Promise<void>;
+
+//     constructor(
+//         app: App,
+//         configuration: BearingsConfiguration,
+//         focalFilePath: string,
+//         linkPath: string,
+//         updateCallbackFn: () => Promise<void>,
+//     ) {
+//         super(app);
+//         this.focalFilePath = focalFilePath;
+//         this.linkPath = linkPath;
+//         this.configuration = configuration;
+//         this.updateCallbackFn = updateCallbackFn;
+//     }
+
+//     // async open() {
+//     //     super.open();
+//     // }
+
+//     outlinkedRelationshipChoices(): RelationshipLinkChoice[] {
+//         let result: RelationshipLinkChoice[] = []
+//         Object.keys(this.configuration.relationshipDefinitions).forEach( (key: string) => {
+//             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
+//             if (relDef.designatedPropertyName) {
+//                 let propertyName: string = relDef.designatedPropertyName;
+//                 let relName: string = key;
+//                 let description1: string;
+//                 if (relName) {
+//                     description1 = ` (designate '${this.linkPath}' as: '${relName}')`
+//                 } else {
+//                     description1 = ``
+//                 }
+//                 let displayText: string = `${propertyName}${description1}`
+//                 result.push({
+//                     "designatedRelationshipName": relName,
+//                     "propertyName": propertyName,
+//                     "displayText": displayText,
+//                 })
+//             }
+//             if (relDef.invertedRelationshipPropertyName) {
+//                 let propertyName: string = relDef.invertedRelationshipPropertyName;
+//                 let relName: string = relDef.invertedRelationshipLabel || "";
+//                 let description1: string;
+//                 if (relName) {
+//                     description1 = ` (designate '${this.linkPath}' as: '${relName}')`
+//                 } else {
+//                     description1 = ``
+//                 }
+//                 let displayText: string = `${propertyName}${description1}`
+//                 result.push({
+//                     "designatedRelationshipName": relName,
+//                     "propertyName": propertyName,
+//                     "displayText": displayText,
+//                 })
+//             }
+//         });
+//         return result;
+//     }
+
+//     getItems(): RelationshipLinkChoice[] {
+//         return this.outlinkedRelationshipChoices();
+//     }
+
+//     getItemText(relItem: RelationshipLinkChoice): string {
+//         return relItem.displayText;
+//     }
+
+//     async onChooseItem(relItem: RelationshipLinkChoice, evt: MouseEvent | KeyboardEvent) {
+//         // new Notice(`Selected ${relItem.propertyName}`);
+//         const normalizedPath = normalizePath(this.focalFilePath);
+//         const file = app.vault.getAbstractFileByPath(normalizedPath);
+//         if (file instanceof TFile) {
+//             await appendFrontmatterLists(
+//                 app,
+//                 file,
+//                 relItem.propertyName,
+//                 `[[${this.linkPath}]]`,
+//             );
+//             await this.updateCallbackFn(); // Callback to refresh views or data
+//         } else {
+//             new Notice("File not found or the path is not a valid file.");
+//         }
+//     }
+
+// }
 
 export class UpdateDisplayTitleModal extends Modal {
     private file: TFile;
