@@ -168,7 +168,7 @@ export class CreateRelationshipModal extends Modal {
                 let propertyName: string = relDef.designatedPropertyName;
                 let description1: string;
                 if (designatedRelationshipLabel) {
-                    description1 = ` (designate '${this.linkPath}' as: '${designatedRelationshipLabel}')`
+                    description1 = ` (designate [[${this.linkPath}]] as: '${designatedRelationshipLabel}')`
                 } else {
                     description1 = ``
                 }
