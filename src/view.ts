@@ -137,7 +137,7 @@ export class BearingsView extends ItemView {
     }
 
     async refresh() {
-        await this.dataService.refresh();
+        // await this.dataService.refresh();
     }
 
     async onActiveLeafChange() {
@@ -150,7 +150,7 @@ export class BearingsView extends ItemView {
     }
 
     async render() {
-        await this.refresh();
+        await this.dataService.refresh();
         // if (this.root) {
         //     this.root.empty();
         // } else {
@@ -265,7 +265,7 @@ export class NavigationView extends NavigationBase {
             navigationContext,
             root,
         );
-        this._context.updateCallbackFn = this.refresh;
+        // this._context.updateCallbackFn = this.refresh;
     }
 
 
