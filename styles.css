@@ -559,3 +559,11 @@ input:disabled {
 .bearings-modal-footer-button {
     margin-left: 0.4rem;
 }
+
+.bearings-modal-infobox {
+    border: solid 0.5px var(--bearings-counter-shade-04);
+    border-radius: 0.4rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    opacity: 0.8;
+}

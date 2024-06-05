@@ -71,6 +71,7 @@ export async function appendFrontmatterLists(
 export interface RelationshipLinkChoice {
     index: number;
     designatedRelationshipName: string;
+    invertedRelationshipName: string;
     propertyName: string;
     displayText: string;
 }
@@ -82,6 +83,7 @@ export class CreateRelationshipModal extends Modal {
     public updateCallbackFn: () => Promise<void>;
     private selectBox: HTMLSelectElement;
     private relationshipChoices: RelationshipLinkChoice[];
+    private relationshipDescEl: HTMLElement;
 
     constructor(
         app: App,
@@ -102,7 +104,12 @@ export class CreateRelationshipModal extends Modal {
         this.loadProperties();
     }
 
+    get currentSelection() {
+        return this.relationshipChoices[Number(this.selectBox.value)];
+    }
+
     async selectionUpdate() {
+        let currentSelection this.currentSelection;
     }
 
     async loadProperties() {
@@ -127,31 +134,32 @@ export class CreateRelationshipModal extends Modal {
                 value: choice.index.toString(),
             });
         });
-        await this.selectionUpdate();
         selectContainer.appendChild(this.selectBox);
         this.contentEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
-        this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
-
+        this.relationshipDescEl = this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-infobox' });
         this.addFooterButtons();
+        await this.selectionUpdate();
     }
 
     loadChoices() {
         this.relationshipChoices = [];
         Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
+            let designatedRelationShipname: string = key;
+            let invertedRelationshipName: string = relDef.invertedRelationshipName;
             if (relDef.designatedPropertyName) {
                 let propertyName: string = relDef.designatedPropertyName;
-                let relName: string = key;
                 let description1: string;
-                if (relName) {
-                    description1 = ` (designate '${this.linkPath}' as: '${relName}')`
+                if (designatedRelationShipname) {
+                    description1 = ` (designate '${this.linkPath}' as: '${designatedRelationShipname}')`
                 } else {
                     description1 = ``
                 }
                 let displayText: string = `${propertyName}${description1}`
                 this.relationshipChoices.push({
                     "index": this.relationshipChoices.length,
-                    "designatedRelationshipName": relName,
+                    "designatedRelationshipName": designatedRelationShipname,
+                    "invertedRelationshipName": relDef.invertedRelationshipPropertyName,
                     "propertyName": propertyName,
                     "displayText": displayText,
                 });
@@ -169,6 +177,7 @@ export class CreateRelationshipModal extends Modal {
                 this.relationshipChoices.push({
                     "index": this.relationshipChoices.length,
                     "designatedRelationshipName": relName,
+                    "invertedRelationshipName": relDef.relationship,
                     "propertyName": propertyName,
                     "displayText": displayText,
                 });
@@ -182,7 +191,7 @@ export class CreateRelationshipModal extends Modal {
 
         const saveButton = this.addFooterButton('Save', 'bearings-modal-footer-button', footer);
         saveButton.onclick = async () => {
-            const selectedProperty = this.relationshipChoices[Number(this.selectBox.value)].propertyName;
+            const selectedProperty = this.currentSelection.propertyName;
             const normalizedPath = normalizePath(this.focalFilePath);
             const file = this.app.vault.getAbstractFileByPath(normalizedPath);
             if (file instanceof TFile) {
