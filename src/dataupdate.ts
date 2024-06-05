@@ -70,8 +70,8 @@ export async function appendFrontmatterLists(
 
 export interface RelationshipLinkChoice {
     index: number;
-    designatedRelationshipName: string;
-    invertedRelationshipName: string;
+    designatedRelationshipLabel: string;
+    invertedRelationshipLabel: string;
     propertyName: string;
     displayText: string;
 }
@@ -109,7 +109,8 @@ export class CreateRelationshipModal extends Modal {
     }
 
     async selectionUpdate() {
-        let currentSelection this.currentSelection;
+        let currentSelection = this.currentSelection;
+        this.relationshipDescEl.setText(`[[${this.focalFilePath}]] will designate [[${this.linkPath}]] as: ${currentSelection.designatedRelationshipLabel}`);
     }
 
     async loadProperties() {
@@ -145,28 +146,28 @@ export class CreateRelationshipModal extends Modal {
         this.relationshipChoices = [];
         Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
-            let designatedRelationShipname: string = key;
-            let invertedRelationshipName: string = relDef.invertedRelationshipName;
+            let designatedRelationshipLabel: string = key;
+            let invertedRelationshipLabel: string = relDef.invertedRelationshipLabel || "";
             if (relDef.designatedPropertyName) {
                 let propertyName: string = relDef.designatedPropertyName;
                 let description1: string;
-                if (designatedRelationShipname) {
-                    description1 = ` (designate '${this.linkPath}' as: '${designatedRelationShipname}')`
+                if (designatedRelationshipLabel) {
+                    description1 = ` (designate '${this.linkPath}' as: '${designatedRelationshipLabel}')`
                 } else {
                     description1 = ``
                 }
                 let displayText: string = `${propertyName}${description1}`
                 this.relationshipChoices.push({
                     "index": this.relationshipChoices.length,
-                    "designatedRelationshipName": designatedRelationShipname,
-                    "invertedRelationshipName": relDef.invertedRelationshipPropertyName,
+                    "designatedRelationshipLabel": designatedRelationshipLabel,
+                    "invertedRelationshipLabel": invertedRelationshipLabel,
                     "propertyName": propertyName,
                     "displayText": displayText,
                 });
             }
             if (relDef.invertedRelationshipPropertyName) {
                 let propertyName: string = relDef.invertedRelationshipPropertyName;
-                let relName: string = relDef.invertedRelationshipLabel || "";
+                let relName: string = invertedRelationshipLabel
                 let description1: string;
                 if (relName) {
                     description1 = ` (designate '${this.linkPath}' as: '${relName}')`
@@ -176,8 +177,8 @@ export class CreateRelationshipModal extends Modal {
                 let displayText: string = `${propertyName}${description1}`
                 this.relationshipChoices.push({
                     "index": this.relationshipChoices.length,
-                    "designatedRelationshipName": relName,
-                    "invertedRelationshipName": relDef.relationship,
+                    "designatedRelationshipLabel": invertedRelationshipLabel,
+                    "invertedRelationshipLabel": designatedRelationshipLabel,
                     "propertyName": propertyName,
                     "displayText": displayText,
                 });
