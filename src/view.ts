@@ -960,11 +960,11 @@ export class NavigationEntryFrame extends NavigationBase {
             relationships.push( ... entryData?.value?.relationships[parentFileNode.filePath]);
         }
         if (relationships.length > 0) {
-            const invertedRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
+            const subordinateRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
             let relationshipPolarityGlyph: string = "";
-            if (invertedRelationships.length === 0) {
+            if (subordinateRelationships.length === 0) {
                 relationshipPolarityGlyph = OUTLINKED_RELATIONSHIP_GLYPH;
-            } else if (invertedRelationships.length === relationships.length) {
+            } else if (subordinateRelationships.length === relationships.length) {
                 relationshipPolarityGlyph = INLINKED_RELATIONSHIP_GLYPH;
             } else {
                 relationshipPolarityGlyph = BILINKED_RELATIONSHIP_GLYPH;
@@ -1053,11 +1053,11 @@ export class NavigationEntryFrame extends NavigationBase {
 
         // if (parentEntryData && parentEntryData.value.relationships[entryData.value.filePath]) {
         //     const relationships = parentEntryData.value.relationships[entryData.value.filePath];
-        //     const invertedRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
+        //     const subordinateRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
         //     let relationshipPolarityGlyph: string = "";
-        //     if (invertedRelationships.length === 0) {
+        //     if (subordinateRelationships.length === 0) {
         //         relationshipPolarityGlyph = OUTLINKED_RELATIONSHIP_GLYPH;
-        //     } else if (invertedRelationships.length === relationships.length) {
+        //     } else if (subordinateRelationships.length === relationships.length) {
         //         relationshipPolarityGlyph = INLINKED_RELATIONSHIP_GLYPH;
         //     } else {
         //         relationshipPolarityGlyph = BILINKED_RELATIONSHIP_GLYPH;

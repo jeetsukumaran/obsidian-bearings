@@ -17,10 +17,10 @@ import {
 } from './cache';
 
 export type RelationshipDefinition = {
-    designatedRelationshipLabel?: string;
-    designatedRelationshipPropertyName?: string;
-    invertedRelationshipPropertyName?: string;
-    invertedRelationshipLabel?: string;
+    superordinateRelationshipRole?: string;
+    superordinateRelationshipPropertyName?: string;
+    subordinateRelationshipPropertyName?: string;
+    subordinateRelationshipRole?: string;
     categories?: string[];
 }
 
@@ -50,53 +50,53 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     },
     relationshipDefinitions: {
         "Parent": {
-            "designatedRelationshipLabel": "Parent",
-            "designatedRelationshipPropertyName": "entry-parents",
-            "invertedRelationshipLabel": "Child",
-            "invertedRelationshipPropertyName": "entry-children",
+            "superordinateRelationshipRole": "Parent",
+            "superordinateRelationshipPropertyName": "entry-parents",
+            "subordinateRelationshipRole": "Child",
+            "subordinateRelationshipPropertyName": "entry-children",
             "categories": [
                 "superordinate"
             ]
         },
         "Classifier": {
-            "designatedRelationshipLabel": "Classifier",
-            "designatedRelationshipPropertyName": "entry-classifiers",
-            "invertedRelationshipLabel": "Classification",
-            "invertedRelationshipPropertyName": "entry-classifications",
+            "superordinateRelationshipRole": "Classifier",
+            "superordinateRelationshipPropertyName": "entry-classifiers",
+            "subordinateRelationshipRole": "Classification",
+            "subordinateRelationshipPropertyName": "entry-classifications",
             "categories": [
                 "superordinate"
             ]
         },
         "Collection": {
-            "designatedRelationshipLabel": "Collection",
-            "designatedRelationshipPropertyName": "entry-collections",
-            "invertedRelationshipPropertyName": "entry-items",
-            "invertedRelationshipLabel": "Item",
+            "superordinateRelationshipRole": "Collection",
+            "superordinateRelationshipPropertyName": "entry-collections",
+            "subordinateRelationshipPropertyName": "entry-items",
+            "subordinateRelationshipRole": "Item",
             "categories": [
                 "superordinate"
             ]
         },
         "Author": {
-            "designatedRelationshipLabel": "Author",
-            "designatedRelationshipPropertyName": "source-authors",
-            "invertedRelationshipLabel": "Bibliography",
-            "invertedRelationshipPropertyName": "entry-bibliography",
+            "superordinateRelationshipRole": "Author",
+            "superordinateRelationshipPropertyName": "source-authors",
+            "subordinateRelationshipRole": "Bibliography",
+            "subordinateRelationshipPropertyName": "entry-bibliography",
             "categories": [
                 "superordinate"
             ]
         },
         "Collaborator": {
-            "designatedRelationshipLabel": "Collaborator",
-            "designatedRelationshipPropertyName": "entry-collaborators",
-            "invertedRelationshipLabel": "Collaborator",
-            "invertedRelationshipPropertyName": "entry-collaborations",
+            "superordinateRelationshipRole": "Collaborator",
+            "superordinateRelationshipPropertyName": "entry-collaborators",
+            "subordinateRelationshipRole": "Collaborator",
+            "subordinateRelationshipPropertyName": "entry-collaborations",
             "categories": [
                 "superordinate"
             ]
         },
         "Referral": {
-            "designatedRelationshipLabel": "Reference",
-            "designatedRelationshipPropertyName": "entry-referrals",
+            "superordinateRelationshipRole": "Reference",
+            "superordinateRelationshipPropertyName": "entry-referrals",
             "categories": [
                 "coordinate"
             ]
@@ -105,14 +105,14 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "categories": [
                 "superordinate"
             ],
-            "invertedRelationshipLabel": "Attachment",
-            "invertedRelationshipPropertyName": "entry-attachments",
+            "subordinateRelationshipRole": "Attachment",
+            "subordinateRelationshipPropertyName": "entry-attachments",
         },
         "Topic": {
-            "designatedRelationshipPropertyName": "entry-topics",
-            "designatedRelationshipLabel": "Topic",
-            "invertedRelationshipPropertyName": "entry-cases",
-            "invertedRelationshipLabel": "Case",
+            "superordinateRelationshipPropertyName": "entry-topics",
+            "superordinateRelationshipRole": "Topic",
+            "subordinateRelationshipPropertyName": "entry-cases",
+            "subordinateRelationshipRole": "Case",
             "categories": [
                 "superordinate"
             ]
@@ -155,8 +155,8 @@ export class BearingsConfiguration {
         const inlinkFields: { [key: string]: string } = {};
         Object.keys(this.relationshipDefinitions).forEach( (key: string) => {
             const value: RelationshipDefinition = this.relationshipDefinitions[key];
-            if (value.designatedRelationshipPropertyName) {
-                let propertyName: string = value.designatedRelationshipPropertyName;
+            if (value.superordinateRelationshipPropertyName) {
+                let propertyName: string = value.superordinateRelationshipPropertyName;
                 let relName: string = key;
                 let description1: string;
                 if (relName) {
@@ -165,11 +165,11 @@ export class BearingsConfiguration {
                     description1 = ``
                 }
                 let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
-                outlinkFields[fieldLabel] = value.designatedRelationshipPropertyName;
+                outlinkFields[fieldLabel] = value.superordinateRelationshipPropertyName;
             }
-            if (value.invertedRelationshipPropertyName) {
-                let propertyName: string = value.invertedRelationshipPropertyName;
-                let relName: string = value.invertedRelationshipLabel || "";
+            if (value.subordinateRelationshipPropertyName) {
+                let propertyName: string = value.subordinateRelationshipPropertyName;
+                let relName: string = value.subordinateRelationshipRole || "";
                 let description1: string;
                 if (relName) {
                     description1 = ` (designate as: '${relName}')`
@@ -177,7 +177,7 @@ export class BearingsConfiguration {
                     description1 = ``
                 }
                 let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
-                outlinkFields[fieldLabel] = value.invertedRelationshipPropertyName;
+                outlinkFields[fieldLabel] = value.subordinateRelationshipPropertyName;
             }
         });
         return {
@@ -223,7 +223,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
         Object.entries(this.pluginConfiguration.relationshipDefinitions)
             .sort((a, b) => a[0].localeCompare(b[0])) // Sorting entries alphabetically by relationshipName
             .forEach(([relationshipName, definition]) => {
-                const settingDiv = new Setting(containerEl).setName(relationshipName).setHeading();
+                const settingDiv = new Setting(containerEl).setName(`Relationship: '${relationshipName}'`).setHeading();
                 this.createRelationshipDefinitionSetting(containerEl, relationshipName, definition);
             });
 
@@ -333,42 +333,42 @@ export class BearingsSettingsTab extends PluginSettingTab {
     createRelationshipDefinitionSetting(container: HTMLElement, relationshipName: string, definition: RelationshipDefinition): void {
 
         new Setting(container)
-            .setName('Designation property name')
-            .setDesc("The property under which the focal note will list notes with this relationship to itself. E.g. Notes with a 'Parent' relationship to the focal note may be listed under the 'entry-parents' property of the focal note.")
+            .setName('Major relationship property name')
+            .setDesc("In superordinate relationship definitions, the property name under which the focal note will list notes with a superordinate relationship of this class to itself. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property of the focal note. In coordinate relationship categories, the focal note will be listed as descendent subtree or child node of the listed linked notes.")
             .addText(text => text
-                .setValue(definition.designatedRelationshipPropertyName || "")
+                .setValue(definition.superordinateRelationshipPropertyName || "")
                 .onChange(async (value) => {
-                    definition.designatedRelationshipPropertyName = value;
+                    definition.superordinateRelationshipPropertyName = value;
                     await this.saveSettingsFn();
                 }));
 
         new Setting(container)
-            .setName('Designated relationship label')
-            .setDesc('A description of the relationship established when listing notes under the above property.')
+            .setName('Major relationship role')
+            .setDesc('A description of the role the linked note takes with respect to the focal note when listed notes under the above property.')
             .addText(text => text
-                .setValue(definition.designatedRelationshipLabel || "")
+                .setValue(definition.superordinateRelationshipRole || "")
                 .onChange(async (value) => {
-                    definition.designatedRelationshipLabel = value;
+                    definition.superordinateRelationshipRole = value;
                     await this.saveSettingsFn();
                 }));
 
         new Setting(container)
-            .setName('Inverted property name')
-            .setDesc("The property under which the focal note will list notes with the reverse of the above relationship to itself. E.g. if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'.")
+            .setName('Complementary relationship property name')
+            .setDesc("In superordinate relationship definitions, the property name under which the focal note will list notes with a subordinate relationship of this class to itself. E.g. if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. In coordinate relationship categories, linked notes listed under this property are displayed as a subtree of the focal note.")
             .addText(text => text
-                .setValue(definition.invertedRelationshipPropertyName || "")
+                .setValue(definition.subordinateRelationshipPropertyName || "")
                 .onChange(async (value) => {
-                    definition.invertedRelationshipPropertyName = value;
+                    definition.subordinateRelationshipPropertyName = value;
                     await this.saveSettingsFn();
                 }));
 
         new Setting(container)
-            .setName('Inverted relationship label')
-            .setDesc('A description of the relationship established when listing notes under the above property.')
+            .setName('Complementary relationship label')
+            .setDesc('A description of the role the linked note takes with respect to the focal note when listed notes under the above property.')
             .addText(text => text
-                .setValue(definition.invertedRelationshipLabel || "")
+                .setValue(definition.subordinateRelationshipRole || "")
                 .onChange(async (value) => {
-                    definition.invertedRelationshipLabel = value;
+                    definition.subordinateRelationshipRole = value;
                     await this.saveSettingsFn();
                 }));
 
@@ -405,10 +405,10 @@ class AddRelationshipDefinitionModal extends Modal {
 
     onOpen() {
         let definitionName = '';
-        let designatedRelationshipPropertyName = '';
-        let invertedRelationshipPropertyName = '';
-        let designatedRelationshipLabel = '';
-        let invertedRelationshipLabel = '';
+        let superordinateRelationshipPropertyName = '';
+        let subordinateRelationshipPropertyName = '';
+        let superordinateRelationshipRole = '';
+        let subordinateRelationshipRole = '';
         let categories = '';
 
         const { contentEl } = this;
@@ -420,19 +420,19 @@ class AddRelationshipDefinitionModal extends Modal {
 
         new Setting(contentEl)
             .setName('Designated relationship property name')
-            .addText(text => text.onChange(value => designatedRelationshipPropertyName = value));
+            .addText(text => text.onChange(value => superordinateRelationshipPropertyName = value));
 
         new Setting(contentEl)
             .setName('Designated relationship label')
-            .addText(text => text.onChange(value => designatedRelationshipLabel = value));
+            .addText(text => text.onChange(value => superordinateRelationshipRole = value));
 
         new Setting(contentEl)
             .setName('Inverted property name')
-            .addText(text => text.onChange(value => invertedRelationshipPropertyName = value));
+            .addText(text => text.onChange(value => subordinateRelationshipPropertyName = value));
 
         new Setting(contentEl)
             .setName('Inverted relationship label')
-            .addText(text => text.onChange(value => invertedRelationshipLabel = value));
+            .addText(text => text.onChange(value => subordinateRelationshipRole = value));
 
         new Setting(contentEl)
             .setName('Categories')
@@ -449,8 +449,8 @@ class AddRelationshipDefinitionModal extends Modal {
                         return;
                     }
                     this.onSubmit(definitionName, {
-                        designatedRelationshipPropertyName,
-                        invertedRelationshipPropertyName,
+                        superordinateRelationshipPropertyName,
+                        subordinateRelationshipPropertyName,
                         categories: categories.split(',').map(s => s.trim()),
                     });
                     this.close();

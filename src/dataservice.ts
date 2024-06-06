@@ -415,7 +415,7 @@ export class FileNode {
     readInlinkedPropertyPathsFromVault(
         propertyName: string,
     ): string[] {
-        let invertedRelationshipPropertyPaths: string[] = [];
+        let subordinateRelationshipPropertyPaths: string[] = [];
         let fileRecords = this.dataService.vaultFileRecords;
         // if (!fileRecords || fileRecords.length === 0) {
         //     fileRecords = this.dataService.refresh();
@@ -435,14 +435,14 @@ export class FileNode {
                                 // to the inlinking node
                                 // let displayText: string = pagePropertyItem.display
                                 let displayText = "";
-                                invertedRelationshipPropertyPaths.push( subscriberFilePath )
+                                subordinateRelationshipPropertyPaths.push( subscriberFilePath )
                                 // }
                             }
                         }
                     })
                 }
             })
-        return invertedRelationshipPropertyPaths
+        return subordinateRelationshipPropertyPaths
     }
 
     _processPropertyLinkResults(
@@ -461,7 +461,7 @@ export class FileNode {
     }
 
     parsePropertyLinkedPaths(
-        designatedRelationshipKey: string,
+        superordinateRelationshipKey: string,
         inlinkedRelationshipKey: string,
         filePathNodeMap: FilePathNodeMapType,
         pathAliases: PathAliasesMapType,
@@ -469,13 +469,13 @@ export class FileNode {
     ): FilePathType[] {
 
         let linkedNotesystemPaths: FilePathType[] = [];
-        if (designatedRelationshipKey) {
+        if (superordinateRelationshipKey) {
             let outlinkedPaths: string[] = this.readDesignatedPropertyPaths(
-                designatedRelationshipKey,
+                superordinateRelationshipKey,
                 pathAliases,
             );
             this._processPropertyLinkResults(
-                designatedRelationshipKey,
+                superordinateRelationshipKey,
                 outlinkedPaths,
                 linkedNotesystemPaths,
                 {
@@ -517,12 +517,12 @@ export class FileNode {
                 return results;
             }
             relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
-                let designatedRelationshipKey: string = relationshipDefinition.designatedRelationshipPropertyName || "";
-                let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
+                let superordinateRelationshipKey: string = relationshipDefinition.superordinateRelationshipPropertyName || "";
+                let subordinateRelationshipKey: string = relationshipDefinition.subordinateRelationshipPropertyName || "";
                 let pathAliases: PathAliasesMapType = {};
                 let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
-                    designatedRelationshipKey,
-                    invertedRelationshipKey,
+                    superordinateRelationshipKey,
+                    subordinateRelationshipKey,
                     filePathNodeMap,
                     pathAliases,
                     false,
@@ -588,8 +588,8 @@ export class FileNode {
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
             // Inverted relationship: inlinked notes are establishing a superordinate relationship;
             // but from the focal note's perspective, the relationship is subordinate
-            let invertedInvertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
-            let invertedDesignatedRelationshipKey: string = relationshipDefinition.designatedRelationshipPropertyName || "";
+            let invertedInvertedRelationshipKey: string = relationshipDefinition.subordinateRelationshipPropertyName || "";
+            let invertedDesignatedRelationshipKey: string = relationshipDefinition.superordinateRelationshipPropertyName || "";
             let pathAliases: PathAliasesMapType = {};
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 invertedInvertedRelationshipKey,
@@ -657,13 +657,13 @@ export class FileNode {
         }
         let coordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
-            let designatedRelationshipKey: string = relationshipDefinition.designatedRelationshipPropertyName || "";
-            // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
-            let inlinkedRelationshipKey: string = designatedRelationshipKey;
-            // let invertedRelationshipKey: string = "";
+            let superordinateRelationshipKey: string = relationshipDefinition.superordinateRelationshipPropertyName || "";
+            // let subordinateRelationshipKey: string = relationshipDefinition.subordinateRelationshipPropertyName || "";
+            let inlinkedRelationshipKey: string = superordinateRelationshipKey;
+            // let subordinateRelationshipKey: string = "";
             let pathAliases: PathAliasesMapType = {};
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
-                designatedRelationshipKey,
+                superordinateRelationshipKey,
                 inlinkedRelationshipKey,
                 filePathNodeMap,
                 pathAliases,

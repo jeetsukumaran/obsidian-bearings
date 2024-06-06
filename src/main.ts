@@ -185,8 +185,8 @@ export default class BearingsPlugin extends Plugin {
         if (rawSettings.relationshipDefinitions) {
             Object.keys(rawSettings.relationshipDefinitions).forEach( (key: string) => {
                 let value = rawSettings.relationshipDefinitions[key];
-                if (value.designatedPropertyName && !value.designatedRelationshipLabel) {
-                    value.designatedRelationshipLabel = value.designatedPropertyName;
+                if (value.designatedPropertyName && !value.superordinateRelationshipRole) {
+                    value.superordinateRelationshipRole = value.designatedPropertyName;
                     isMigrated = true;
                 }
             });

@@ -74,8 +74,8 @@ export async function appendFrontmatterLists(
 
 export interface RelationshipLinkChoice {
     index: number;
-    designatedRelationshipLabel: string;
-    invertedRelationshipLabel: string;
+    superordinateRelationshipRole: string;
+    subordinateRelationshipRole: string;
     propertyName: string;
     displayText: string;
 }
@@ -91,10 +91,10 @@ export class CreateRelationshipModal extends Modal {
     private relationshipChoices: RelationshipLinkChoice[];
     // private relationshipDescEl: HTMLElement;
     private headerEl: HTMLElement;
-    private designatedRelationshipLabelEl: HTMLElement;
-    private designatedRelationshipValueEl: HTMLElement;
-    private invertedRelationshipLabelEl: HTMLElement;
-    private invertedRelationshipValueEl: HTMLElement;
+    private superordinateRelationshipRoleEl: HTMLElement;
+    private superordinateRelationshipValueEl: HTMLElement;
+    private subordinateRelationshipRoleEl: HTMLElement;
+    private subordinateRelationshipValueEl: HTMLElement;
 
     constructor(
         app: App,
@@ -123,11 +123,11 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
-        this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.designatedRelationshipLabel || 'relationship'}`);
-        this.invertedRelationshipLabelEl.setText(`${currentSelection.invertedRelationshipLabel} (active file source)`);
-        this.invertedRelationshipValueEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`);
-        this.designatedRelationshipLabelEl.setText(` ${currentSelection.designatedRelationshipLabel} (selected file target)`);
-        this.designatedRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
+        this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.superordinateRelationshipRole || 'relationship'}`);
+        this.subordinateRelationshipRoleEl.setText(`${currentSelection.subordinateRelationshipRole} (active file source)`);
+        this.subordinateRelationshipValueEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`);
+        this.superordinateRelationshipRoleEl.setText(` ${currentSelection.superordinateRelationshipRole} (selected file target)`);
+        this.superordinateRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
     }
 
     async loadProperties() {
@@ -155,10 +155,10 @@ export class CreateRelationshipModal extends Modal {
 
         // this.contentEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
         // this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-infobox' });
-        this.invertedRelationshipLabelEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
-        this.invertedRelationshipValueEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-infobox bearings-modal-data-entry-item-fixed-value'});
-        this.designatedRelationshipLabelEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
-        this.designatedRelationshipValueEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-infobox bearings-modal-data-entry-fixed-value'});
+        this.subordinateRelationshipRoleEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
+        this.subordinateRelationshipValueEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-infobox bearings-modal-data-entry-item-fixed-value'});
+        this.superordinateRelationshipRoleEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
+        this.superordinateRelationshipValueEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-infobox bearings-modal-data-entry-fixed-value'});
 
         // this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
         // this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
@@ -173,28 +173,28 @@ export class CreateRelationshipModal extends Modal {
         this.relationshipChoices = [];
         Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
-            let designatedRelationshipLabel: string = key;
-            let invertedRelationshipLabel: string = relDef.invertedRelationshipLabel || "";
-            if (relDef.designatedRelationshipPropertyName) {
-                let propertyName: string = relDef.designatedRelationshipPropertyName;
+            let superordinateRelationshipRole: string = key;
+            let subordinateRelationshipRole: string = relDef.subordinateRelationshipRole || "";
+            if (relDef.superordinateRelationshipPropertyName) {
+                let propertyName: string = relDef.superordinateRelationshipPropertyName;
                 let description1: string;
-                if (designatedRelationshipLabel) {
-                    description1 = ` (designate [[${this.linkPath}]] as: '${designatedRelationshipLabel}')`
+                if (superordinateRelationshipRole) {
+                    description1 = ` (designate [[${this.linkPath}]] as: '${superordinateRelationshipRole}')`
                 } else {
                     description1 = ``
                 }
                 let displayText: string = `${propertyName}${description1}`
                 this.relationshipChoices.push({
                     "index": this.relationshipChoices.length,
-                    "designatedRelationshipLabel": designatedRelationshipLabel,
-                    "invertedRelationshipLabel": invertedRelationshipLabel,
+                    "superordinateRelationshipRole": superordinateRelationshipRole,
+                    "subordinateRelationshipRole": subordinateRelationshipRole,
                     "propertyName": propertyName,
                     "displayText": displayText,
                 });
             }
-            if (relDef.invertedRelationshipPropertyName) {
-                let propertyName: string = relDef.invertedRelationshipPropertyName;
-                let relName: string = invertedRelationshipLabel
+            if (relDef.subordinateRelationshipPropertyName) {
+                let propertyName: string = relDef.subordinateRelationshipPropertyName;
+                let relName: string = subordinateRelationshipRole
                 let description1: string;
                 if (relName) {
                     description1 = ` (designate '${this.linkPath}' as: '${relName}')`
@@ -204,8 +204,8 @@ export class CreateRelationshipModal extends Modal {
                 let displayText: string = `${propertyName}${description1}`
                 this.relationshipChoices.push({
                     "index": this.relationshipChoices.length,
-                    "designatedRelationshipLabel": invertedRelationshipLabel,
-                    "invertedRelationshipLabel": designatedRelationshipLabel,
+                    "superordinateRelationshipRole": subordinateRelationshipRole,
+                    "subordinateRelationshipRole": superordinateRelationshipRole,
                     "propertyName": propertyName,
                     "displayText": displayText,
                 });
