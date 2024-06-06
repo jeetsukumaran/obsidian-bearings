@@ -517,7 +517,7 @@ export class FileNode {
                 return results;
             }
             relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
-                let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
+                let designatedRelationshipKey: string = relationshipDefinition.designatedRelationshipPropertyName || "";
                 let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
                 let pathAliases: PathAliasesMapType = {};
                 let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
@@ -589,7 +589,7 @@ export class FileNode {
             // Inverted relationship: inlinked notes are establishing a superordinate relationship;
             // but from the focal note's perspective, the relationship is subordinate
             let invertedInvertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
-            let invertedDesignatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
+            let invertedDesignatedRelationshipKey: string = relationshipDefinition.designatedRelationshipPropertyName || "";
             let pathAliases: PathAliasesMapType = {};
             let linkedNotesystemPaths = this.parsePropertyLinkedPaths(
                 invertedInvertedRelationshipKey,
@@ -657,7 +657,7 @@ export class FileNode {
         }
         let coordinateFilePaths: { [filePath: string]: FileNavigationTreeNode } = {};
         relationshipDefinitions.forEach( (relationshipDefinition: RelationshipDefinition) => {
-            let designatedRelationshipKey: string = relationshipDefinition.designatedPropertyName || "";
+            let designatedRelationshipKey: string = relationshipDefinition.designatedRelationshipPropertyName || "";
             // let invertedRelationshipKey: string = relationshipDefinition.invertedRelationshipPropertyName || "";
             let inlinkedRelationshipKey: string = designatedRelationshipKey;
             // let invertedRelationshipKey: string = "";

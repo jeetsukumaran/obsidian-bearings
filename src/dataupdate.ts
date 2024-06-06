@@ -175,8 +175,8 @@ export class CreateRelationshipModal extends Modal {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
             let designatedRelationshipLabel: string = key;
             let invertedRelationshipLabel: string = relDef.invertedRelationshipLabel || "";
-            if (relDef.designatedPropertyName) {
-                let propertyName: string = relDef.designatedPropertyName;
+            if (relDef.designatedRelationshipPropertyName) {
+                let propertyName: string = relDef.designatedRelationshipPropertyName;
                 let description1: string;
                 if (designatedRelationshipLabel) {
                     description1 = ` (designate [[${this.linkPath}]] as: '${designatedRelationshipLabel}')`
