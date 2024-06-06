@@ -694,7 +694,7 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
         let treeNodes: FileNavigationTreeNode[] = [];
         treeNodes = this._context.dataService.superordinateChains(
             this.focalFilePath,
-            this._context.configuration.superordinateRelationshipDefinitions(),
+            this._context.configuration.primaryRelationshipDefinitions(),
             true,
             this.discoveryDepthLimit,
         );
@@ -723,7 +723,7 @@ export class SubordinateRelationshipsViewFrame extends NavigationViewFrame {
     NavigationViewResults {
         let subtreeRoot = this._context.dataService.subordinateSubtrees(
                 this.focalFilePath,
-                this._context.configuration.superordinateRelationshipDefinitions(),
+                this._context.configuration.primaryRelationshipDefinitions(),
                 this.discoveryDepthLimit
         );
         // return {
@@ -756,7 +756,7 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
         let subtreeRoot = this._context.dataService.coordinateSubtrees(
             this.focalFilePath,
             this._context.configuration.symmetricalRelationshipDefinitions(),
-            this._context.configuration.superordinateRelationshipDefinitions(),
+            this._context.configuration.primaryRelationshipDefinitions(),
             this.discoveryDepthLimit,
         )
 
@@ -791,7 +791,7 @@ export class ParallelRelationshipsViewFrame extends NavigationViewFrame {
         let fileNodePathMap = new Map<FilePathType, FileNode>();
         let currentFileSuperordinates = currentFileNode.superordinateChains(
             "standard",
-            this._context.configuration.superordinateRelationshipDefinitions(),
+            this._context.configuration.primaryRelationshipDefinitions(),
             1,
             fileNodePathMap,
         ).rootNodes;
@@ -799,7 +799,7 @@ export class ParallelRelationshipsViewFrame extends NavigationViewFrame {
             treeNodes.push(
                 this._context.dataService.subordinateSubtrees(
                     superordinate.value.filePath,
-                    this._context.configuration.superordinateRelationshipDefinitions(),
+                    this._context.configuration.primaryRelationshipDefinitions(),
                     this.discoveryDepthLimit,
                     // fileNodePathMap,
                 ),
@@ -827,7 +827,7 @@ export class BacklinkedRelationshipsViewFrame extends NavigationViewFrame {
             .map( (fileNode: FileNode) => {
                 return this._context.dataService.subordinateSubtrees(
                    fileNode.filePath,
-                   this._context.configuration.superordinateRelationshipDefinitions(),
+                   this._context.configuration.primaryRelationshipDefinitions(),
                    0,
                 )
             });
@@ -960,11 +960,11 @@ export class NavigationEntryFrame extends NavigationBase {
             relationships.push( ... entryData?.value?.relationships[parentFileNode.filePath]);
         }
         if (relationships.length > 0) {
-            const subordinateRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
+            const complementaryRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
             let relationshipPolarityGlyph: string = "";
-            if (subordinateRelationships.length === 0) {
+            if (complementaryRelationships.length === 0) {
                 relationshipPolarityGlyph = OUTLINKED_RELATIONSHIP_GLYPH;
-            } else if (subordinateRelationships.length === relationships.length) {
+            } else if (complementaryRelationships.length === relationships.length) {
                 relationshipPolarityGlyph = INLINKED_RELATIONSHIP_GLYPH;
             } else {
                 relationshipPolarityGlyph = BILINKED_RELATIONSHIP_GLYPH;
@@ -1053,11 +1053,11 @@ export class NavigationEntryFrame extends NavigationBase {
 
         // if (parentEntryData && parentEntryData.value.relationships[entryData.value.filePath]) {
         //     const relationships = parentEntryData.value.relationships[entryData.value.filePath];
-        //     const subordinateRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
+        //     const complementaryRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
         //     let relationshipPolarityGlyph: string = "";
-        //     if (subordinateRelationships.length === 0) {
+        //     if (complementaryRelationships.length === 0) {
         //         relationshipPolarityGlyph = OUTLINKED_RELATIONSHIP_GLYPH;
-        //     } else if (subordinateRelationships.length === relationships.length) {
+        //     } else if (complementaryRelationships.length === relationships.length) {
         //         relationshipPolarityGlyph = INLINKED_RELATIONSHIP_GLYPH;
         //     } else {
         //         relationshipPolarityGlyph = BILINKED_RELATIONSHIP_GLYPH;

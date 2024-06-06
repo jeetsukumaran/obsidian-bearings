@@ -181,19 +181,19 @@ export default class BearingsPlugin extends Plugin {
             await this.loadData()
         )
         // update to new config
-        let isMigrated: boolean = false;
-        if (rawSettings.relationshipDefinitions) {
-            Object.keys(rawSettings.relationshipDefinitions).forEach( (key: string) => {
-                let value = rawSettings.relationshipDefinitions[key];
-                if (value.designatedPropertyName && !value.superordinateRelationshipRole) {
-                    value.superordinateRelationshipRole = value.designatedPropertyName;
-                    isMigrated = true;
-                }
-            });
-            if (isMigrated) {
-                await this.saveSettings()
-            }
-        }
+        // let isMigrated: boolean = false;
+        // if (rawSettings.relationshipDefinitions) {
+        //     Object.keys(rawSettings.relationshipDefinitions).forEach( (key: string) => {
+        //         let value = rawSettings.relationshipDefinitions[key];
+        //         if (value.designatedPropertyName && !value.primaryRelationshipRole) {
+        //             value.primaryRelationshipRole = value.designatedPropertyName;
+        //             isMigrated = true;
+        //         }
+        //     });
+        //     if (isMigrated) {
+        //         await this.saveSettings()
+        //     }
+        // }
         this.configuration = new BearingsConfiguration(rawSettings);
     }
 
