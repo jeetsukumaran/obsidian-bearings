@@ -163,6 +163,7 @@ export class CreateRelationshipModal extends Modal {
             });
         selectContainer.appendChild(this.selectBox);
 
+        this.contentEl.createEl('br');
         // this.contentEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
         // this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-infobox' });
         this.complementaryRelationshipRoleEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
