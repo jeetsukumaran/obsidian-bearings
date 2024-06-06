@@ -363,7 +363,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
                 }));
 
         new Setting(container)
-            .setName('Designated relationship label')
+            .setName('Inverted relationship label')
             .setDesc('A description of the relationship established when listing notes under the above property.')
             .addText(text => text
                 .setValue(definition.invertedRelationshipLabel || "")
