@@ -1,10 +1,14 @@
 import {
     Notice,
+    normalizePath,
+    FrontMatterCache,
+    TFile,
     App,
 } from 'obsidian';
 
 import {
-   RelationshipDefinition,
+    DEFAULT_TITLE_FIELDS,
+    RelationshipDefinition,
 } from "./settings";
 
 let getFileBaseName = (value: string) => value.split('\\')?.pop()?.split('/').pop() || value;
@@ -27,6 +31,54 @@ import {
 export type DataviewPage = Record<string, Literal>; // aka Dataview "page"
 export type FileNodeDataRecords = DataviewPage;
 export type FileNodeDataType = Literal;
+
+export function getFrontMatter(
+    app: App,
+    filePath?: string,
+    file?: TFile,
+): FrontMatterCache {
+    if (filePath) {
+        let afile = app.vault.getFileByPath(normalizePath(filePath));
+        if (afile) {
+            file = afile;
+        } else {
+            return {};
+        }
+    }
+    if (!file) {
+        return {};
+    }
+    return app.metadataCache.getFileCache(file)?.frontmatter || {};
+}
+
+export function getDisplayTitle(
+    app: App,
+    configurationOptions:  { [name: string]: any },
+    filePath?: string,
+    file?: TFile,
+    defaultTitle: string = ""): string {
+        const frontMatter = getFrontMatter(app, filePath, file);
+        return frontMatterDisplayTitle(
+            configurationOptions,
+            frontMatter,
+            defaultTitle,
+        );
+}
+
+export function frontMatterDisplayTitle(
+    configurationOptions:  { [name: string]: any },
+    frontMatterCache: FrontMatterCache,
+    defaultTitle: string): string {
+    let result: string = defaultTitle;
+    let propertyNames: string[] = configurationOptions["titleField"] || DEFAULT_TITLE_FIELDS;
+    propertyNames.forEach( (propertyName: string) => {
+        if (frontMatterCache[propertyName]) {
+            result = propertyName;
+        }
+        return result;
+    });
+    return result;
+}
 
 
 export class FileNodeData {

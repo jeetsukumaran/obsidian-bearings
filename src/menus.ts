@@ -9,6 +9,10 @@ import {
 } from "obsidian";
 
 import {
+    getFrontMatter,
+} from "./dataservice";
+
+import {
     BearingsConfiguration,
 } from "./settings";
 
