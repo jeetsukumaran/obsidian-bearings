@@ -315,7 +315,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         new Setting(container)
             .setName('Complementary relationship property name')
-            .setDesc("The name of the property field listing notes the inverse or reflection of the primary relationship in asymmetrical relationships. E.g., if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. This field is ignored in symmetrical relationships.")
+            .setDesc("The name of the property field listing notes with the inverse or reflection of the primary relationship (asymmetrical relationships). E.g., if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. This field is ignored in symmetrical relationships.")
             .addText(text => text
                 .setValue(definition.complementaryRelationshipPropertyName || "")
                 .setPlaceholder("entry-children")
