@@ -452,12 +452,12 @@ export class NavigationView extends NavigationBase {
         );
         parallelsViewFrame.render();
 
-        let coordinateViewFrame = new CoordinateRelationshipsViewFrame(
+        let symmetricalViewFrame = new CoordinateRelationshipsViewFrame(
             this._context,
             viewContainerBody.createEl("div", {cls: "bearings-viewframe-container"}),
             "Referrals",
         );
-        coordinateViewFrame.render();
+        symmetricalViewFrame.render();
 
         let backlinkedViewFrame = new BacklinkedRelationshipsViewFrame(
             this._context,
@@ -755,7 +755,7 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
     NavigationViewResults {
         let subtreeRoot = this._context.dataService.coordinateSubtrees(
             this.focalFilePath,
-            this._context.configuration.coordinateRelationshipDefinitions(),
+            this._context.configuration.symmetricalRelationshipDefinitions(),
             this._context.configuration.superordinateRelationshipDefinitions(),
             this.discoveryDepthLimit,
         )

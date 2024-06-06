@@ -55,7 +55,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "subordinateRelationshipRole": "Child",
             "subordinateRelationshipPropertyName": "entry-children",
             "categories": [
-                "superordinate"
+                "hierarchical"
             ]
         },
         "Classifier": {
@@ -64,7 +64,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "subordinateRelationshipRole": "Classification",
             "subordinateRelationshipPropertyName": "entry-classifications",
             "categories": [
-                "superordinate"
+                "hierarchical"
             ]
         },
         "Collection": {
@@ -73,7 +73,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "subordinateRelationshipPropertyName": "entry-items",
             "subordinateRelationshipRole": "Item",
             "categories": [
-                "superordinate"
+                "hierarchical"
             ]
         },
         "Author": {
@@ -82,7 +82,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "subordinateRelationshipRole": "Bibliography",
             "subordinateRelationshipPropertyName": "entry-bibliography",
             "categories": [
-                "superordinate"
+                "hierarchical"
             ]
         },
         "Collaborator": {
@@ -91,19 +91,19 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "subordinateRelationshipRole": "Collaborator",
             "subordinateRelationshipPropertyName": "entry-collaborations",
             "categories": [
-                "superordinate"
+                "hierarchical"
             ]
         },
         "Referral": {
             "superordinateRelationshipRole": "Reference",
             "superordinateRelationshipPropertyName": "entry-referrals",
             "categories": [
-                "coordinate"
+                "symmetrical"
             ]
         },
         "Attachment": {
             "categories": [
-                "superordinate"
+                "hierarchical"
             ],
             "subordinateRelationshipRole": "Attachment",
             "subordinateRelationshipPropertyName": "entry-attachments",
@@ -114,7 +114,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "subordinateRelationshipPropertyName": "entry-cases",
             "subordinateRelationshipRole": "Case",
             "categories": [
-                "superordinate"
+                "hierarchical"
             ]
         }
     }
@@ -135,12 +135,12 @@ export class BearingsConfiguration {
 
     superordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
-            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "superordinate"  ));
+            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "hierarchical"  ));
     }
 
-    coordinateRelationshipDefinitions(): RelationshipDefinition[] {
+    symmetricalRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
-            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "coordinate"  ));
+            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "symmetrical"  ));
     }
 
     get titleFields(): string[] {
@@ -334,9 +334,10 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         new Setting(container)
             .setName('Major relationship property name')
-            .setDesc("In superordinate relationship definitions, the property name under which the focal note will list notes with a superordinate relationship of this class to itself. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property of the focal note. In coordinate relationship categories, the focal note will be listed as descendent subtree or child node of the listed linked notes.")
+            .setDesc("In hierarchical relationships, the property field listing superordinate relationships. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property of the focal note. In symmetrical relationship categories, the focal note will be listed as descendent subtree or child node of the listed linked notes.")
             .addText(text => text
                 .setValue(definition.superordinateRelationshipPropertyName || "")
+                .setPlaceholder("entry-parents")
                 .onChange(async (value) => {
                     definition.superordinateRelationshipPropertyName = value;
                     await this.saveSettingsFn();
@@ -354,7 +355,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         new Setting(container)
             .setName('Complementary relationship property name')
-            .setDesc("In superordinate relationship definitions, the property name under which the focal note will list notes with a subordinate relationship of this class to itself. E.g. if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. In coordinate relationship categories, linked notes listed under this property are displayed as a subtree of the focal note.")
+            .setDesc("In hierarchical relationship definitions, the property name under which the focal note will list notes with a subordinate relationship of this class to itself. E.g. if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. In symmetrical relationship categories, linked notes listed under this property are displayed as a subtree of the focal note.")
             .addText(text => text
                 .setValue(definition.subordinateRelationshipPropertyName || "")
                 .onChange(async (value) => {
