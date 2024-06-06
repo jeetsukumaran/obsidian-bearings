@@ -760,13 +760,13 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
             this.discoveryDepthLimit,
         )
 
-        // return {
-        //     treeNodes: [... subtreeRoot.children],
-        //     parentFileNode: subtreeRoot.value,
-        // };
         return {
-            treeNodes: [subtreeRoot],
+            treeNodes: [... subtreeRoot.children],
+            parentFileNode: subtreeRoot.value,
         };
+        // return {
+        //     treeNodes: [subtreeRoot],
+        // };
     }
 }
 

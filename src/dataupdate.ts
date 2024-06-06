@@ -129,7 +129,7 @@ export class CreateRelationshipModal extends Modal {
         this.designatedRelationshipLabelEl.setText(currentSelection.designatedRelationshipLabel);
         // this.designatedRelationshipValueEl.setText(this.linkPath);
         this.designatedRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
-        this.headerEl.setText(`Add ${currentSelection.designatedRelationshipLabel || 'relationship link'}`);
+        this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.designatedRelationshipLabel || 'relationship'}`);
     }
 
     async loadProperties() {
