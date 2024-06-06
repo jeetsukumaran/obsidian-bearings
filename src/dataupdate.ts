@@ -124,10 +124,11 @@ export class CreateRelationshipModal extends Modal {
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
         // this.relationshipDescEl.setText(`[[${this.focalFilePath}]] will designate [[${this.linkPath}]] as: ${currentSelection.designatedRelationshipLabel}`);
-        this.designatedRelationshipLabelEl.setText(currentSelection.designatedRelationshipLabel);
-        this.designatedRelationshipValueEl.setText(this.linkPath);
         this.invertedRelationshipLabelEl.setText(currentSelection.invertedRelationshipLabel);
-        this.invertedRelationshipValueEl.setText(this.focalFilePath);
+        this.invertedRelationshipValueEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`);
+        this.designatedRelationshipLabelEl.setText(currentSelection.designatedRelationshipLabel);
+        // this.designatedRelationshipValueEl.setText(this.linkPath);
+        this.designatedRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
         this.headerEl.setText(`Add ${currentSelection.designatedRelationshipLabel || 'relationship link'}`);
     }
 
