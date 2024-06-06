@@ -147,52 +147,52 @@ export class BearingsConfiguration {
         return this.options?.titleField || DEFAULT_TITLE_FIELDS;
     }
 
-    get linkFields() : {
-        "outlinkFields": { [key: string]: string },
-        "inlinkFields": { [key: string]: string },
-    } {
-        const outlinkFields: { [key: string]: string } = {};
-        const inlinkFields: { [key: string]: string } = {};
-        Object.keys(this.relationshipDefinitions).forEach( (key: string) => {
-            const value: RelationshipDefinition = this.relationshipDefinitions[key];
-            if (value.superordinateRelationshipPropertyName) {
-                let propertyName: string = value.superordinateRelationshipPropertyName;
-                let relName: string = key;
-                let description1: string;
-                if (relName) {
-                    description1 = ` (designate as: '${relName}')`
-                } else {
-                    description1 = ``
-                }
-                let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
-                outlinkFields[fieldLabel] = value.superordinateRelationshipPropertyName;
-            }
-            if (value.subordinateRelationshipPropertyName) {
-                let propertyName: string = value.subordinateRelationshipPropertyName;
-                let relName: string = value.subordinateRelationshipRole || "";
-                let description1: string;
-                if (relName) {
-                    description1 = ` (designate as: '${relName}')`
-                } else {
-                    description1 = ``
-                }
-                let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
-                outlinkFields[fieldLabel] = value.subordinateRelationshipPropertyName;
-            }
-        });
-        return {
-            outlinkFields: outlinkFields,
-            inlinkFields: inlinkFields,
-        };
-    }
+    // get linkFields() : {
+    //     "outlinkFields": { [key: string]: string },
+    //     "inlinkFields": { [key: string]: string },
+    // } {
+    //     const outlinkFields: { [key: string]: string } = {};
+    //     const inlinkFields: { [key: string]: string } = {};
+    //     Object.keys(this.relationshipDefinitions).forEach( (key: string) => {
+    //         const value: RelationshipDefinition = this.relationshipDefinitions[key];
+    //         if (value.superordinateRelationshipPropertyName) {
+    //             let propertyName: string = value.superordinateRelationshipPropertyName;
+    //             let relName: string = key;
+    //             let description1: string;
+    //             if (relName) {
+    //                 description1 = ` (designate as: '${relName}')`
+    //             } else {
+    //                 description1 = ``
+    //             }
+    //             let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
+    //             outlinkFields[fieldLabel] = value.superordinateRelationshipPropertyName;
+    //         }
+    //         if (value.subordinateRelationshipPropertyName) {
+    //             let propertyName: string = value.subordinateRelationshipPropertyName;
+    //             let relName: string = value.subordinateRelationshipRole || "";
+    //             let description1: string;
+    //             if (relName) {
+    //                 description1 = ` (designate as: '${relName}')`
+    //             } else {
+    //                 description1 = ``
+    //             }
+    //             let fieldLabel: string = `Add link under: '${propertyName}'${description1}`
+    //             outlinkFields[fieldLabel] = value.subordinateRelationshipPropertyName;
+    //         }
+    //     });
+    //     return {
+    //         outlinkFields: outlinkFields,
+    //         inlinkFields: inlinkFields,
+    //     };
+    // }
 
-    get outlinkFields() : { [key: string]: string } {
-        return this.linkFields.outlinkFields;
-    }
+    // get outlinkFields() : { [key: string]: string } {
+    //     return this.linkFields.outlinkFields;
+    // }
 
-    get inlinkFields() : { [key: string]: string } {
-        return this.linkFields.inlinkFields;
-    }
+    // get inlinkFields() : { [key: string]: string } {
+    //     return this.linkFields.inlinkFields;
+    // }
 
 }
 
