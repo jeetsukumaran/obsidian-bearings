@@ -9,6 +9,7 @@ import {
 import {
     DEFAULT_TITLE_FIELDS,
     RelationshipDefinition,
+    BearingsConfiguration,
 } from "./settings";
 
 let getFileBaseName = (value: string) => value.split('\\')?.pop()?.split('/').pop() || value;
@@ -53,27 +54,27 @@ export function getFrontMatter(
 
 export function getDisplayTitle(
     app: App,
-    configurationOptions:  { [name: string]: any },
+    configuration: BearingsConfiguration,
     filePath?: string,
     file?: TFile,
     defaultTitle: string = ""): string {
         const frontMatter = getFrontMatter(app, filePath, file);
-        return frontMatterDisplayTitle(
-            configurationOptions,
+        return getFrontMatterDisplayTitle(
+            configuration,
             frontMatter,
             defaultTitle,
         );
 }
 
-export function frontMatterDisplayTitle(
-    configurationOptions:  { [name: string]: any },
+export function getFrontMatterDisplayTitle(
+    configuration: BearingsConfiguration,
     frontMatterCache: FrontMatterCache,
     defaultTitle: string): string {
     let result: string = defaultTitle;
-    let propertyNames: string[] = configurationOptions["titleField"] || DEFAULT_TITLE_FIELDS;
+    let propertyNames: string[] = configuration.options["titleField"] || DEFAULT_TITLE_FIELDS;
     propertyNames.forEach( (propertyName: string) => {
         if (frontMatterCache[propertyName]) {
-            result = propertyName;
+            result = String(frontMatterCache[propertyName]);
         }
         return result;
     });
@@ -172,13 +173,18 @@ export type PathAliasesMapType = { [filePath: string]: string[] };
 
 export class DataService {
     app: App;
+    configuration: BearingsConfiguration;
     _dataviewApi: DataviewApi;
     _vaultFileRecords: FileNodeDataRecords[] = [];
     _isDataviewUnavailableMessageSent: boolean = false;
     _glyphFilePathNodeMap: FilePathNodeMapType;
 
-    constructor(app: App) {
+    constructor(
+        app: App,
+        configuration: BearingsConfiguration,
+    ) {
         this.app = app;
+        this.configuration = configuration;
         this.refresh();
     }
 
@@ -798,12 +804,14 @@ export class FileNode {
     get indexEntryText(): string {
         return this._memoize(
           "indexEntry",
-          () => String(this.displayText
-            || this.fileData["entry-title"]
-            || this.fileData["title"]
-            || this.fileBaseName
+          () => this.displayText
+            || getFrontMatterDisplayTitle(
+                this.dataService.configuration,
+                this.fileData,
+                this.fileBaseName,
+               )
             || this.filePath
-            || "(?)")
+            || "(?)"
             .trim()
           );
     }

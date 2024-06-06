@@ -47,7 +47,7 @@ export default class BearingsPlugin extends Plugin {
 
         /* Setup */
         await this.loadSettings();
-        this.dataService = new DataService(this.app);
+        this.dataService = new DataService(this.app, this.configuration);
 
         /* Code block */
         this.registerMarkdownCodeBlockProcessor(
