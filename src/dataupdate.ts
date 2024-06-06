@@ -182,11 +182,12 @@ export class CreateRelationshipModal extends Modal {
                 let propertyName: string = relDef.primaryRelationshipPropertyName;
                 let description1: string;
                 if (primaryRelationshipRole) {
-                    description1 = ` (designate [[${this.linkPath}]] as: '${primaryRelationshipRole}')`
+                    description1 = `'${primaryRelationshipRole}': `
                 } else {
                     description1 = ``
                 }
-                let displayText: string = `${propertyName}${description1}`;
+                // let displayText: string = `${description1}add link to [[${this.linkPath}]] under property '${propertyName}'`;
+                let displayText: string = `${description1}Add link under: '${propertyName}'`;
                 let key = displayText;
                 this.relationshipChoices[key] = {
                     "key": key,
@@ -198,14 +199,15 @@ export class CreateRelationshipModal extends Modal {
             }
             if (relDef.complementaryRelationshipPropertyName) {
                 let propertyName: string = relDef.complementaryRelationshipPropertyName;
-                let relName: string = complementaryRelationshipRole
                 let description1: string;
-                if (relName) {
-                    description1 = ` (designate '${this.linkPath}' as: '${relName}')`
+                if (complementaryRelationshipRole) {
+                    description1 = `'${complementaryRelationshipRole}': `
                 } else {
                     description1 = ``
                 }
-                let displayText: string = `${propertyName}${description1}`
+                // let displayText: string = `${description1}link [[${this.linkPath}]] under: ${propertyName}`;
+                let displayText: string = `${description1}Add link under: '${propertyName}'`;
+                // let displayText: string = `${description1}add link to [[${this.linkPath}]] under property '${propertyName}'`;
                 let key = displayText;
                 this.relationshipChoices[key] = {
                     "key": key,

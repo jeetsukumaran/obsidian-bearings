@@ -90,7 +90,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
         "Collaborator": {
             "primaryRelationshipRole": "Collaborator",
             "primaryRelationshipPropertyName": "entry-collaborators",
-            "complementaryRelationshipRole": "Collaborator",
+            "complementaryRelationshipRole": "Collaboration",
             "complementaryRelationshipPropertyName": "entry-collaborations",
             "categories": [
                 "hierarchical"
