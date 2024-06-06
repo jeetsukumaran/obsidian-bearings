@@ -84,6 +84,7 @@ export class CreateRelationshipModal extends Modal {
     private selectBox: HTMLSelectElement;
     private relationshipChoices: RelationshipLinkChoice[];
     private relationshipDescEl: HTMLElement;
+    private headerEl: HTMLElement;
     private designatedRelationshipLabelEl: HTMLElement;
     private designatedRelationshipValueEl: HTMLElement;
     private invertedRelationshipLabelEl: HTMLElement;
@@ -114,15 +115,12 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
-        // this.relationshipDescEl.setText(`[[${this.focalFilePath}]] will designate [[${this.linkPath}]] as: ${currentSelection.designatedRelationshipLabel}`);
-        let s1 = `[[${this.focalFilePath}]]: ${currentSelection.invertedRelationshipLabel}`;
-        let s2 = `[[${this.focalFilePath}]]: ${currentSelection.designatedRelationshipLabel}`;
+        this.relationshipDescEl.setText(`[[${this.focalFilePath}]] will designate [[${this.linkPath}]] as: ${currentSelection.designatedRelationshipLabel}`);
         this.designatedRelationshipLabelEl.setText(currentSelection.designatedRelationshipLabel);
         this.designatedRelationshipValueEl.setText(this.linkPath);
         this.invertedRelationshipLabelEl.setText(currentSelection.invertedRelationshipLabel);
         this.invertedRelationshipValueEl.setText(this.focalFilePath);
-        // this.relationshipDescEl.setText(`${s1}<BR>${s2}`);
-        // this.relationshipDescEl.setText(`${s1}<BR>${s2}`);
+        this.headerEl.setText(`Add ${currentSelection.designatedRelationshipLabel || 'relationship'} link`);
     }
 
     async loadProperties() {
@@ -133,12 +131,11 @@ export class CreateRelationshipModal extends Modal {
             return;
         }
 
-        this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
-        this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
-        this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
-        this.contentEl.createEl('div', {text: "Linked file target", cls: 'bearings-modal-data-entry-item-label'});
-        this.contentEl.createEl('div', { text: this.linkPath, cls: 'bearings-modal-data-entry-fileinfo' });
-        this.contentEl.createEl('div', {text: "Relationship property name", cls: 'bearings-modal-data-entry-item-label'});
+        this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
+
+        this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-infobox' });
+
+        this.contentEl.createEl('div', {text: "Relationship type", cls: 'bearings-modal-data-entry-item-label'});
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         this.selectBox.className = 'bearings-modal-data-entry-select-box';
         this.relationshipChoices.forEach(choice => {
@@ -148,12 +145,19 @@ export class CreateRelationshipModal extends Modal {
             });
         });
         selectContainer.appendChild(this.selectBox);
-        this.contentEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
-        this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-infobox' });
-        this.designatedRelationshipLabelEl = this.relationshipDescEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
-        this.designatedRelationshipValueEl = this.relationshipDescEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-infobox bearings-modal-data-entry-fixed-value'});
-        this.invertedRelationshipLabelEl = this.relationshipDescEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
-        this.invertedRelationshipValueEl = this.relationshipDescEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-infobox bearings-modal-data-entry-item-fixed-value'});
+
+        // this.contentEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
+        // this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-infobox' });
+        this.invertedRelationshipLabelEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
+        this.invertedRelationshipValueEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-infobox bearings-modal-data-entry-item-fixed-value'});
+        this.designatedRelationshipLabelEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
+        this.designatedRelationshipValueEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-infobox bearings-modal-data-entry-fixed-value'});
+
+        // this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
+        // this.contentEl.createEl('div', { text: this.focalFilePath, cls: 'bearings-modal-data-entry-fileinfo' });
+        // this.contentEl.createEl('div', {text: "Linked file target", cls: 'bearings-modal-data-entry-item-label'});
+        // this.contentEl.createEl('div', { text: this.linkPath, cls: 'bearings-modal-data-entry-fileinfo' });
+
         this.addFooterButtons();
         await this.selectionUpdate();
     }
