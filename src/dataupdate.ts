@@ -176,7 +176,7 @@ export class CreateRelationshipModal extends Modal {
         this.relationshipChoices = {};
         Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
-            let primaryRelationshipRole: string = relDef.primaryRelationshipRole || key;
+            let primaryRelationshipRole: string = relDef.primaryRelationshipRole || "";
             let complementaryRelationshipRole: string = relDef.complementaryRelationshipRole || "";
             if (relDef.primaryRelationshipPropertyName) {
                 let propertyName: string = relDef.primaryRelationshipPropertyName;
