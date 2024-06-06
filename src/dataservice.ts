@@ -75,8 +75,8 @@ export function getFrontMatterDisplayTitle(
     propertyNames.forEach( (propertyName: string) => {
         if (frontMatterCache[propertyName]) {
             result = String(frontMatterCache[propertyName]);
+            return result;
         }
-        return result;
     });
     return result;
 }
