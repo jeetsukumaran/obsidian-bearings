@@ -211,6 +211,7 @@ export class CreateRelationshipModal extends Modal {
                 });
             }
         });
+        this.relationshipChoices.sort((a, b) => a.displayText.localeCompare(b.displayText));
     }
 
     addFooterButtons() {
