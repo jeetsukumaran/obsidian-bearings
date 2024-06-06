@@ -175,13 +175,14 @@ export default class BearingsPlugin extends Plugin {
     }
 
     async loadSettings() {
-        // this.settings = DEFAULT_SETTINGS;
-        // return;
-        this.configuration = new BearingsConfiguration(Object.assign(
+        // update to new config
+        let isUpdated: boolean = false;
+        let rawSettings = Object.assign(
             {},
             DEFAULT_SETTINGS,
             await this.loadData()
-        ));
+        )
+        this.configuration = new BearingsConfiguration(rawSettings);
     }
 
     async saveSettings() {
