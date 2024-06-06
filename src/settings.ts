@@ -94,13 +94,6 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
                 "hierarchical"
             ]
         },
-        "Referral": {
-            "superordinateRelationshipRole": "Reference",
-            "superordinateRelationshipPropertyName": "entry-referrals",
-            "categories": [
-                "symmetrical"
-            ]
-        },
         "Attachment": {
             "categories": [
                 "hierarchical"
@@ -116,7 +109,14 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             "categories": [
                 "hierarchical"
             ]
-        }
+        },
+        "Referral": {
+            "superordinateRelationshipRole": "Reference",
+            "superordinateRelationshipPropertyName": "entry-referrals",
+            "categories": [
+                "symmetrical"
+            ]
+        },
     }
 }
 
