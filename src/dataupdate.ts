@@ -124,10 +124,17 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
+        let wrapIfNotEmpty = (s: string) => {
+            if (s) {
+                return `: designated as '${s}'`;
+            } else {
+                return "";
+            }
+        };
         this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
-        this.complementaryRelationshipRoleEl.setText(`${currentSelection.complementaryRelationshipRole} (active file source)`);
+        this.complementaryRelationshipRoleEl.setText(`Active file source${wrapIfNotEmpty(currentSelection.complementaryRelationshipRole)}`);
         this.complementaryRelationshipValueEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`);
-        this.primaryRelationshipRoleEl.setText(` ${currentSelection.primaryRelationshipRole} (selected file target)`);
+        this.primaryRelationshipRoleEl.setText(`Selected target${wrapIfNotEmpty(currentSelection.primaryRelationshipRole)}`);
         this.primaryRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
     }
 
