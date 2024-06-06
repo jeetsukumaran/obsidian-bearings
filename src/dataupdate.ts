@@ -13,6 +13,10 @@ import {
     BearingsConfiguration,
 } from "./settings";
 
+import {
+    getDisplayTitle,
+} from "./dataservice";
+
 interface FrontMatterUpdateOptions {
     app: App;
     path: string;
@@ -78,12 +82,14 @@ export interface RelationshipLinkChoice {
 
 export class CreateRelationshipModal extends Modal {
     public focalFilePath: string;
+    public focalFilePathDisplayTitle: string;
+    public linkPathDisplayTitle: string;
     public linkPath: string;
     public configuration: BearingsConfiguration;
     public updateCallbackFn: () => Promise<void>;
     private selectBox: HTMLSelectElement;
     private relationshipChoices: RelationshipLinkChoice[];
-    private relationshipDescEl: HTMLElement;
+    // private relationshipDescEl: HTMLElement;
     private headerEl: HTMLElement;
     private designatedRelationshipLabelEl: HTMLElement;
     private designatedRelationshipValueEl: HTMLElement;
@@ -100,6 +106,8 @@ export class CreateRelationshipModal extends Modal {
         super(app);
         this.focalFilePath = focalFilePath;
         this.linkPath = linkPath;
+        this.focalFilePathDisplayTitle = this.focalFilePath ? getDisplayTitle(app, configuration, this.focalFilePath, undefined, this.focalFilePath) : "";
+        this.linkPathDisplayTitle = this.linkPath ? getDisplayTitle(app, configuration, this.linkPath, undefined, this.linkPath) : "";
         this.configuration = configuration;
         this.updateCallbackFn = updateCallbackFn;
         this.selectBox = document.createElement('select');
@@ -115,12 +123,12 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
-        this.relationshipDescEl.setText(`[[${this.focalFilePath}]] will designate [[${this.linkPath}]] as: ${currentSelection.designatedRelationshipLabel}`);
+        // this.relationshipDescEl.setText(`[[${this.focalFilePath}]] will designate [[${this.linkPath}]] as: ${currentSelection.designatedRelationshipLabel}`);
         this.designatedRelationshipLabelEl.setText(currentSelection.designatedRelationshipLabel);
         this.designatedRelationshipValueEl.setText(this.linkPath);
         this.invertedRelationshipLabelEl.setText(currentSelection.invertedRelationshipLabel);
         this.invertedRelationshipValueEl.setText(this.focalFilePath);
-        this.headerEl.setText(`Add ${currentSelection.designatedRelationshipLabel || 'relationship'} link`);
+        this.headerEl.setText(`Add ${currentSelection.designatedRelationshipLabel || 'relationship link'}`);
     }
 
     async loadProperties() {
@@ -133,7 +141,7 @@ export class CreateRelationshipModal extends Modal {
 
         this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
 
-        this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-infobox' });
+        // this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-data-entry-item-label' });
 
         this.contentEl.createEl('div', {text: "Relationship type", cls: 'bearings-modal-data-entry-item-label'});
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
