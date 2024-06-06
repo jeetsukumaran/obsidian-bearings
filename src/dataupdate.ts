@@ -73,7 +73,7 @@ export async function appendFrontmatterLists(
 }
 
 export interface RelationshipLinkChoice {
-    index: number;
+    key: string;
     primaryRelationshipRole: string;
     complementaryRelationshipRole: string;
     propertyName: string;
@@ -88,7 +88,8 @@ export class CreateRelationshipModal extends Modal {
     public configuration: BearingsConfiguration;
     public updateCallbackFn: () => Promise<void>;
     private selectBox: HTMLSelectElement;
-    private relationshipChoices: RelationshipLinkChoice[];
+    // private relationshipChoices: { [key: string]: RelationshipLinkChoice };
+    private relationshipChoices: { [key: string]: RelationshipLinkChoice };
     // private relationshipDescEl: HTMLElement;
     private headerEl: HTMLElement;
     private primaryRelationshipRoleEl: HTMLElement;
@@ -118,7 +119,7 @@ export class CreateRelationshipModal extends Modal {
     }
 
     get currentSelection() {
-        return this.relationshipChoices[Number(this.selectBox.value)];
+        return this.relationshipChoices[this.selectBox.value];
     }
 
     async selectionUpdate() {
@@ -145,12 +146,14 @@ export class CreateRelationshipModal extends Modal {
         this.contentEl.createEl('div', {text: "Relationship type", cls: 'bearings-modal-data-entry-item-label'});
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         this.selectBox.className = 'bearings-modal-data-entry-select-box';
-        this.relationshipChoices.forEach(choice => {
-            const optionEl = this.selectBox.createEl('option', {
-                text: choice.displayText,
-                value: choice.index.toString(),
+        Object.values(this.relationshipChoices)
+            .sort((a, b) => a.displayText.localeCompare(b.displayText))
+            .forEach(choice => {
+                const optionEl = this.selectBox.createEl('option', {
+                    text: choice.displayText,
+                    value: choice.key,
+                });
             });
-        });
         selectContainer.appendChild(this.selectBox);
 
         // this.contentEl.createEl('div', {text: "Relationship", cls: 'bearings-modal-data-entry-item-label'});
@@ -170,10 +173,10 @@ export class CreateRelationshipModal extends Modal {
     }
 
     loadChoices() {
-        this.relationshipChoices = [];
+        this.relationshipChoices = {};
         Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
             const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
-            let primaryRelationshipRole: string = key;
+            let primaryRelationshipRole: string = relDef.primaryRelationshipRole || key;
             let complementaryRelationshipRole: string = relDef.complementaryRelationshipRole || "";
             if (relDef.primaryRelationshipPropertyName) {
                 let propertyName: string = relDef.primaryRelationshipPropertyName;
@@ -183,14 +186,15 @@ export class CreateRelationshipModal extends Modal {
                 } else {
                     description1 = ``
                 }
-                let displayText: string = `${propertyName}${description1}`
-                this.relationshipChoices.push({
-                    "index": this.relationshipChoices.length,
+                let displayText: string = `${propertyName}${description1}`;
+                let key = displayText;
+                this.relationshipChoices[key] = {
+                    "key": key,
                     "primaryRelationshipRole": primaryRelationshipRole,
                     "complementaryRelationshipRole": complementaryRelationshipRole,
                     "propertyName": propertyName,
                     "displayText": displayText,
-                });
+                };
             }
             if (relDef.complementaryRelationshipPropertyName) {
                 let propertyName: string = relDef.complementaryRelationshipPropertyName;
@@ -202,16 +206,17 @@ export class CreateRelationshipModal extends Modal {
                     description1 = ``
                 }
                 let displayText: string = `${propertyName}${description1}`
-                this.relationshipChoices.push({
-                    "index": this.relationshipChoices.length,
+                let key = displayText;
+                this.relationshipChoices[key] = {
+                    "key": key,
                     "primaryRelationshipRole": complementaryRelationshipRole,
                     "complementaryRelationshipRole": primaryRelationshipRole,
                     "propertyName": propertyName,
                     "displayText": displayText,
-                });
+                };
             }
         });
-        this.relationshipChoices.sort((a, b) => a.displayText.localeCompare(b.displayText));
+        // this.relationshipChoices.sort((a, b) => a.displayText.localeCompare(b.displayText));
     }
 
     addFooterButtons() {
