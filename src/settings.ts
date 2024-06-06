@@ -333,8 +333,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
     createRelationshipDefinitionSetting(container: HTMLElement, relationshipName: string, definition: RelationshipDefinition): void {
 
         new Setting(container)
-            .setName('Major relationship property name')
-            .setDesc("In hierarchical relationships, the property field listing superordinate relationships. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property of the focal note. In symmetrical relationship categories, the focal note will be listed as descendent subtree or child node of the listed linked notes.")
+            .setName('Primary relationship property name')
+            .setDesc("The name of the property field listing notes with this relationship to the focal note. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property.")
             .addText(text => text
                 .setValue(definition.superordinateRelationshipPropertyName || "")
                 .setPlaceholder("entry-parents")
@@ -344,10 +344,11 @@ export class BearingsSettingsTab extends PluginSettingTab {
                 }));
 
         new Setting(container)
-            .setName('Major relationship role')
-            .setDesc('A description of the role the linked note takes with respect to the focal note when listed notes under the above property.')
+            .setName('Primary relationship label')
+            .setDesc('A label for the role of a note with this relationship to the focal note.')
             .addText(text => text
                 .setValue(definition.superordinateRelationshipRole || "")
+                .setPlaceholder("Parent")
                 .onChange(async (value) => {
                     definition.superordinateRelationshipRole = value;
                     await this.saveSettingsFn();
@@ -355,9 +356,10 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         new Setting(container)
             .setName('Complementary relationship property name')
-            .setDesc("In hierarchical relationship definitions, the property name under which the focal note will list notes with a subordinate relationship of this class to itself. E.g. if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. In symmetrical relationship categories, linked notes listed under this property are displayed as a subtree of the focal note.")
+            .setDesc("The name of the property field listing notes the inverse or reflection of the primary relationship in asymmetrical relationships. E.g., if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. This field is ignored in symmetrical relationships.")
             .addText(text => text
                 .setValue(definition.subordinateRelationshipPropertyName || "")
+                .setPlaceholder("entry-children")
                 .onChange(async (value) => {
                     definition.subordinateRelationshipPropertyName = value;
                     await this.saveSettingsFn();
@@ -365,9 +367,10 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         new Setting(container)
             .setName('Complementary relationship label')
-            .setDesc('A description of the role the linked note takes with respect to the focal note when listed notes under the above property.')
+            .setDesc('A label for the inverse role of a note with this relationship to the focal note.')
             .addText(text => text
                 .setValue(definition.subordinateRelationshipRole || "")
+                .setPlaceholder("Child")
                 .onChange(async (value) => {
                     definition.subordinateRelationshipRole = value;
                     await this.saveSettingsFn();
@@ -379,6 +382,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc('Categories for this relationship.')
             .addText(text => text
                 .setValue(definition.categories?.join(', ') || "")
+                .setPlaceholder("E.g. 'hierarchical' or 'symmetrical'")
                 .onChange(async (value) => {
                     definition.categories = value.split(',').map(s => s.trim());
                     await this.saveSettingsFn();
