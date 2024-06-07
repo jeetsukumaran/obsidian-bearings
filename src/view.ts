@@ -694,7 +694,7 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
         let treeNodes: FileNavigationTreeNode[] = [];
         treeNodes = this._context.dataService.superordinateChains(
             this.focalFilePath,
-            this._context.configuration.primaryRelationshipDefinitions(),
+            this._context.configuration.superordinateRelationshipDefinitions(),
             true,
             this.discoveryDepthLimit,
         );
@@ -723,7 +723,7 @@ export class SubordinateRelationshipsViewFrame extends NavigationViewFrame {
     NavigationViewResults {
         let subtreeRoot = this._context.dataService.subordinateSubtrees(
                 this.focalFilePath,
-                this._context.configuration.primaryRelationshipDefinitions(),
+                this._context.configuration.superordinateRelationshipDefinitions(),
                 this.discoveryDepthLimit
         );
         // return {
@@ -756,7 +756,7 @@ export class CoordinateRelationshipsViewFrame extends NavigationViewFrame {
         let subtreeRoot = this._context.dataService.coordinateSubtrees(
             this.focalFilePath,
             this._context.configuration.symmetricalRelationshipDefinitions(),
-            this._context.configuration.primaryRelationshipDefinitions(),
+            this._context.configuration.superordinateRelationshipDefinitions(),
             this.discoveryDepthLimit,
         )
 
@@ -791,7 +791,7 @@ export class ParallelRelationshipsViewFrame extends NavigationViewFrame {
         let fileNodePathMap = new Map<FilePathType, FileNode>();
         let currentFileSuperordinates = currentFileNode.superordinateChains(
             "standard",
-            this._context.configuration.primaryRelationshipDefinitions(),
+            this._context.configuration.superordinateRelationshipDefinitions(),
             1,
             fileNodePathMap,
         ).rootNodes;
@@ -799,7 +799,7 @@ export class ParallelRelationshipsViewFrame extends NavigationViewFrame {
             treeNodes.push(
                 this._context.dataService.subordinateSubtrees(
                     superordinate.value.filePath,
-                    this._context.configuration.primaryRelationshipDefinitions(),
+                    this._context.configuration.superordinateRelationshipDefinitions(),
                     this.discoveryDepthLimit,
                     // fileNodePathMap,
                 ),
@@ -827,7 +827,7 @@ export class BacklinkedRelationshipsViewFrame extends NavigationViewFrame {
             .map( (fileNode: FileNode) => {
                 return this._context.dataService.subordinateSubtrees(
                    fileNode.filePath,
-                   this._context.configuration.primaryRelationshipDefinitions(),
+                   this._context.configuration.superordinateRelationshipDefinitions(),
                    0,
                 )
             });

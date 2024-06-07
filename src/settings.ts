@@ -49,38 +49,38 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             primaryRelationshipPropertyName: "entry-parents",
             complementaryRelationshipRole: "Child",
             complementaryRelationshipPropertyName: "entry-children",
-            categories: ["hierarchical"]
+            categories: ["superordinate"]
         },
         "Classifier": {
             primaryRelationshipRole: "Classifier",
             primaryRelationshipPropertyName: "entry-classifiers",
             complementaryRelationshipRole: "Classification",
             complementaryRelationshipPropertyName: "entry-classifications",
-            categories: ["hierarchical"]
+            categories: ["superordinate"]
         },
         "Collection": {
             primaryRelationshipRole: "Collection",
             primaryRelationshipPropertyName: "entry-collections",
             complementaryRelationshipPropertyName: "entry-items",
             complementaryRelationshipRole: "Item",
-            categories: ["hierarchical"]
+            categories: ["superordinate"]
         },
         "Author": {
             primaryRelationshipRole: "Author",
             primaryRelationshipPropertyName: "source-authors",
             complementaryRelationshipRole: "Bibliography",
             complementaryRelationshipPropertyName: "entry-bibliography",
-            categories: ["hierarchical"]
+            categories: ["superordinate"]
         },
         "Collaborator": {
             primaryRelationshipRole: "Collaborator",
             primaryRelationshipPropertyName: "entry-collaborators",
             complementaryRelationshipRole: "Collaboration",
             complementaryRelationshipPropertyName: "entry-collaborations",
-            categories: ["hierarchical"]
+            categories: ["superordinate"]
         },
         "Attachment": {
-            categories: ["hierarchical"],
+            categories: ["superordinate"],
             complementaryRelationshipRole: "Attachment",
             complementaryRelationshipPropertyName: "entry-attachments",
         },
@@ -89,7 +89,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             primaryRelationshipRole: "Topic",
             complementaryRelationshipPropertyName: "entry-cases",
             complementaryRelationshipRole: "Case",
-            categories: ["hierarchical"]
+            categories: ["superordinate"]
         },
         "Referral": {
             primaryRelationshipRole: "Reference",
@@ -112,9 +112,9 @@ export class BearingsConfiguration {
         this.options = { ...settingsData.options };
     }
 
-    primaryRelationshipDefinitions(): RelationshipDefinition[] {
+    superordinateRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
-            .filter(rdef => rdef.categories?.includes("hierarchical"));
+            .filter(rdef => rdef.categories?.includes("superordinate"));
     }
 
     symmetricalRelationshipDefinitions(): RelationshipDefinition[] {
