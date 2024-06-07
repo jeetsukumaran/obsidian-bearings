@@ -92,7 +92,7 @@ export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
             categories: ["superordinate"]
         },
         "Referral": {
-            primaryRelationshipRole: "Reference",
+            primaryRelationshipRole: "Referrals",
             primaryRelationshipPropertyName: "entry-referrals",
             categories: ["symmetrical"]
         },
@@ -131,12 +131,14 @@ export class BearingsSettingsTab extends PluginSettingTab {
     plugin: Plugin;
     pluginConfiguration: BearingsConfiguration;
     saveSettingsFn: () => Promise<void>;
+    relationshipCategoryChoices: string[];
 
     constructor(app: App, plugin: Plugin, pluginConfiguration: BearingsConfiguration, saveSettingsFn: () => Promise<void>) {
         super(app, plugin);
         this.plugin = plugin;
         this.pluginConfiguration = pluginConfiguration;
         this.saveSettingsFn = saveSettingsFn;
+        this.relationshipCategoryChoices = ["superordinate", "symmetrical"];
     }
 
     display(): void {
@@ -162,10 +164,13 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(containerEl).setName("Manage relationship definitions").setHeading();
         const addDefinitionButton = containerEl.createEl('button', { text: 'New relationship definition' });
         addDefinitionButton.onclick = () => {
-            new AddRelationshipDefinitionModal(this.app, (definitionName, definition) => {
+            new AddRelationshipDefinitionModal(this.app,
+                (definitionName, definition) => {
                 this.pluginConfiguration.relationshipDefinitions[definitionName] = definition;
                 this.saveSettingsFn().then(() => this.display());
-            }).open();
+                },
+                this.relationshipCategoryChoices,
+            ).open();
         };
 
         // Reset to Default Button
@@ -292,15 +297,18 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(container)
             .setName('Categories')
             .setDesc('Categories for this relationship.')
-            .addText(text => text
-                .setValue(definition.categories?.join(', ') || "")
-                .setPlaceholder("E.g. 'hierarchical' or 'symmetrical'")
-                .onChange(async (value) => {
-                    definition.categories = value.split(',').map(s => s.trim());
-                    await this.saveSettingsFn();
-                }));
+            .addDropdown(dropdown => {
+                const categories = ['superordinate', 'symmetrical'];
+                categories.forEach(category => {
+                    dropdown.addOption(category, category);
+                });
+                dropdown.setValue(definition.categories?.[0] || categories[0])
+                    .onChange(async (value) => {
+                        definition.categories = [value];
+                        await this.saveSettingsFn();
+                    });
+            });
 
-        // Remove Relationship Definition Button
         new Setting(container)
             .addButton(button => button
                 .setButtonText('Remove')
@@ -314,10 +322,12 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
 class AddRelationshipDefinitionModal extends Modal {
     onSubmit: (definitionName: string, definition: RelationshipDefinition) => void;
+    relationshipCategoryChoices: string[];
 
-    constructor(app: App, onSubmit: (definitionName: string, definition: RelationshipDefinition) => void) {
+    constructor(app: App, onSubmit: (definitionName: string, definition: RelationshipDefinition) => void, relationshipCategoryChoices: string[]) {
         super(app);
         this.onSubmit = onSubmit;
+        this.relationshipCategoryChoices = relationshipCategoryChoices;
     }
 
     onOpen() {
@@ -326,7 +336,7 @@ class AddRelationshipDefinitionModal extends Modal {
         let complementaryRelationshipPropertyName = '';
         let primaryRelationshipRole = '';
         let complementaryRelationshipRole = '';
-        let categories = '';
+        let categories: string[] = [];
 
         const { contentEl } = this;
         contentEl.createEl('h3', { text: 'Add new relationship definition' });
@@ -353,31 +363,39 @@ class AddRelationshipDefinitionModal extends Modal {
 
         new Setting(contentEl)
             .setName('Categories')
-            .addText(text => text.onChange(value => categories = value));
+            .addDropdown(dropdown => {
+                this.relationshipCategoryChoices.forEach(category => {
+                    dropdown.addOption(category, category);
+                });
+                dropdown.onChange(value => {
+                    categories = [value];
+                });
+            });
 
         new Setting(contentEl)
             .addButton(button =>
                 button
-                .setButtonText('Add')
-                .setCta()
-                .onClick(() => {
-                    if (!definitionName) {
-                        new Notice('Definition name is required.');
-                        return;
-                    }
-                    this.onSubmit(definitionName, {
-                        primaryRelationshipPropertyName,
-                        complementaryRelationshipPropertyName,
-                        primaryRelationshipRole,
-                        complementaryRelationshipRole,
-                        categories: categories.split(',').map(s => s.trim()),
-                    });
-                    this.close();
-                }));
+                    .setButtonText('Add')
+                    .setCta()
+                    .onClick(() => {
+                        if (!definitionName) {
+                            new Notice('Definition name is required.');
+                            return;
+                        }
+                        this.onSubmit(definitionName, {
+                            primaryRelationshipPropertyName,
+                            complementaryRelationshipPropertyName,
+                            primaryRelationshipRole,
+                            complementaryRelationshipRole,
+                            categories,
+                        });
+                        this.close();
+                    }));
     }
 
     onClose() {
         this.contentEl.empty();
     }
 }
+
 
