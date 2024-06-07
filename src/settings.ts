@@ -341,8 +341,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
         //             })
         //             );
 
-        let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
-        const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-inline-control' });
+        let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-subinline-controls-container' });
+        const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-subinline-control' });
         deleteButton.onclick = async () => {
                         delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
                         await this.saveSettingsFn();
