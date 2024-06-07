@@ -149,23 +149,14 @@ export class BearingsSettingsTab extends PluginSettingTab {
         this.createOptionsSetting(optionsDiv, this.pluginConfiguration.options)
 
         // Relationship Definitions Section
-        new Setting(containerEl).setName("Relationship definitions").setHeading();
+        // const relationshipsDiv = containerEl.createDiv();
+        // new Setting(relationshipsDiv).setName("Relationship definitions").setHeading();
 
-        this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-start' });
+        // this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-start' });
 
-        new Setting(containerEl).setName("Manage relationship definitions").setHeading();
-
-        // Reset to Default Button
+        const relationshipsManageDiv = containerEl.createDiv();
+        new Setting(relationshipsManageDiv).setName("Manage relationship definitions").setHeading();
         let manageRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
-        const resetButton = manageRelationshipsControlContainer.createEl('button', { text: 'Reset to default relationships', cls: 'bearings-settings-inline-control' });
-        resetButton.onclick = async () => {
-            Object.assign(this.pluginConfiguration.relationshipDefinitions, BEARINGS_DEFAULT_SETTINGS.relationshipDefinitions);
-            await this.saveSettingsFn();
-            this.display();
-            new Notice('Settings reset to default.');
-        };
-
-        // Add New Relationship Definition Button
         const addDefinitionButton = manageRelationshipsControlContainer.createEl('button', { text: 'New relationship definition', cls: 'bearings-settings-inline-control' });
         addDefinitionButton.onclick = () => {
             new AddRelationshipDefinitionModal(this.app,
@@ -179,6 +170,21 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         this.displayRelationshipCategory("superordinate", "Superordinate relationships");
         this.displayRelationshipCategory("symmetrical", "Symmetrical relationships");
+
+        const relationshipsResetDiv = containerEl.createDiv();
+        new Setting(relationshipsResetDiv).setName("Reset relationship definitions").setHeading();
+        // Reset to Default Button
+        let resetRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
+        const resetButton = resetRelationshipsControlContainer.createEl('button', { text: 'Reset to default relationships', cls: 'bearings-settings-inline-control' });
+        resetButton.onclick = async () => {
+            Object.assign(this.pluginConfiguration.relationshipDefinitions, BEARINGS_DEFAULT_SETTINGS.relationshipDefinitions);
+            await this.saveSettingsFn();
+            this.display();
+            new Notice('Settings reset to default.');
+        };
+
+        // Add New Relationship Definition Button
+
     }
 
     private displayRelationshipCategory(category: string, heading: string): void {
@@ -188,7 +194,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         if (definitions.length > 0) {
             const { containerEl } = this;
-            containerEl.createEl('h3', { text: heading });
+            // containerEl.createEl('h3', { text: heading });
+            const relationshipsDefinitionDiv = containerEl.createDiv();
+            new Setting(relationshipsDefinitionDiv).setName(heading).setHeading();
             definitions.forEach(([relationshipName, definition]) => {
                 this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-mid' });
                 const settingDiv = new Setting(containerEl).setName(`Relationship: '${relationshipName}'`).setHeading();
