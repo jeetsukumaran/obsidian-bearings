@@ -295,8 +295,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
                 }));
 
         new Setting(container)
-            .setName('Categories')
-            .setDesc('Categories for this relationship.')
+            .setName('Category')
+            .setDesc('Category for this relationship.')
             .addDropdown(dropdown => {
                 const categories = ['superordinate', 'symmetrical'];
                 categories.forEach(category => {
@@ -362,7 +362,7 @@ class AddRelationshipDefinitionModal extends Modal {
             .addText(text => text.onChange(value => complementaryRelationshipPropertyName = value));
 
         new Setting(contentEl)
-            .setName('Categories')
+            .setName('Category')
             .addDropdown(dropdown => {
                 this.relationshipCategoryChoices.forEach(category => {
                     dropdown.addOption(category, category);
