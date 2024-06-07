@@ -330,14 +330,25 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     });
             });
 
-        new Setting(container)
-            .addButton(button => button
-                .setButtonText('Remove')
-                .onClick(async () => {
-                    delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
-                    await this.saveSettingsFn();
-                    this.display();
-                }));
+        // new Setting(container)
+        // .addButton(button => button
+        //             .setButtonText('Remove')
+        //             .setClass('bearings-settings-spanning-control')
+        //             .onClick(async () => {
+        //                 delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
+        //                 await this.saveSettingsFn();
+        //                 this.display();
+        //             })
+        //             );
+
+        let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
+        const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-inline-control' });
+        deleteButton.onclick = async () => {
+                        delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
+                        await this.saveSettingsFn();
+                        this.display();
+                    };
+
     }
 
     private displayDefinitions(definitions: [string, RelationshipDefinition][], heading: string): void {
