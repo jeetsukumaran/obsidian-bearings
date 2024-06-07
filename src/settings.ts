@@ -168,8 +168,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
             ).open();
         };
 
-        this.displayRelationshipCategory("superordinate", "Superordinate relationships");
-        this.displayRelationshipCategory("symmetrical", "Symmetrical relationships");
+        // this.displayRelationshipCategory("superordinate", "Superordinate relationships");
+        // this.displayRelationshipCategory("symmetrical", "Symmetrical relationships");
+        this.displayRelationshipDefinitions(null);
 
         const relationshipsResetDiv = containerEl.createDiv();
         new Setting(relationshipsResetDiv).setName("Reset relationship definitions").setHeading();
@@ -187,16 +188,13 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
     }
 
-    private displayRelationshipCategory(category: string, heading: string): void {
+    private displayRelationshipDefinitions(category: string | null): void {
         const definitions = Object.entries(this.pluginConfiguration.relationshipDefinitions)
-            .filter(([_, definition]) => definition.categories?.includes(category))
+            .filter(([_, definition]) => category === null || definition.categories?.includes(category))
             .sort((a, b) => a[0].localeCompare(b[0]));
 
         if (definitions.length > 0) {
             const { containerEl } = this;
-            // containerEl.createEl('h3', { text: heading });
-            const relationshipsDefinitionDiv = containerEl.createDiv();
-            new Setting(relationshipsDefinitionDiv).setName(heading).setHeading();
             definitions.forEach(([relationshipName, definition]) => {
                 this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-mid' });
                 const settingDiv = new Setting(containerEl).setName(`Relationship: '${relationshipName}'`).setHeading();
