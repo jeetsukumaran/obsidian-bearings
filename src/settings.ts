@@ -10,12 +10,6 @@ import {
 	Setting
 } from 'obsidian';
 
-import {
-    // CacheManager,
-    // Encache,
-    // EncacheFn,
-} from './cache';
-
 export type RelationshipDefinition = {
     primaryRelationshipRole?: string;
     primaryRelationshipPropertyName?: string;
@@ -42,87 +36,69 @@ export const DEFAULT_TITLE_FIELDS: string[] = [
 export const TRAJECTORIES_DEFAULT_SETTINGS: BearingsSettingsData = {
     schemaVersion: "0.0.0",
     options: {
-        // globalNamespacePrefix: "entry-", // string | null
         titleField: ["title", "entry-title"],
         glyphField: ["glyphs", "entry-glyphs"],
-        autoexpansionDepthLimit: 2,    // number | null
-        discoveryDepthLimitPrimary: 2,    // number | null
-        discoveryDepthLimitSecondary: 2,     // number | null
-        inactiveFileFocalNote: "", // string
+        autoexpansionDepthLimit: 2,
+        discoveryDepthLimitPrimary: 2,
+        discoveryDepthLimitSecondary: 2,
+        inactiveFileFocalNote: "",
     },
     relationshipDefinitions: {
         "Parent": {
-            "primaryRelationshipRole": "Parent",
-            "primaryRelationshipPropertyName": "entry-parents",
-            "complementaryRelationshipRole": "Child",
-            "complementaryRelationshipPropertyName": "entry-children",
-            "categories": [
-                "hierarchical"
-            ]
+            primaryRelationshipRole: "Parent",
+            primaryRelationshipPropertyName: "entry-parents",
+            complementaryRelationshipRole: "Child",
+            complementaryRelationshipPropertyName: "entry-children",
+            categories: ["hierarchical"]
         },
         "Classifier": {
-            "primaryRelationshipRole": "Classifier",
-            "primaryRelationshipPropertyName": "entry-classifiers",
-            "complementaryRelationshipRole": "Classification",
-            "complementaryRelationshipPropertyName": "entry-classifications",
-            "categories": [
-                "hierarchical"
-            ]
+            primaryRelationshipRole: "Classifier",
+            primaryRelationshipPropertyName: "entry-classifiers",
+            complementaryRelationshipRole: "Classification",
+            complementaryRelationshipPropertyName: "entry-classifications",
+            categories: ["hierarchical"]
         },
         "Collection": {
-            "primaryRelationshipRole": "Collection",
-            "primaryRelationshipPropertyName": "entry-collections",
-            "complementaryRelationshipPropertyName": "entry-items",
-            "complementaryRelationshipRole": "Item",
-            "categories": [
-                "hierarchical"
-            ]
+            primaryRelationshipRole: "Collection",
+            primaryRelationshipPropertyName: "entry-collections",
+            complementaryRelationshipPropertyName: "entry-items",
+            complementaryRelationshipRole: "Item",
+            categories: ["hierarchical"]
         },
         "Author": {
-            "primaryRelationshipRole": "Author",
-            "primaryRelationshipPropertyName": "source-authors",
-            "complementaryRelationshipRole": "Bibliography",
-            "complementaryRelationshipPropertyName": "entry-bibliography",
-            "categories": [
-                "hierarchical"
-            ]
+            primaryRelationshipRole: "Author",
+            primaryRelationshipPropertyName: "source-authors",
+            complementaryRelationshipRole: "Bibliography",
+            complementaryRelationshipPropertyName: "entry-bibliography",
+            categories: ["hierarchical"]
         },
         "Collaborator": {
-            "primaryRelationshipRole": "Collaborator",
-            "primaryRelationshipPropertyName": "entry-collaborators",
-            "complementaryRelationshipRole": "Collaboration",
-            "complementaryRelationshipPropertyName": "entry-collaborations",
-            "categories": [
-                "hierarchical"
-            ]
+            primaryRelationshipRole: "Collaborator",
+            primaryRelationshipPropertyName: "entry-collaborators",
+            complementaryRelationshipRole: "Collaboration",
+            complementaryRelationshipPropertyName: "entry-collaborations",
+            categories: ["hierarchical"]
         },
         "Attachment": {
-            "categories": [
-                "hierarchical"
-            ],
-            "complementaryRelationshipRole": "Attachment",
-            "complementaryRelationshipPropertyName": "entry-attachments",
+            categories: ["hierarchical"],
+            complementaryRelationshipRole: "Attachment",
+            complementaryRelationshipPropertyName: "entry-attachments",
         },
         "Topic": {
-            "primaryRelationshipPropertyName": "entry-topics",
-            "primaryRelationshipRole": "Topic",
-            "complementaryRelationshipPropertyName": "entry-cases",
-            "complementaryRelationshipRole": "Case",
-            "categories": [
-                "hierarchical"
-            ]
+            primaryRelationshipPropertyName: "entry-topics",
+            primaryRelationshipRole: "Topic",
+            complementaryRelationshipPropertyName: "entry-cases",
+            complementaryRelationshipRole: "Case",
+            categories: ["hierarchical"]
         },
         "Referral": {
-            "primaryRelationshipRole": "Reference",
-            "primaryRelationshipPropertyName": "entry-referrals",
-            "categories": [
-                "symmetrical"
-            ]
+            primaryRelationshipRole: "Reference",
+            primaryRelationshipPropertyName: "entry-referrals",
+            categories: ["symmetrical"]
         },
     }
 }
 
-// export class BearingsConfiguration extends CacheManager {
 export class BearingsConfiguration {
     options: {
         [name: string]: any;
@@ -132,27 +108,23 @@ export class BearingsConfiguration {
     }
 
     constructor(settingsData: BearingsSettingsData) {
-        // super();
-        this.relationshipDefinitions = {
-             ... settingsData.relationshipDefinitions,
-        };
-        this.options = { ... settingsData.options };
+        this.relationshipDefinitions = { ...settingsData.relationshipDefinitions };
+        this.options = { ...settingsData.options };
     }
 
     primaryRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
-            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "hierarchical"  ));
+            .filter(rdef => rdef.categories?.includes("hierarchical"));
     }
 
     symmetricalRelationshipDefinitions(): RelationshipDefinition[] {
         return Object.values(this.relationshipDefinitions)
-            .filter( (rdef: RelationshipDefinition) => rdef.categories?.some( (category: string) => category === "symmetrical"  ));
+            .filter(rdef => rdef.categories?.includes("symmetrical"));
     }
 
     get titleFields(): string[] {
         return this.options?.titleField || DEFAULT_TITLE_FIELDS;
     }
-
 }
 
 export class BearingsSettingsTab extends PluginSettingTab {
@@ -177,7 +149,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(optionsDiv).setName("Options").setHeading();
         this.createOptionsSetting(optionsDiv, this.pluginConfiguration.options)
 
-        // containerEl.createDiv().createEl('h3', { text: `Relationship definitions` });
+        // Relationship Definitions Section
         new Setting(containerEl).setName("Relationship definitions").setHeading();
         Object.entries(this.pluginConfiguration.relationshipDefinitions)
             .sort((a, b) => a[0].localeCompare(b[0])) // Sorting entries alphabetically by relationshipName
@@ -207,18 +179,14 @@ export class BearingsSettingsTab extends PluginSettingTab {
     }
 
     processIntLimit(value: string): number | null {
-        if (value && value === "") {
+        if (value === "") {
             return 0;
         }
         if (value === "*") {
             return null;
         }
         const parsedValue = parseInt(value.trim());
-        if (isNaN(parsedValue)) {
-            return null;
-        } else {
-            return parsedValue;
-        }
+        return isNaN(parsedValue) ? null : parsedValue;
     }
 
     displayIntLimit(value: number | null): string {
@@ -226,26 +194,13 @@ export class BearingsSettingsTab extends PluginSettingTab {
     }
 
     createOptionsSetting(container: HTMLElement, options: any): void {
-
-        // Global Namespace Prefix
-        // new Setting(container)
-        //     .setName('Global Namespace Prefix')
-        //     .setDesc('A prefix for global namespacing, can be null.')
-        //     .addText(text => text
-        //         .setValue(options.globalNamespacePrefix || "")
-        //         .onChange(async (value) => {
-        //             options.globalNamespacePrefix = value || null; // Set to null if empty
-        //             await this.saveSettingsFn();
-        //         }));
-
         new Setting(container)
             .setName('Title fields')
             .setDesc('Comma-separated list of property names that will be used as the display text of each note. Custom values not yet supported.')
             .addText(text => text
                 .setValue((options.titleField || DEFAULT_TITLE_FIELDS).join(", "))
-                // .setDisabled(true)
                 .onChange(async (value) => {
-                    options.titleField = (value ? value : DEFAULT_TITLE_FIELDS).toString().split(",").map( (s:string) => s.trim() );
+                    options.titleField = (value ? value : DEFAULT_TITLE_FIELDS).toString().split(",").map(s => s.trim());
                     await this.saveSettingsFn();
                 })
             );
@@ -286,21 +241,9 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     options.inactiveFileFocalNote = value;
                     await this.saveSettingsFn();
                 }));
-
     }
 
     createRelationshipDefinitionSetting(container: HTMLElement, relationshipName: string, definition: RelationshipDefinition): void {
-
-        new Setting(container)
-            .setName('Primary relationship property name')
-            .setDesc("The name of the property field listing notes with this relationship to the focal note. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property.")
-            .addText(text => text
-                .setValue(definition.primaryRelationshipPropertyName || "")
-                .setPlaceholder("entry-parents")
-                .onChange(async (value) => {
-                    definition.primaryRelationshipPropertyName = value;
-                    await this.saveSettingsFn();
-                }));
 
         new Setting(container)
             .setName('Primary relationship role')
@@ -314,19 +257,19 @@ export class BearingsSettingsTab extends PluginSettingTab {
                 }));
 
         new Setting(container)
-            .setName('Complementary relationship property name')
-            .setDesc("The name of the property field listing notes with the inverse or reflection of the primary relationship (asymmetrical relationships). E.g., if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. This field is ignored in symmetrical relationships.")
+            .setName('Primary relationship property name')
+            .setDesc("The name of the property field listing notes with this relationship to the focal note. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property.")
             .addText(text => text
-                .setValue(definition.complementaryRelationshipPropertyName || "")
-                .setPlaceholder("entry-children")
+                .setValue(definition.primaryRelationshipPropertyName || "")
+                .setPlaceholder("entry-parents")
                 .onChange(async (value) => {
-                    definition.complementaryRelationshipPropertyName = value;
+                    definition.primaryRelationshipPropertyName = value;
                     await this.saveSettingsFn();
                 }));
 
         new Setting(container)
             .setName('Complementary relationship role')
-            .setDesc('A label for the inverse role of a note with this relationship to the focal note.')
+            .setDesc('A label for the role of a note with the inverse or reflection of this relationship to the focal note.')
             .addText(text => text
                 .setValue(definition.complementaryRelationshipRole || "")
                 .setPlaceholder("Child")
@@ -335,6 +278,16 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     await this.saveSettingsFn();
                 }));
 
+        new Setting(container)
+            .setName('Complementary relationship property name')
+            .setDesc("In asymmetrical relationships, the name of the property field listing notes with the inverse or reflection of the primary relationship. E.g., if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. This field is ignored in symmetrical relationships.")
+            .addText(text => text
+                .setValue(definition.complementaryRelationshipPropertyName || "")
+                .setPlaceholder("entry-children")
+                .onChange(async (value) => {
+                    definition.complementaryRelationshipPropertyName = value;
+                    await this.saveSettingsFn();
+                }));
 
         new Setting(container)
             .setName('Categories')
@@ -383,20 +336,20 @@ class AddRelationshipDefinitionModal extends Modal {
             .addText(text => text.onChange(value => definitionName = value));
 
         new Setting(contentEl)
-            .setName('Primary relationship property name')
-            .addText(text => text.onChange(value => primaryRelationshipPropertyName = value));
-
-        new Setting(contentEl)
             .setName('Primary relationship label')
             .addText(text => text.onChange(value => primaryRelationshipRole = value));
 
         new Setting(contentEl)
-            .setName('Complementary relationship property name')
-            .addText(text => text.onChange(value => complementaryRelationshipPropertyName = value));
+            .setName('Primary relationship property name')
+            .addText(text => text.onChange(value => primaryRelationshipPropertyName = value));
 
         new Setting(contentEl)
             .setName('Complementary relationship label')
             .addText(text => text.onChange(value => complementaryRelationshipRole = value));
+
+        new Setting(contentEl)
+            .setName('Complementary relationship property name')
+            .addText(text => text.onChange(value => complementaryRelationshipPropertyName = value));
 
         new Setting(contentEl)
             .setName('Categories')
@@ -415,6 +368,8 @@ class AddRelationshipDefinitionModal extends Modal {
                     this.onSubmit(definitionName, {
                         primaryRelationshipPropertyName,
                         complementaryRelationshipPropertyName,
+                        primaryRelationshipRole,
+                        complementaryRelationshipRole,
                         categories: categories.split(',').map(s => s.trim()),
                     });
                     this.close();

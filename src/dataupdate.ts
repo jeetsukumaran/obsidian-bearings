@@ -150,7 +150,7 @@ export class CreateRelationshipModal extends Modal {
 
         // this.relationshipDescEl = this.contentEl.createEl('div', { cls: 'bearings-modal-data-entry-item-label' });
 
-        this.contentEl.createEl('div', {text: "Relationship type", cls: 'bearings-modal-data-entry-item-label'});
+        this.contentEl.createEl('div', {text: `Add relationship link to [[${this.linkPath}]] as:`, cls: 'bearings-modal-data-entry-item-label'});
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         this.selectBox.className = 'bearings-modal-data-entry-select-box';
         Object.values(this.relationshipChoices)
@@ -180,53 +180,44 @@ export class CreateRelationshipModal extends Modal {
         await this.selectionUpdate();
     }
 
-    loadChoices() {
+    loadChoices(): void {
         this.relationshipChoices = {};
-        Object.keys(this.configuration.relationshipDefinitions).forEach((key: string) => {
-            const relDef: RelationshipDefinition = this.configuration.relationshipDefinitions[key];
-            let primaryRelationshipRole: string = relDef.primaryRelationshipRole || "";
-            let complementaryRelationshipRole: string = relDef.complementaryRelationshipRole || "";
-            if (relDef.primaryRelationshipPropertyName) {
-                let propertyName: string = relDef.primaryRelationshipPropertyName;
-                let description1: string;
-                if (primaryRelationshipRole) {
-                    description1 = `'${primaryRelationshipRole}': `
-                } else {
-                    description1 = ``
-                }
-                // let displayText: string = `${description1}add link to [[${this.linkPath}]] under property '${propertyName}'`;
-                let displayText: string = `${description1}Add link under: '${propertyName}'`;
-                let key = displayText;
-                this.relationshipChoices[key] = {
-                    "key": key,
-                    "primaryRelationshipRole": primaryRelationshipRole,
-                    "complementaryRelationshipRole": complementaryRelationshipRole,
-                    "propertyName": propertyName,
-                    "displayText": displayText,
+
+        const createChoice = (propertyName: string, primaryRole: string, complementaryRole: string): string => {
+            const roleDescription = primaryRole ? `'${primaryRole}' ` : "";
+            return `${roleDescription}(add link under: '${propertyName}')`;
+        };
+
+        for (const [key, relDef] of Object.entries(this.configuration.relationshipDefinitions)) {
+            const {
+                primaryRelationshipPropertyName,
+                primaryRelationshipRole = "",
+                    complementaryRelationshipPropertyName,
+                complementaryRelationshipRole = ""
+            } = relDef;
+
+            if (primaryRelationshipPropertyName) {
+                const displayText = createChoice(primaryRelationshipPropertyName, primaryRelationshipRole, complementaryRelationshipRole);
+                this.relationshipChoices[displayText] = {
+                    key: displayText,
+                    primaryRelationshipRole,
+                    complementaryRelationshipRole,
+                    propertyName: primaryRelationshipPropertyName,
+                    displayText
                 };
             }
-            if (relDef.complementaryRelationshipPropertyName) {
-                let propertyName: string = relDef.complementaryRelationshipPropertyName;
-                let description1: string;
-                if (complementaryRelationshipRole) {
-                    description1 = `'${complementaryRelationshipRole}': `
-                } else {
-                    description1 = ``
-                }
-                // let displayText: string = `${description1}link [[${this.linkPath}]] under: ${propertyName}`;
-                let displayText: string = `${description1}Add link under: '${propertyName}'`;
-                // let displayText: string = `${description1}add link to [[${this.linkPath}]] under property '${propertyName}'`;
-                let key = displayText;
-                this.relationshipChoices[key] = {
-                    "key": key,
-                    "primaryRelationshipRole": complementaryRelationshipRole,
-                    "complementaryRelationshipRole": primaryRelationshipRole,
-                    "propertyName": propertyName,
-                    "displayText": displayText,
+
+            if (complementaryRelationshipPropertyName) {
+                const displayText = createChoice(complementaryRelationshipPropertyName, complementaryRelationshipRole, primaryRelationshipRole);
+                this.relationshipChoices[displayText] = {
+                    key: displayText,
+                    primaryRelationshipRole: complementaryRelationshipRole,
+                    complementaryRelationshipRole: primaryRelationshipRole,
+                    propertyName: complementaryRelationshipPropertyName,
+                    displayText
                 };
             }
-        });
-        // this.relationshipChoices.sort((a, b) => a.displayText.localeCompare(b.displayText));
+        }
     }
 
     addFooterButtons() {
