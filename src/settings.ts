@@ -341,13 +341,24 @@ export class BearingsSettingsTab extends PluginSettingTab {
         //             })
         //             );
 
+        // let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-subinline-controls-container' });
+        // const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-subinline-control' });
+        // deleteButton.onclick = async () => {
+        //                 delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
+        //                 await this.saveSettingsFn();
+        //                 this.display();
+        //             };
+
+
         let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-subinline-controls-container' });
         const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-subinline-control' });
         deleteButton.onclick = async () => {
-                        delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
-                        await this.saveSettingsFn();
-                        this.display();
-                    };
+            new ConfirmDeleteModal(this.app, async () => {
+                delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
+                await this.saveSettingsFn();
+                this.display();
+            }).open();
+        };
 
     }
 
@@ -443,4 +454,35 @@ class AddRelationshipDefinitionModal extends Modal {
     }
 }
 
+class ConfirmDeleteModal extends Modal {
+    onConfirm: () => void;
 
+    constructor(app: App, onConfirm: () => void) {
+        super(app);
+        this.onConfirm = onConfirm;
+    }
+
+    onOpen() {
+        const { contentEl } = this;
+        contentEl.createEl('h2', { text: 'Confirm Deletion' });
+        contentEl.createEl('p', { text: 'Are you sure you want to delete this relationship definition?' });
+
+        const buttonContainer = contentEl.createDiv({ cls: 'modal-button-container' });
+
+        const confirmButton = buttonContainer.createEl('button', { text: 'Yes', cls: 'modal-button-confirm' });
+        confirmButton.onclick = () => {
+            this.onConfirm();
+            this.close();
+        };
+
+        const cancelButton = buttonContainer.createEl('button', { text: 'No', cls: 'modal-button-cancel' });
+        cancelButton.onclick = () => {
+            this.close();
+        };
+    }
+
+    onClose() {
+        const { contentEl } = this;
+        contentEl.empty();
+    }
+}
