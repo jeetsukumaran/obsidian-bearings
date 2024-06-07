@@ -332,16 +332,20 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     });
             });
 
-        // new Setting(container)
-        // .addButton(button => button
-        //             .setButtonText('Remove')
-        //             .setClass('bearings-settings-spanning-control')
-        //             .onClick(async () => {
-        //                 delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
-        //                 await this.saveSettingsFn();
-        //                 this.display();
-        //             })
-        //             );
+        new Setting(container)
+            .setName('⚠️  DELETE ⚠️')
+            .setDesc('Delete this definition.')
+            .addButton(button => button
+                    .setButtonText('Delete definition')
+                    // .setClass('bearings-settings-subinline-control')
+                    .onClick(async () => {
+                        new ConfirmDeleteModal(this.app, async () => {
+                            delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
+                            await this.saveSettingsFn();
+                            this.display();
+                        }).open();
+                    })
+                    );
 
         // let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-subinline-controls-container' });
         // const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-subinline-control' });
@@ -352,15 +356,15 @@ export class BearingsSettingsTab extends PluginSettingTab {
         //             };
 
 
-        let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-subinline-controls-container' });
-        const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-subinline-control' });
-        deleteButton.onclick = async () => {
-            new ConfirmDeleteModal(this.app, async () => {
-                delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
-                await this.saveSettingsFn();
-                this.display();
-            }).open();
-        };
+        // let deleteDefinitionControlContainer = container.createEl('div', { cls: 'bearings-settings-subinline-controls-container' });
+        // const deleteButton = deleteDefinitionControlContainer.createEl('button', { text: 'Delete definition', cls: 'bearings-settings-subinline-control' });
+        // deleteButton.onclick = async () => {
+        //     new ConfirmDeleteModal(this.app, async () => {
+        //         delete this.pluginConfiguration.relationshipDefinitions[relationshipName];
+        //         await this.saveSettingsFn();
+        //         this.display();
+        //     }).open();
+        // };
 
     }
 
