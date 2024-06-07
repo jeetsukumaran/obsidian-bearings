@@ -278,7 +278,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc('A label for the role of a note with this relationship to the focal note.')
             .addText(text => text
                 .setValue(definition.primaryRelationshipRole || "")
-                .setPlaceholder("Parent")
+                .setPlaceholder("E.g.: 'Parent', 'Classifier', 'Topic', 'Up', or 'Related")
                 .onChange(async (value) => {
                     definition.primaryRelationshipRole = value;
                     await this.saveSettingsFn();
@@ -289,7 +289,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc("The name of the property field listing notes with this relationship to the focal note. E.g. Notes with a 'Parent' relationship might be listed under the 'entry-parents' property.")
             .addText(text => text
                 .setValue(definition.primaryRelationshipPropertyName || "")
-                .setPlaceholder("entry-parents")
+                .setPlaceholder("E.g.: `entry-parents`, `entry-classifiers`, `entry-topics`, `entry-up`, `entry-related`")
                 .onChange(async (value) => {
                     definition.primaryRelationshipPropertyName = value;
                     await this.saveSettingsFn();
@@ -300,7 +300,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc('A label for the role of a note with the inverse or reflection of this relationship to the focal note.')
             .addText(text => text
                 .setValue(definition.complementaryRelationshipRole || "")
-                .setPlaceholder("Child")
+                .setPlaceholder("E.g.: 'Child', 'Classification', 'Cases', 'Down', 'Related'")
                 .onChange(async (value) => {
                     definition.complementaryRelationshipRole = value;
                     await this.saveSettingsFn();
@@ -311,7 +311,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
             .setDesc("In asymmetrical relationships, the name of the property field listing notes with the inverse or reflection of the primary relationship. E.g., if a 'Parent' relationship is established above with the 'entry-parents' property, here describe the inverse: 'entry-children' with the label of 'Child'. This field is ignored in symmetrical relationships.")
             .addText(text => text
                 .setValue(definition.complementaryRelationshipPropertyName || "")
-                .setPlaceholder("entry-children")
+                .setPlaceholder("E.g.: `entry-children`, `entry-classifications`, `entry-cases`, `entry-down`, `entry-related`")
                 .onChange(async (value) => {
                     definition.complementaryRelationshipPropertyName = value;
                     await this.saveSettingsFn();
