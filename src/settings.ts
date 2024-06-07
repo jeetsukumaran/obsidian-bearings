@@ -154,6 +154,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
 
         // this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-start' });
 
+        containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-start' });
         const relationshipsManageDiv = containerEl.createDiv();
         new Setting(relationshipsManageDiv).setName("Manage relationship definitions").setHeading();
         let manageRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
@@ -172,6 +173,7 @@ export class BearingsSettingsTab extends PluginSettingTab {
         // this.displayRelationshipCategory("symmetrical", "Symmetrical relationships");
         this.displayRelationshipDefinitions(null);
 
+        containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-start' });
         const relationshipsResetDiv = containerEl.createDiv();
         new Setting(relationshipsResetDiv).setName("Reset relationship definitions").setHeading();
         // Reset to Default Button
