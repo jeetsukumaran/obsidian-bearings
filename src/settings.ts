@@ -156,37 +156,47 @@ export class BearingsSettingsTab extends PluginSettingTab {
         new Setting(containerEl).setName("Manage relationship definitions").setHeading();
 
         // Reset to Default Button
-        // const resetButton = containerEl.createEl('button', { text: 'Reset to defaults' });
-        let manageRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container'});
-        const resetButton = manageRelationshipsControlContainer.createEl('button', { text: 'Reset to default relationships', cls: 'bearings-settings-inline-control'});
+        let manageRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
+        const resetButton = manageRelationshipsControlContainer.createEl('button', { text: 'Reset to default relationships', cls: 'bearings-settings-inline-control' });
         resetButton.onclick = async () => {
             Object.assign(this.pluginConfiguration.relationshipDefinitions, BEARINGS_DEFAULT_SETTINGS.relationshipDefinitions);
             await this.saveSettingsFn();
             this.display();
             new Notice('Settings reset to default.');
         };
+
         // Add New Relationship Definition Button
-        const addDefinitionButton = manageRelationshipsControlContainer.createEl('button', { text: 'New relationship definition', cls: 'bearings-settings-inline-control'});
+        const addDefinitionButton = manageRelationshipsControlContainer.createEl('button', { text: 'New relationship definition', cls: 'bearings-settings-inline-control' });
         addDefinitionButton.onclick = () => {
             new AddRelationshipDefinitionModal(this.app,
                 (definitionName, definition) => {
-                this.pluginConfiguration.relationshipDefinitions[definitionName] = definition;
-                this.saveSettingsFn().then(() => this.display());
+                    this.pluginConfiguration.relationshipDefinitions[definitionName] = definition;
+                    this.saveSettingsFn().then(() => this.display());
                 },
                 this.relationshipCategoryChoices,
             ).open();
         };
 
-        Object.entries(this.pluginConfiguration.relationshipDefinitions)
-            .sort((a, b) => a[0].localeCompare(b[0])) // Sorting entries alphabetically by relationshipName
-            .forEach(([relationshipName, definition]) => {
+        this.displayRelationshipCategory("superordinate", "Superordinate relationships");
+        this.displayRelationshipCategory("symmetrical", "Symmetrical relationships");
+    }
+
+    private displayRelationshipCategory(category: string, heading: string): void {
+        const definitions = Object.entries(this.pluginConfiguration.relationshipDefinitions)
+            .filter(([_, definition]) => definition.categories?.includes(category))
+            .sort((a, b) => a[0].localeCompare(b[0]));
+
+        if (definitions.length > 0) {
+            const { containerEl } = this;
+            containerEl.createEl('h3', { text: heading });
+            definitions.forEach(([relationshipName, definition]) => {
                 this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-mid' });
                 const settingDiv = new Setting(containerEl).setName(`Relationship: '${relationshipName}'`).setHeading();
                 this.createRelationshipDefinitionSetting(containerEl, relationshipName, definition);
             });
-        // this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-end' });
-
+        }
     }
+
 
     processIntLimit(value: string): number | null {
         if (value === "") {
@@ -323,7 +333,20 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     this.display();
                 }));
     }
+
+    private displayDefinitions(definitions: [string, RelationshipDefinition][], heading: string): void {
+        if (definitions.length > 0) {
+            const { containerEl } = this;
+            containerEl.createEl('h3', { text: heading });
+            definitions.forEach(([relationshipName, definition]) => {
+                this.containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-mid' });
+                const settingDiv = new Setting(containerEl).setName(`Relationship: '${relationshipName}'`).setHeading();
+                this.createRelationshipDefinitionSetting(containerEl, relationshipName, definition);
+            });
+        }
+    }
 }
+
 
 class AddRelationshipDefinitionModal extends Modal {
     onSubmit: (definitionName: string, definition: RelationshipDefinition) => void;
