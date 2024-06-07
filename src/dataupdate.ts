@@ -150,14 +150,14 @@ export class CreateRelationshipModal extends Modal {
         this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
 
         // this.contentEl.createEl('div', {text: "Focal file (will be updated)", cls: 'bearings-modal-data-entry-item-label'});
-        this.contentEl.createEl('div', {text: `The current file:`, cls: 'bearings-modal-data-entry-item-label'});
-        this.contentEl.createEl('div', { text: `[[${this.focalFilePath}: : '${this.focalFilePathDisplayTitle}']]`, cls: 'bearings-modal-data-entry-fileinfo' });
+        this.contentEl.createEl('div', {text: `The focal file:`, cls: 'bearings-modal-data-entry-item-label'});
+        this.contentEl.createEl('div', { text: `[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`, cls: 'bearings-modal-data-entry-fileinfo' });
         // this.contentEl.createEl('div', {text: "Linked file target", cls: 'bearings-modal-data-entry-item-label'});
         // this.contentEl.createEl('div', { text: this.linkPath, cls: 'bearings-modal-data-entry-fileinfo' });
 
         // this.contentEl.createEl('div', {text: `will add a relationship link to:`, cls: 'bearings-modal-data-entry-item-label'});
         this.contentEl.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
-        this.contentEl.createEl('div', { text: `[[${this.linkPath}: : '${this.linkPathDisplayTitle}']]`, cls: 'bearings-modal-data-entry-fileinfo' });
+        this.contentEl.createEl('div', { text: `[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`, cls: 'bearings-modal-data-entry-fileinfo' });
 
         this.contentEl.createEl('div', {text: `as:`, cls: 'bearings-modal-data-entry-item-label'});
 
@@ -195,7 +195,7 @@ export class CreateRelationshipModal extends Modal {
 
         const createChoice = (propertyName: string, primaryRole: string, complementaryRole: string): string => {
             const roleDescription = primaryRole ? `'${primaryRole}' ` : "";
-            return `${roleDescription}(add link under: '${propertyName}')`;
+            return `${roleDescription}(link under property: '${propertyName}')`;
         };
 
         for (const [key, relDef] of Object.entries(this.configuration.relationshipDefinitions)) {
