@@ -23,7 +23,7 @@ import {
     BearingsConfiguration,
     BearingsSettingsData,
     BearingsSettingsTab,
-    TRAJECTORIES_DEFAULT_SETTINGS as DEFAULT_SETTINGS,
+    BEARINGS_DEFAULT_SETTINGS as DEFAULT_SETTINGS,
 } from "./settings";
 
 import {
