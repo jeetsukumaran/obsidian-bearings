@@ -10,13 +10,10 @@ import {
 	Setting
 } from 'obsidian';
 
-export type RelationshipDefinition = {
-    primaryRelationshipRole?: string;
-    primaryRelationshipPropertyName?: string;
-    complementaryRelationshipPropertyName?: string;
-    complementaryRelationshipRole?: string;
-    categories?: string[];
-}
+import {
+    RelationshipDefinition,
+} from "./types";
+export type { RelationshipDefinition } from "./types";
 
 export interface BearingsSettingsData {
     schemaVersion: string;
