@@ -32,6 +32,12 @@ import {
 } from "./menus"
 
 import {
+    UpdateDisplayTitleModal,
+    CreateRelationshipModal,
+    appendFrontmatterLists,
+} from "./dataupdate"
+
+import {
     VIEW_TYPE as NAVIGATOR_VIEW_TYPE,
     BearingsView,
     NavigationContext,
@@ -67,7 +73,8 @@ export default class BearingsPlugin extends Plugin {
                     this.configuration,
                     this.dataService,
                     "",
-                    this.codeBlockRefresh
+                    // this.codeBlockRefresh,
+                    this.refresh,
                     // true,
                 );
                 let navigationView = new NavigationView(
@@ -92,8 +99,16 @@ export default class BearingsPlugin extends Plugin {
         this.addCommand({
             id: 'refresh-bearings-code-blocks',
             name: 'Navigation code blocks: refresh',
-            callback: this.codeBlockRefresh,
+            // callback: this.codeBlockRefresh,
+            callback: this.refresh,
         });
+
+        this.addCommand({
+            id: 'add-bearings-relationship',
+            name: 'Add relationship ...',
+            callback: this.addRelationship,
+        });
+
 
         /* Sidebar view */
         this.registerView(
@@ -108,6 +123,10 @@ export default class BearingsPlugin extends Plugin {
 
         this.addRibbonIcon("radar", "Open the navigator", () => {
             this.activateView();
+        });
+
+        this.addRibbonIcon("git-branch-plus", "Add a relationship", () => {
+            this.addRelationship();
         });
 
         this.addCommand({
@@ -174,6 +193,18 @@ export default class BearingsPlugin extends Plugin {
         // this.app.workspace.detachLeavesOfType(VIEW_TYPE_APEXNAVIGATOR)
     }
 
+    addRelationship() {
+        let activeFilePath: string = this.app.workspace.getActiveFile()?.path || "";
+        const modal = new CreateRelationshipModal(
+            this.app,
+            this.configuration,
+            activeFilePath,
+            "",
+            this.refresh,
+        );
+        modal.open();
+    }
+
     async loadSettings() {
         let rawSettings = Object.assign(
             {},
@@ -199,6 +230,10 @@ export default class BearingsPlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(this.configuration);
+    }
+
+    async refresh() {
+        await this.codeBlockRefresh();
     }
 
     async codeBlockRefresh() {
