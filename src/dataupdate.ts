@@ -165,7 +165,7 @@ export class CreateRelationshipModal extends Modal {
             }
         };
         // this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
-        this.headerEl.setText(`Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
+        // this.headerEl.setText(`Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
         this.focalFilePathDisplayEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`)
         this.linkPathDisplayEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`)
         this.complementaryRelationshipRoleEl.setText(`Active file source${wrapIfNotEmpty(currentSelection.complementaryRelationshipRole)}`);
