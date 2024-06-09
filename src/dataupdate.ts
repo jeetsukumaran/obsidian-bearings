@@ -182,14 +182,6 @@ export class CreateRelationshipModal extends Modal {
         onUpdate: (path: string) => void,
     ): HTMLElement {
         let controlRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
-        // let swapButton = new ButtonComponent(
-        //     controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        // );
-        // swapButton.setClass("bearings-control-button");
-        // swapButton.setTooltip("Swap focal and link paths");
-        // swapButton.setIcon("arrow-up-down");
-
-
         let findButton = new ButtonComponent(
             controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         );
@@ -229,8 +221,9 @@ export class CreateRelationshipModal extends Modal {
             },
         );
 
+        let swapRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
         let swapButton = new ButtonComponent(
-            this.contentEl.createEl("div", {cls: [ "bearings-settings-spanning-controls-container", ]})
+            swapRow.createEl("div", {cls: [ "bearings-settings-spanning-controls-container", ]})
         );
         swapButton.setClass("bearings-settings-soanning-control");
         swapButton.setTooltip("Swap focal and link paths");
@@ -242,7 +235,7 @@ export class CreateRelationshipModal extends Modal {
             this.selectionUpdate();
         });
 
-        this.contentEl.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
+        swapRow.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.linkPathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
         this.linkPathDisplayEl = this.createFileControl(
             (path: string) => {
