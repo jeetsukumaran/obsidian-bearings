@@ -22,6 +22,7 @@ interface FileDisplayRecord {
 export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
 
     configuration: BearingsConfiguration;
+    _allFiles: FileDisplayRecord[];
 
     constructor(
         app: App,
@@ -29,6 +30,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     ) {
         super(app);
         this.configuration = configuration;
+        this._allFiles = [];
     }
 
     getSuggestions(query: string): FileDisplayRecord[] {
@@ -40,13 +42,11 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
         );
     }
 
-    // Renders each suggestion item.
     renderSuggestion(fileDisplayRecord: FileDisplayRecord, el: HTMLElement) {
         el.createEl("div", { text: fileDisplayRecord.displayTitle });
         el.createEl("small", { text: fileDisplayRecord.path });
     }
 
-    // Perform action on the selected suggestion.
     onChooseSuggestion(fileDisplayRecord: FileDisplayRecord, evt: MouseEvent | KeyboardEvent) {
         new Notice(`Selected ${fileDisplayRecord.path}`);
     }
@@ -68,4 +68,12 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
             })
             .sort((a: FileDisplayRecord, b: FileDisplayRecord) => a.displayTitle.localeCompare(b.displayTitle));
     }
+
+    get allFiles() {
+        if (!this._allFiles) {
+            this._allFiles = this.loadFiles();
+        }
+        return this._allFiles;
+    }
+
 }

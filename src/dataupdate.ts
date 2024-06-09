@@ -18,6 +18,10 @@ import {
     getDisplayTitle,
 } from "./dataservice";
 
+import {
+    SelectFileModal,
+} from "./SelectFile";
+
 interface FrontMatterUpdateOptions {
     app: App;
     path: string;
@@ -191,6 +195,8 @@ export class CreateRelationshipModal extends Modal {
         findButton.setTooltip("Swap focal and link paths");
         findButton.setIcon("search");
         findButton.onClick(() => {
+            const modal = new SelectFileModal(this.app, this.configuration);
+            modal.open();
         });
 
         let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
