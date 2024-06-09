@@ -82,10 +82,10 @@ export interface RelationshipLinkChoice {
 }
 
 export class CreateRelationshipModal extends Modal {
-    public focalFilePath: string;
-    public focalFilePathDisplayTitle: string;
-    public linkPathDisplayTitle: string;
-    public linkPath: string;
+    public _focalFilePath: string;
+    public _focalFilePathDisplayTitle: string;
+    public _linkPath: string;
+    public _linkPathDisplayTitle: string;
     public configuration: BearingsConfiguration;
     public updateCallbackFn: () => Promise<void>;
     private selectBox: HTMLSelectElement;
@@ -110,8 +110,8 @@ export class CreateRelationshipModal extends Modal {
         super(app);
         this.focalFilePath = focalFilePath;
         this.linkPath = linkPath;
-        this.focalFilePathDisplayTitle = this.focalFilePath ? getDisplayTitle(app, configuration, this.focalFilePath, undefined, this.focalFilePath) : "";
-        this.linkPathDisplayTitle = this.linkPath ? getDisplayTitle(app, configuration, this.linkPath, undefined, this.linkPath) : "";
+        // this._focalFilePathDisplayTitle = this.focalFilePath ? getDisplayTitle(app, configuration, this.focalFilePath, undefined, this.focalFilePath) : "";
+        // this._linkPathDisplayTitle = this.linkPath ? getDisplayTitle(app, configuration, this.linkPath, undefined, this.linkPath) : "";
         this.configuration = configuration;
         this.updateCallbackFn = updateCallbackFn;
         this.selectBox = document.createElement('select');
@@ -123,6 +123,36 @@ export class CreateRelationshipModal extends Modal {
 
     get currentSelection() {
         return this.relationshipChoices[this.selectBox.value];
+    }
+
+    get focalFilePath() {
+        return this._focalFilePath;
+    }
+    set focalFilePath(value: string) {
+        this._focalFilePath = value;
+        this._focalFilePathDisplayTitle = "";
+    }
+
+    get linkPath() {
+        return this._linkPath;
+    }
+    set linkPath(value: string) {
+        this._linkPath = value;
+        this._linkPathDisplayTitle = "";
+    }
+
+    get focalFilePathDisplayTitle() {
+        if (!this._focalFilePathDisplayTitle) {
+            this._focalFilePathDisplayTitle = this.focalFilePath ? getDisplayTitle(app, this.configuration, this.focalFilePath, undefined, this.focalFilePath) : "";
+        }
+        return this._focalFilePathDisplayTitle;
+    }
+
+    get linkPathDisplayTitle() {
+        if (!this._linkPathDisplayTitle) {
+            this._linkPathDisplayTitle = this.linkPath ? getDisplayTitle(app, this.configuration, this.linkPath, undefined, this.linkPath) : "";
+        }
+        return this._linkPathDisplayTitle;
     }
 
     async selectionUpdate() {
@@ -160,6 +190,8 @@ export class CreateRelationshipModal extends Modal {
         findButton.setClass("bearings-control-button");
         findButton.setTooltip("Swap focal and link paths");
         findButton.setIcon("search");
+        findButton.onClick(() => {
+        });
 
         let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         let filePathDisplayEl = fdcell.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
@@ -186,6 +218,12 @@ export class CreateRelationshipModal extends Modal {
         swapButton.setClass("bearings-settings-soanning-control");
         swapButton.setTooltip("Swap focal and link paths");
         swapButton.setIcon("arrow-up-down");
+        swapButton.onClick(() => {
+            let t = this.focalFilePath
+            this.focalFilePath = this.linkPath;
+            this.linkPath = t;
+            this.selectionUpdate();
+        });
 
         this.contentEl.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.linkPathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
