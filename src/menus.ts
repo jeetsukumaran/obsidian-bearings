@@ -55,23 +55,17 @@ export function buildLinkTargetEditMenu(
             })
     );
 
-    let focalFilePath: string = app.workspace.getActiveFile()?.path || "";
-    let focalFileName: string = focalFilePath.split("/").slice(-1,)[0];
-    // let prefix: string = focalFileName !== focalFilePath ? ".../" : ""
-    // let displayTitle = getDisplayTitle(app, configuration, focalFilePath, undefined, focalFilePath.replace(/.md/, ""));
+    let activeFilePath: string = app.workspace.getActiveFile()?.path || "";
     menu.addItem((item) =>
                     item
-                    // .setTitle(`Add relationship link from '${focalFilePath}'`)
-                    // .setTitle(`Add relationship link from '${displayTitle}'`)
-                    .setTitle(`Add relationship link from '${focalFileName}'`)
+                    .setTitle(`Add relationship link ...`)
                     .setIcon("git-branch-plus")
-                    .setDisabled(!focalFilePath || (focalFilePath === linkPath))
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
                             app,
                             configuration,
-                            focalFilePath,
                             linkPath,
+                            (activeFilePath === linkPath ? "" : activeFilePath),
                             updateCallbackFn,
                         );
                         modal.open();
