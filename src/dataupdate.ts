@@ -163,10 +163,20 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
-        if (!this.focalFilePath || !this.linkPath || this.focalFilePath === this.linkPath) {
-            // this.saveButton.setDisabled(true);
+        if (!this.focalFilePath && !this.linkPath) {
+            // this.saveButton.tooltip = "Focal file source and link target file are unspecified";
+            this.saveButton.disabled = true;
+        } else if (!this.focalFilePath) {
+            // this.saveButton.tooltip = "Focal file source is unspecified";
+            this.saveButton.disabled = true;
+        } else if (!this.linkPath) {
+            // this.saveButton.tooltip = "Link target is unspecified";
+            this.saveButton.disabled = true;
+        } else if (this.focalFilePath === this.linkPath) {
+            // this.saveButton.tooltip = "Focal file source and link target file are the same";
             this.saveButton.disabled = true;
         } else {
+            // this.saveButton.tooltip = "Add the relationship link to the focal file source metadata";
             this.saveButton.disabled = false;
         }
         let wrapIfNotEmpty = (s: string) => {
