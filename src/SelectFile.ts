@@ -23,6 +23,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
 
     configuration: BearingsConfiguration;
     _allFiles: FileDisplayRecord[];
+    onUpdate: (path: string) => void;
 
     constructor(
         app: App,
@@ -32,6 +33,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
         super(app);
         this.configuration = configuration;
         this._allFiles = [];
+        this.onUpdate = onUpdate;
     }
 
     getSuggestions(query: string): FileDisplayRecord[] {
@@ -49,7 +51,8 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     }
 
     onChooseSuggestion(fileDisplayRecord: FileDisplayRecord, evt: MouseEvent | KeyboardEvent) {
-        new Notice(`Selected ${fileDisplayRecord.path}`);
+        new Notice(`Selected [[${fileDisplayRecord.path}]]: '${fileDisplayRecord.displayTitle}'`);
+        this.onUpdate(fileDisplayRecord.path);
     }
 
     loadFiles(): FileDisplayRecord[] {
