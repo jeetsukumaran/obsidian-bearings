@@ -172,7 +172,7 @@ export class CreateRelationshipModal extends Modal {
         // this.headerEl.setText(`Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
         this.focalFilePathDisplayEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`)
         this.linkPathDisplayEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`)
-        this.complementaryRelationshipRoleEl.setText(`Active file source${wrapIfNotEmpty(currentSelection.complementaryRelationshipRole)}`);
+        this.complementaryRelationshipRoleEl.setText(`Focal file source${wrapIfNotEmpty(currentSelection.complementaryRelationshipRole)}`);
         this.complementaryRelationshipValueEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`);
         this.primaryRelationshipRoleEl.setText(`Selected target${wrapIfNotEmpty(currentSelection.primaryRelationshipRole)}`);
         this.primaryRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
@@ -212,7 +212,7 @@ export class CreateRelationshipModal extends Modal {
         }
         this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
 
-        this.contentEl.createEl('div', {text: `The focal file:`, cls: 'bearings-modal-data-entry-item-label'});
+        this.contentEl.createEl('div', {text: `The focal file source:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.focalFilePathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
         this.focalFilePathDisplayEl = this.createFileControl(
             (path: string) => {
@@ -225,7 +225,7 @@ export class CreateRelationshipModal extends Modal {
         let swapButton = new ButtonComponent(
             swapRow.createEl("div", {cls: [ "bearings-settings-spanning-controls-container", ]})
         );
-        swapButton.setClass("bearings-settings-soanning-control");
+        swapButton.setClass("bearings-settings-spanning-control");
         swapButton.setTooltip("Swap focal and link paths");
         swapButton.setIcon("arrow-up-down");
         swapButton.onClick(() => {
