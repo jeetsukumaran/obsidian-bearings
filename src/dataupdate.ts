@@ -163,7 +163,7 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
-        if (!this.focalFilePath || !this.linkPath) {
+        if (!this.focalFilePath || !this.linkPath || this.focalFilePath === this.linkPath) {
             // this.saveButton.setDisabled(true);
             this.saveButton.disabled = true;
         } else {
