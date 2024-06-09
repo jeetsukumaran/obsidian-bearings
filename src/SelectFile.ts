@@ -27,6 +27,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     constructor(
         app: App,
         configuration: BearingsConfiguration,
+        onUpdate: (path: string) => void,
     ) {
         super(app);
         this.configuration = configuration;
