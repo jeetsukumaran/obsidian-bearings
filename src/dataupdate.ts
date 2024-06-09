@@ -103,6 +103,8 @@ export class CreateRelationshipModal extends Modal {
     private primaryRelationshipValueEl: HTMLElement;
     private complementaryRelationshipRoleEl: HTMLElement;
     private complementaryRelationshipValueEl: HTMLElement;
+    // private saveButton: ButtonComponent;
+    private saveButton: HTMLButtonElement;
 
     constructor(
         app: App,
@@ -161,6 +163,12 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
+        if (!this.focalFilePath || !this.linkPath) {
+            // this.saveButton.setDisabled(true);
+            this.saveButton.disabled = true;
+        } else {
+            this.saveButton.disabled = false;
+        }
         let wrapIfNotEmpty = (s: string) => {
             if (s) {
                 return `: designated as '${s}'`;
@@ -310,8 +318,11 @@ export class CreateRelationshipModal extends Modal {
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
 
-        const saveButton = this.addFooterButton('Save', 'bearings-modal-footer-button', footer);
-        saveButton.onclick = async () => {
+        this.saveButton = this.addFooterButton('Save', 'bearings-modal-footer-button', footer);
+        this.saveButton.onclick = async () => {
+            if (!this.focalFilePath || !this.linkPath) {
+                return;
+            }
             const selectedProperty = this.currentSelection.propertyName;
             const normalizedPath = normalizePath(this.focalFilePath);
             const file = this.app.vault.getAbstractFileByPath(normalizedPath);
