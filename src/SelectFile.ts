@@ -51,7 +51,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     }
 
     onChooseSuggestion(fileDisplayRecord: FileDisplayRecord, evt: MouseEvent | KeyboardEvent) {
-        new Notice(`Selected [[${fileDisplayRecord.path}]]: '${fileDisplayRecord.displayTitle}'`);
+        // new Notice(`Selected [[${fileDisplayRecord.path}]]: '${fileDisplayRecord.displayTitle}'`);
         this.onUpdate(fileDisplayRecord.path);
     }
 

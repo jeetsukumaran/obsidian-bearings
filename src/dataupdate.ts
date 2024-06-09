@@ -188,12 +188,26 @@ export class CreateRelationshipModal extends Modal {
         };
         // this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
         // this.headerEl.setText(`Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
-        this.focalFilePathDisplayEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`)
-        this.linkPathDisplayEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`)
+        let formatDisplay = (fpath: string, ftitle: string) => {
+            let s = [];
+            if (!fpath) {
+                return "";
+            }
+            if (ftitle) {
+                return `[[${fpath}]]: '${ftitle}'`;
+            } else {
+                return `[[${fpath}]]`;
+            }
+        }
+        // this.focalFilePathDisplayEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`)
+        let focalFileDisplayText = formatDisplay(this.focalFilePath, this.focalFilePathDisplayTitle)
+        let linkDisplayText = formatDisplay(this.linkPath, this.linkPathDisplayTitle)
+        this.focalFilePathDisplayEl.setText(focalFileDisplayText);
+        this.linkPathDisplayEl.setText(linkDisplayText)
         this.complementaryRelationshipRoleEl.setText(`Focal file source${wrapIfNotEmpty(currentSelection.complementaryRelationshipRole)}`);
-        this.complementaryRelationshipValueEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`);
+        this.complementaryRelationshipValueEl.setText(focalFileDisplayText);
         this.primaryRelationshipRoleEl.setText(`Selected target${wrapIfNotEmpty(currentSelection.primaryRelationshipRole)}`);
-        this.primaryRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
+        this.primaryRelationshipValueEl.setText(linkDisplayText);
     }
 
     createFileControl(
