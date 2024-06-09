@@ -294,7 +294,6 @@ export class NavigationView extends NavigationBase {
         callbackAction: (value: boolean) => void,
         initialValue: boolean,
     ) {
-        let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
         let button = new ButtonComponent(
             controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
         );

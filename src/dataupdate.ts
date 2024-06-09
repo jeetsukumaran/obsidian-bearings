@@ -145,21 +145,22 @@ export class CreateRelationshipModal extends Modal {
     }
 
     createFileControl(): HTMLElement {
-        let controlRow = this.contentEl.createEl('div', {cls: 'bearings-control-row'});
-        let filePathDisplayEl = controlRow.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
-        let controlCell = controlRow.createEl("div", {cls: ["bearings-control-cell"]});
+        let controlRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
         let swapButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+            controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         );
         swapButton.setClass("bearings-control-button");
         swapButton.setTooltip("Swap focal and link paths");
         swapButton.setIcon("arrow-up-down");
         let findButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+            controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         );
         findButton.setClass("bearings-control-button");
         findButton.setTooltip("Swap focal and link paths");
         findButton.setIcon("search");
+
+        let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        let filePathDisplayEl = fdcell.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
         return filePathDisplayEl;
     }
 

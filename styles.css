@@ -499,12 +499,36 @@ input:disabled {
     border: dashed 2px;
 }
 
+.bearings-data-entry-control-row {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0;
+    margin: 0;
+}
+.bearings-data-entry-control-cell {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 0;
+    margin: 0;
+    margin-right: 0.1rem;
+}
+
 
 .bearings-modal-data-entry-fileinfo {
-    background-color: var(--bearings-counter-shade-01);
+    /* background-color: var(--bearings-counter-shade-01); */
+    display: inline-block;
+    /* width: 20rem; */
+    /* float: right; */
+    border: solid 0.5px var(--bearings-counter-shade-04);
     padding: 0.4rem;
     border-radius: 0.4rem;
-    margin-bottom: 1rem;
+    /* /1* margin-bottom: 1rem; *1/ */
     /* font-size: 0.8rem; */
     /* font-weight: bold; */
     /* text-align: center; */
