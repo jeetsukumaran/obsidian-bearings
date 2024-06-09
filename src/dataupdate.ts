@@ -146,12 +146,14 @@ export class CreateRelationshipModal extends Modal {
 
     createFileControl(): HTMLElement {
         let controlRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
-        let swapButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        );
-        swapButton.setClass("bearings-control-button");
-        swapButton.setTooltip("Swap focal and link paths");
-        swapButton.setIcon("arrow-up-down");
+        // let swapButton = new ButtonComponent(
+        //     controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        // );
+        // swapButton.setClass("bearings-control-button");
+        // swapButton.setTooltip("Swap focal and link paths");
+        // swapButton.setIcon("arrow-up-down");
+
+
         let findButton = new ButtonComponent(
             controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         );
@@ -161,6 +163,7 @@ export class CreateRelationshipModal extends Modal {
 
         let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         let filePathDisplayEl = fdcell.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+
         return filePathDisplayEl;
     }
 
@@ -176,6 +179,14 @@ export class CreateRelationshipModal extends Modal {
         this.contentEl.createEl('div', {text: `The focal file:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.focalFilePathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
         this.focalFilePathDisplayEl = this.createFileControl();
+
+        let swapButton = new ButtonComponent(
+            this.contentEl.createEl("div", {cls: [ "bearings-settings-spanning-controls-container", ]})
+        );
+        swapButton.setClass("bearings-settings-soanning-control");
+        swapButton.setTooltip("Swap focal and link paths");
+        swapButton.setIcon("arrow-up-down");
+
         this.contentEl.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.linkPathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
         this.linkPathDisplayEl = this.createFileControl();

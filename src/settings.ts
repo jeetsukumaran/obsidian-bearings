@@ -157,8 +157,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
         containerEl.createEl('hr', { cls: 'bearings-settings-inline-section-start' });
         const relationshipsManageDiv = containerEl.createDiv();
         new Setting(relationshipsManageDiv).setName("Manage relationship definitions").setHeading();
-        let manageRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
-        const addDefinitionButton = manageRelationshipsControlContainer.createEl('button', { text: 'New relationship definition', cls: 'bearings-settings-inline-control' });
+        let manageRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-spanning-controls-container' });
+        const addDefinitionButton = manageRelationshipsControlContainer.createEl('button', { text: 'New relationship definition', cls: 'bearings-settings-spanning-control' });
         addDefinitionButton.onclick = () => {
             new AddRelationshipDefinitionModal(this.app,
                 (definitionName, definition) => {
@@ -177,8 +177,8 @@ export class BearingsSettingsTab extends PluginSettingTab {
         const relationshipsResetDiv = containerEl.createDiv();
         new Setting(relationshipsResetDiv).setName("Reset relationship definitions").setHeading();
         // Reset to Default Button
-        let resetRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-inline-controls-container' });
-        const resetButton = resetRelationshipsControlContainer.createEl('button', { text: 'Reset to default relationships', cls: 'bearings-settings-inline-control' });
+        let resetRelationshipsControlContainer = containerEl.createEl('div', { cls: 'bearings-settings-spanning-controls-container' });
+        const resetButton = resetRelationshipsControlContainer.createEl('button', { text: 'Reset to default relationships', cls: 'bearings-settings-spanningcontrol' });
         resetButton.onclick = async () => {
             Object.assign(this.pluginConfiguration.relationshipDefinitions, BEARINGS_DEFAULT_SETTINGS.relationshipDefinitions);
             await this.saveSettingsFn();

@@ -523,7 +523,9 @@ input:disabled {
 .bearings-modal-data-entry-fileinfo {
     /* background-color: var(--bearings-counter-shade-01); */
     display: inline-block;
-    /* width: 20rem; */
+    flex: 1 1 100%;
+    min-width: 100%;
+    width: 100%;
     /* float: right; */
     border: solid 0.5px var(--bearings-counter-shade-04);
     padding: 0.4rem;
@@ -574,6 +576,10 @@ input:disabled {
     height: 3rem;
 }
 
+
+.bearings-modal-data-entry-spanning-button {
+}
+
 .bearings-modal-footer {
     margin-top: 1rem;
     display: flex;
@@ -591,7 +597,7 @@ input:disabled {
     padding: 1rem;
 }
 
-.bearings-settings-inline-controls-container {
+.bearings-settings-spanning-controls-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -600,7 +606,7 @@ input:disabled {
     margin-bottom: 0.4rem;
 }
 
-.bearings-settings-inline-control {
+.bearings-settings-spanning-control {
     margin-top: 0.2rem;
 }
 
@@ -625,5 +631,4 @@ input:disabled {
     margin-left: 30%;
     margin-right: 30%;
 }
-
 
