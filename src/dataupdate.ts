@@ -236,12 +236,12 @@ export class CreateRelationshipModal extends Modal {
     }
 
     async loadProperties() {
-        const file = this.app.vault.getAbstractFileByPath(this.focalFilePath);
-        if (!file || !(file instanceof TFile)) {
-            new Notice('File not found or the path is not a valid file.');
-            this.close();
-            return;
-        }
+        // const file = this.app.vault.getAbstractFileByPath(this.focalFilePath);
+        // if (!file || !(file instanceof TFile)) {
+        //     new Notice('File not found or the path is not a valid file.');
+        //     this.close();
+        //     return;
+        // }
         this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
 
         this.contentEl.createEl('div', {text: `The focal file source:`, cls: 'bearings-modal-data-entry-item-label'});
