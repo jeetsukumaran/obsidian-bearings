@@ -143,6 +143,12 @@ export class CreateRelationshipModal extends Modal {
         this.primaryRelationshipValueEl.setText(`[[${this.linkPath}]]: '${this.linkPathDisplayTitle}'`);
     }
 
+    createFileControl(): HTMLElement {
+        let controlRow = this.contentEl.createEl('div', {cls: 'bearings-control-row'});
+        let filePathDisplayEl = controlRow.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+        return filePathDisplayEl;
+    }
+
     async loadProperties() {
         const file = this.app.vault.getAbstractFileByPath(this.focalFilePath);
         if (!file || !(file instanceof TFile)) {
@@ -151,10 +157,15 @@ export class CreateRelationshipModal extends Modal {
             return;
         }
         this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
+
         this.contentEl.createEl('div', {text: `The focal file:`, cls: 'bearings-modal-data-entry-item-label'});
-        this.focalFilePathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+        // this.focalFilePathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+        this.focalFilePathDisplayEl = this.createFileControl();
         this.contentEl.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
-        this.linkPathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+        // this.linkPathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+        this.linkPathDisplayEl = this.createFileControl();
+
+
         this.contentEl.createEl('div', {text: `as:`, cls: 'bearings-modal-data-entry-item-label'});
         const selectContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         this.selectBox.className = 'bearings-modal-data-entry-select-box';
