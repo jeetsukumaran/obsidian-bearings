@@ -106,7 +106,7 @@ export default class BearingsPlugin extends Plugin {
         this.addCommand({
             id: 'create-bearings-relationship',
             name: 'Create relationship link ...',
-            callback: this.addRelationship,
+            callback: () => this.addRelationship(),
         });
 
 
