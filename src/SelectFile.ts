@@ -25,40 +25,48 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     _allFiles: FileDisplayRecord[];
     onUpdate: (path: string) => void;
     isRegExp: boolean;
-    wrapInWildcards: boolean;
+    isWrapInWildcards: boolean;
 
     constructor(
         app: App,
         configuration: BearingsConfiguration,
         onUpdate: (path: string) => void,
         isRegExp: boolean = false,
-        wrapInWildcards: boolean = true,
+        isWrapInWildcards: boolean = true,
     ) {
         super(app);
         this.configuration = configuration;
         this._allFiles = [];
         this.onUpdate = onUpdate;
         this.isRegExp = isRegExp;
-        this.wrapInWildcards = wrapInWildcards;
+        this.isWrapInWildcards = isWrapInWildcards;
     }
 
     getSuggestions(query: string): FileDisplayRecord[] {
-        const queryTokens = query.toLowerCase().split(/\s+/);
+        let isRegExp = this.isRegExp;
+        if (query.startsWith("\\/")) {
+            isRegExp = true;
+            query = query.slice(2);
+        }
         return this.loadFiles().filter((fileDisplayRecord: FileDisplayRecord) => {
             const title = fileDisplayRecord.displayTitle.toLowerCase();
             const path = fileDisplayRecord.path.toLowerCase();
-
             if (this.isRegExp) {
-                const regexQuery = queryTokens.map(token => {
-                    if (this.wrapInWildcards) {
-                        return `.*${token}.*`;
-                    }
-                    return token;
-                }).join('|');
-
-                const regex = new RegExp(regexQuery, 'i');
-                return regex.test(title) || regex.test(path);
+                // const regexQuery = queryTokens.map(token => {
+                //     if (this.wrapInWildcards) {
+                //         return `.*${token}.*`;
+                //     }
+                //     return token;
+                // }).join('|');
+                let regExp: RegExp;
+                if (this.isWrapInWildcards) {
+                    regExp = new RegExp(`.*${query}.*`, 'i');
+                } else {
+                    regExp = new RegExp(query, 'i');
+                }
+                return regExp.test(title) || regExp.test(path);
             } else {
+                const queryTokens = query.toLowerCase().split(/\s+/);
                 return queryTokens.every(token => title.includes(token) || path.includes(token));
             }
         });
