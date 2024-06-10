@@ -24,25 +24,44 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     configuration: BearingsConfiguration;
     _allFiles: FileDisplayRecord[];
     onUpdate: (path: string) => void;
+    isRegExp: boolean;
+    wrapInWildcards: boolean;
 
     constructor(
         app: App,
         configuration: BearingsConfiguration,
         onUpdate: (path: string) => void,
+        isRegExp: boolean = true,
+        wrapInWildcards: boolean = true,
     ) {
         super(app);
         this.configuration = configuration;
         this._allFiles = [];
         this.onUpdate = onUpdate;
+        this.isRegExp = isRegExp;
+        this.wrapInWildcards = wrapInWildcards;
     }
 
     getSuggestions(query: string): FileDisplayRecord[] {
-        return this.loadFiles()
-                .filter(
-                (fileDisplayRecord: FileDisplayRecord) =>
-            fileDisplayRecord.displayTitle.toLowerCase().includes(query.toLowerCase())
-            || fileDisplayRecord.path.toLowerCase().includes(query.toLowerCase())
-        );
+        const queryTokens = query.toLowerCase().split(/\s+/);
+        return this.loadFiles().filter((fileDisplayRecord: FileDisplayRecord) => {
+            const title = fileDisplayRecord.displayTitle.toLowerCase();
+            const path = fileDisplayRecord.path.toLowerCase();
+
+            if (this.isRegExp) {
+                const regexQuery = queryTokens.map(token => {
+                    if (this.wrapInWildcards) {
+                        return `.*${token}.*`;
+                    }
+                    return token;
+                }).join('|');
+
+                const regex = new RegExp(regexQuery, 'i');
+                return regex.test(title) || regex.test(path);
+            } else {
+                return queryTokens.some(token => title.includes(token) || path.includes(token));
+            }
+        });
     }
 
     renderSuggestion(fileDisplayRecord: FileDisplayRecord, el: HTMLElement) {
@@ -51,14 +70,13 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     }
 
     onChooseSuggestion(fileDisplayRecord: FileDisplayRecord, evt: MouseEvent | KeyboardEvent) {
-        // new Notice(`Selected [[${fileDisplayRecord.path}]]: '${fileDisplayRecord.displayTitle}'`);
         this.onUpdate(fileDisplayRecord.path);
     }
 
     loadFiles(): FileDisplayRecord[] {
         return this.app.vault
             .getMarkdownFiles()
-            .map( (file: TFile) => {
+            .map((file: TFile) => {
                 return {
                     path: file.path,
                     displayTitle: getDisplayTitle(
@@ -68,7 +86,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
                         file,
                         file.path,
                     ),
-                }
+                };
             })
             .sort((a: FileDisplayRecord, b: FileDisplayRecord) => a.displayTitle.localeCompare(b.displayTitle));
     }
@@ -81,3 +99,4 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
     }
 
 }
+
