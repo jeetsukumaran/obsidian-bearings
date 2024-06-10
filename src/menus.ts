@@ -58,7 +58,7 @@ export function buildLinkTargetEditMenu(
     let activeFilePath: string = app.workspace.getActiveFile()?.path || "";
     menu.addItem((item) =>
                     item
-                    .setTitle(`Create relationship link ...`)
+                    .setTitle(`Create relationship to ...`)
                     .setIcon("git-branch-plus")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
@@ -66,6 +66,20 @@ export function buildLinkTargetEditMenu(
                             configuration,
                             activeFilePath,
                             activeFilePath === linkPath ? "" : linkPath,
+                            updateCallbackFn,
+                        );
+                        modal.open();
+                    }));
+    menu.addItem((item) =>
+                    item
+                    .setTitle(`Create relationship from ...`)
+                    .setIcon("git-branch-plus")
+                    .onClick( () => {
+                        const modal = new CreateRelationshipModal(
+                            app,
+                            configuration,
+                            linkPath,
+                            activeFilePath === linkPath ? "" : activeFilePath,
                             updateCallbackFn,
                         );
                         modal.open();
