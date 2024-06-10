@@ -64,8 +64,8 @@ export function buildLinkTargetEditMenu(
                         const modal = new CreateRelationshipModal(
                             app,
                             configuration,
-                            linkPath,
-                            (activeFilePath === linkPath ? "" : activeFilePath),
+                            activeFilePath,
+                            activeFilePath === linkPath ? "" : linkPath,
                             updateCallbackFn,
                         );
                         modal.open();
