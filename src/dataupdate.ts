@@ -213,12 +213,20 @@ export class CreateRelationshipModal extends Modal {
     createFileControl(
         onUpdate: (path: string) => void,
     ): HTMLElement {
-        let controlRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
+        const fieldEntryContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
+        const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
+        const textArea = valueBox.createEl('textarea', {
+            cls: 'bearings-modal-data-entry-text-area',
+            text: "",
+        });
+        textArea.disabled = true;
+
+        const controlsContainer = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-item-controls-container' });
         let findButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+            controlsContainer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         );
         findButton.setClass("bearings-control-button");
-        findButton.setTooltip("Swap focal and link paths");
+        findButton.setTooltip("Find file");
         findButton.setIcon("search");
         findButton.onClick(() => {
             const modal = new SelectFileModal(
@@ -228,11 +236,31 @@ export class CreateRelationshipModal extends Modal {
             );
             modal.open();
         });
+        return textArea;
 
-        let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        let filePathDisplayEl = fdcell.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
 
-        return filePathDisplayEl;
+
+        // let controlRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
+
+        // let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        // let filePathDisplayEl = fdcell.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
+
+        // let findButton = new ButtonComponent(
+        //     controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        // );
+        // findButton.setClass("bearings-control-button");
+        // findButton.setTooltip("Swap focal and link paths");
+        // findButton.setIcon("search");
+        // findButton.onClick(() => {
+        //     const modal = new SelectFileModal(
+        //         this.app,
+        //         this.configuration,
+        //         onUpdate,
+        //     );
+        //     modal.open();
+        // });
+
+        // return filePathDisplayEl;
     }
 
     async loadProperties() {
@@ -242,7 +270,7 @@ export class CreateRelationshipModal extends Modal {
         //     this.close();
         //     return;
         // }
-        this.headerEl = this.contentEl.createEl('h3', { text: "Add relationship link", cls: 'bearings-modal-data-entry-heading-title' });
+        this.headerEl = this.contentEl.createEl('h3', { text: "Create relationship link", cls: 'bearings-modal-data-entry-heading-title' });
 
         this.contentEl.createEl('div', {text: `The focal file source:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.focalFilePathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });

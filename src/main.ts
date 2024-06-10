@@ -104,8 +104,8 @@ export default class BearingsPlugin extends Plugin {
         });
 
         this.addCommand({
-            id: 'add-bearings-relationship',
-            name: 'Add relationship ...',
+            id: 'create-bearings-relationship',
+            name: 'Create relationship link ...',
             callback: this.addRelationship,
         });
 
@@ -125,7 +125,7 @@ export default class BearingsPlugin extends Plugin {
             this.activateView();
         });
 
-        this.addRibbonIcon("git-branch-plus", "Add a relationship", () => {
+        this.addRibbonIcon("git-branch-plus", "Create relationship link", () => {
             this.addRelationship();
         });
 

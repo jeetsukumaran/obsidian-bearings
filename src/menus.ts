@@ -58,7 +58,7 @@ export function buildLinkTargetEditMenu(
     let activeFilePath: string = app.workspace.getActiveFile()?.path || "";
     menu.addItem((item) =>
                     item
-                    .setTitle(`Add relationship link ...`)
+                    .setTitle(`Create relationship link ...`)
                     .setIcon("git-branch-plus")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
