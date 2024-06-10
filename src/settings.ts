@@ -69,6 +69,11 @@ export const BEARINGS_DEFAULT_SETTINGS: BearingsSettingsData = {
             complementaryRelationshipPropertyName: "entry-bibliography",
             categories: ["superordinate"]
         },
+        "Reference": {
+            primaryRelationshipRole: "Reference",
+            primaryRelationshipPropertyName: "entry-bibliography",
+            categories: ["superordinate"]
+        },
         "Collaborator": {
             primaryRelationshipRole: "Collaborator",
             primaryRelationshipPropertyName: "entry-collaborators",
