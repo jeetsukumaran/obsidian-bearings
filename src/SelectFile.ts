@@ -31,7 +31,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
         app: App,
         configuration: BearingsConfiguration,
         onUpdate: (path: string) => void,
-        isRegExp: boolean = true,
+        isRegExp: boolean = false,
         wrapInWildcards: boolean = true,
     ) {
         super(app);
@@ -59,7 +59,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
                 const regex = new RegExp(regexQuery, 'i');
                 return regex.test(title) || regex.test(path);
             } else {
-                return queryTokens.some(token => title.includes(token) || path.includes(token));
+                return queryTokens.every(token => title.includes(token) || path.includes(token));
             }
         });
     }
