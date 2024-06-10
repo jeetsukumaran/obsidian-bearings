@@ -89,7 +89,7 @@ export const BEARINGS_DEFAULT_SETTINGS: BearingsSettingsData = {
             categories: ["superordinate"]
         },
         "Referral": {
-            primaryRelationshipRole: "Referrals",
+            primaryRelationshipRole: "Referral",
             primaryRelationshipPropertyName: "entry-referrals",
             categories: ["symmetrical"]
         },
