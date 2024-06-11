@@ -376,8 +376,8 @@ export class NavigationView extends NavigationBase {
                 controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
             );
             findButton.setClass("bearings-control-button");
-            findButton.setIcon("arrow-right");
-            findButton.setTooltip("Refresh the view");
+            findButton.setIcon("search");
+            findButton.setTooltip("Find file");
             const findAction = () => {
                 const modal = new SelectFileModal(
                     this._context.app,
