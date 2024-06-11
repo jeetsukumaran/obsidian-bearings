@@ -32,7 +32,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
         configuration: BearingsConfiguration,
         onUpdate: (path: string) => void,
         isRegExp: boolean = false,
-        isWrapInWildcards: boolean = true,
+        isWrapInWildcards: boolean = false,
     ) {
         super(app);
         this.configuration = configuration;
