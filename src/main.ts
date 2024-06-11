@@ -73,10 +73,9 @@ export default class BearingsPlugin extends Plugin {
                     this.configuration,
                     this.dataService,
                     "",
-                    [],
                     // this.codeBlockRefresh,
                     this.refresh,
-                    // true,
+                    true,
                 );
                 let navigationView = new NavigationView(
                     navigationContext,

@@ -22,6 +22,9 @@ import {
     normalizePath,
 } from "obsidian";
 
+import {
+    SelectFileModal,
+} from "./SelectFile";
 
 import {
     DataService,
@@ -91,8 +94,6 @@ export class BearingsView extends ItemView {
     navigationView: NavigationView;
     root: HTMLElement;
     icon = "radar";
-    // focalFileHistory: { [path: string]: string } = {};
-    focalFileHistory: string[] = [];
 
     constructor(
         leaf: WorkspaceLeaf,
@@ -166,9 +167,8 @@ export class BearingsView extends ItemView {
                 this.configuration,
                 this.dataService,
                 "",
-                this.focalFileHistory,
                 this.refresh,
-                // true,
+                true,
             );
             this.navigationView = new NavigationView(
                 navigationContext,
@@ -176,7 +176,7 @@ export class BearingsView extends ItemView {
             );
         }
         let focalFilePath = this.computeActiveFilePath()
-        this.focalFileHistory.push(focalFilePath);
+        // this.focalFileHistory.push(focalFilePath);
         this.navigationView.render(focalFilePath);
     }
 
@@ -191,26 +191,23 @@ export class NavigationContext {
     configuration: BearingsConfiguration;
     dataService: DataService;
     _focalFilePath: string;
-    focalFileHistory: string[];
     updateCallbackFn: () => Promise<void>;
-    // isOpenFocalFile: boolean = false;
+    isOpenFocalFile: boolean = false;
 
     constructor(
         app: App,
         configuration: BearingsConfiguration,
         dataService: DataService,
         focalFilePath: string,
-        focalFileHistory: string[],
         updateCallbackFn: () => Promise<void>,
-        // isOpenFocalFile: boolean,
+        isOpenFocalFile: boolean,
     ) {
         this.app = app;
         this.configuration = configuration;
         this.dataService = dataService;
         this._focalFilePath = focalFilePath;
-        this.focalFileHistory = focalFileHistory;
         this.updateCallbackFn = updateCallbackFn;
-        // this.isOpenFocalFile = isOpenFocalFile;
+        this.isOpenFocalFile = isOpenFocalFile;
     }
 
 }
@@ -343,6 +340,7 @@ export class NavigationView extends NavigationBase {
             }
         }
         this.root.empty();
+
         this._context._focalFilePath = targetFilePath;
         if (!this._context._focalFilePath) {
             return;
@@ -372,28 +370,23 @@ export class NavigationView extends NavigationBase {
         // Controls
         let controlRow = controlsSide.createEl("div", {cls: ["bearings-control-row"]});
 
-        let prevButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
-        );
-        prevButton.setClass("bearings-control-button");
-        prevButton.setIcon("arrow-left");
-        prevButton.setTooltip("Refresh the view");
-        const prevAction = () => {
-            console.log(this._context.focalFileHistory);
-        };
-        prevButton.onClick( () => prevAction() );
-        let nextButton = new ButtonComponent(
-            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
-        );
-        nextButton.setClass("bearings-control-button");
-        nextButton.setIcon("arrow-right");
-        nextButton.setTooltip("Refresh the view");
-        const nextAction = () => {
-            console.log(this._context.focalFileHistory);
-        };
-        nextButton.onClick( () => nextAction() );
 
         if (!options.isCodeBlock) {
+            let findButton = new ButtonComponent(
+                controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+            );
+            findButton.setClass("bearings-control-button");
+            findButton.setIcon("arrow-right");
+            findButton.setTooltip("Refresh the view");
+            const findAction = () => {
+                const modal = new SelectFileModal(
+                    this._context.app,
+                    this._context.configuration,
+                    (path: string) => this.render(path, options),
+                );
+                    modal.open();
+            };
+            findButton.onClick( () => findAction() );
             this.createToggleButton(
                 "isPinned",
                 controlRow,
