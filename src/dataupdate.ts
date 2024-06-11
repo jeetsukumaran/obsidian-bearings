@@ -385,7 +385,8 @@ export class CreateRelationshipModal extends Modal {
                     selectedProperty,
                     `[[${this.linkPath}]]`,
                 );
-                await this.updateCallbackFn(); // Callback to refresh views or data
+                this.updateCallbackFn(); // Callback to refresh views or data
+                this.close();
             } else {
                 new Notice("File not found or the path is not a valid file.");
             }
