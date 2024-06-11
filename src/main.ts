@@ -73,6 +73,7 @@ export default class BearingsPlugin extends Plugin {
                     this.configuration,
                     this.dataService,
                     "",
+                    [],
                     // this.codeBlockRefresh,
                     this.refresh,
                     // true,

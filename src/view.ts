@@ -91,6 +91,8 @@ export class BearingsView extends ItemView {
     navigationView: NavigationView;
     root: HTMLElement;
     icon = "radar";
+    // focalFileHistory: { [path: string]: string } = {};
+    focalFileHistory: string[] = [];
 
     constructor(
         leaf: WorkspaceLeaf,
@@ -164,6 +166,7 @@ export class BearingsView extends ItemView {
                 this.configuration,
                 this.dataService,
                 "",
+                this.focalFileHistory,
                 this.refresh,
                 // true,
             );
@@ -172,7 +175,9 @@ export class BearingsView extends ItemView {
                 this.root,
             );
         }
-        this.navigationView.render(this.computeActiveFilePath());
+        let focalFilePath = this.computeActiveFilePath()
+        this.focalFileHistory.push(focalFilePath);
+        this.navigationView.render(focalFilePath);
     }
 
     async onClose() {
@@ -186,6 +191,7 @@ export class NavigationContext {
     configuration: BearingsConfiguration;
     dataService: DataService;
     _focalFilePath: string;
+    focalFileHistory: string[];
     updateCallbackFn: () => Promise<void>;
     // isOpenFocalFile: boolean = false;
 
@@ -194,6 +200,7 @@ export class NavigationContext {
         configuration: BearingsConfiguration,
         dataService: DataService,
         focalFilePath: string,
+        focalFileHistory: string[],
         updateCallbackFn: () => Promise<void>,
         // isOpenFocalFile: boolean,
     ) {
@@ -201,6 +208,7 @@ export class NavigationContext {
         this.configuration = configuration;
         this.dataService = dataService;
         this._focalFilePath = focalFilePath;
+        this.focalFileHistory = focalFileHistory;
         this.updateCallbackFn = updateCallbackFn;
         // this.isOpenFocalFile = isOpenFocalFile;
     }
@@ -363,6 +371,28 @@ export class NavigationView extends NavigationBase {
 
         // Controls
         let controlRow = controlsSide.createEl("div", {cls: ["bearings-control-row"]});
+
+        let prevButton = new ButtonComponent(
+            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+        );
+        prevButton.setClass("bearings-control-button");
+        prevButton.setIcon("arrow-left");
+        prevButton.setTooltip("Refresh the view");
+        const prevAction = () => {
+            console.log(this._context.focalFileHistory);
+        };
+        prevButton.onClick( () => prevAction() );
+        let nextButton = new ButtonComponent(
+            controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
+        );
+        nextButton.setClass("bearings-control-button");
+        nextButton.setIcon("arrow-right");
+        nextButton.setTooltip("Refresh the view");
+        const nextAction = () => {
+            console.log(this._context.focalFileHistory);
+        };
+        nextButton.onClick( () => nextAction() );
+
         if (!options.isCodeBlock) {
             this.createToggleButton(
                 "isPinned",
@@ -399,7 +429,7 @@ export class NavigationView extends NavigationBase {
             );
         }
 
-        // Refresh button
+
         let refreshButton = new ButtonComponent(
             controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
         );
@@ -411,28 +441,32 @@ export class NavigationView extends NavigationBase {
         };
         refreshButton.onClick( () => refreshAction() );
 
-
-
-
-
         let headerLabel = mainSide.createEl("div", {
             cls: ["bearings-main-container-header-label"],
             text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
         });
 
-
-        // // Refresh button
         // let controlRowRight = headerRight.createEl("div", {cls: ["bearings-control-row"]});
-        // let refreshButton = new ButtonComponent(
+        // let prevButton = new ButtonComponent(
         //     controlRowRight.createEl("div", {cls: [ "bearings-control-cell", ]})
         // );
-        // refreshButton.setClass("bearings-control-button");
-        // refreshButton.setIcon("rotate-ccw");
-        // refreshButton.setTooltip("Refresh the view");
-        // const refreshAction = () => {
-        //     this.refresh(options);
+        // prevButton.setClass("bearings-control-button");
+        // prevButton.setIcon("rotate-ccw");
+        // prevButton.setTooltip("Refresh the view");
+        // const prevAction = () => {
+        //     console.log(this.focalFileHistory);
         // };
-        // refreshButton.onClick( () => refreshAction() );
+        // prevButton.onClick( () => prevAction() );
+        // let nextButton = new ButtonComponent(
+        //     controlRowRight.createEl("div", {cls: [ "bearings-control-cell", ]})
+        // );
+        // nextButton.setClass("bearings-control-button");
+        // nextButton.setIcon("rotate-ccw");
+        // nextButton.setTooltip("Refresh the view");
+        // const nextAction = () => {
+        //     console.log(this.focalFileHistory);
+        // };
+        // nextButton.onClick( () => nextAction() );
 
 
         let viewContainerBody = this.viewContainer.createEl("div", {cls: "bearings-main-container-body"})
