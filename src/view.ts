@@ -807,7 +807,9 @@ export class ParallelRelationshipsViewFrame extends NavigationViewFrame {
         entryData: FileNavigationTreeNode,
     ) {
         entryFrame.options.isHighlightFocalFile = true;
-        entryFrame.options.isOpenFocalFile = false;
+        entryFrame.options.isOpenFocalFile = true;
+        entryFrame.options.isDefaultOpen = true;
+        entryFrame.options.isIgnoreDefaultOpenLimit = true;
     }
 
     generateResults():
