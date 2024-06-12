@@ -386,6 +386,16 @@ input:disabled {
     position: relative;
 }
 
+.bearings-entry-main.bearings-is-focal-file-entry {
+    border-radius: 0.4rem;
+    background: var(--bearings-counter-shade-01);
+    /* box-shadow: inset 10px 10px 10px 10px var(--bearings-counter-shade-01); */
+    box-shadow: -0.8rem 0px var(--bearings-counter-shade-01);
+    padding-left: 0;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    padding-right: 0.4rem;
+}
 
 
 .bearings-entry-head {
