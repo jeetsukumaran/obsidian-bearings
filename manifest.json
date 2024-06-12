@@ -1,7 +1,7 @@
 {
 	"id": "bearings",
 	"name": "Bearings",
-	"version": "1.3.1",
+	"version": "1.3.2",
 	"minAppVersion": "1.4.14",
 	"description": "Dynamically-scoped expanding tree views of your vault's semantic and logical architectures.",
 	"author": "Jeet Sukumaran",
