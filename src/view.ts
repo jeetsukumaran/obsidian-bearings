@@ -714,7 +714,6 @@ export class SuperordinateRelationshipsAscendersViewFrame extends NavigationView
         entryFrame.options.isHighlightFocalFile = true;
         entryFrame.options.isDefaultOpenFocalFile = isDefaultOpenFocalFile;
         entryFrame.options.isDefaultOpen = true;
-        entryFrame.options.isIgnoreDefaultOpenLimit = true;
     }
 
     generateResults(): NavigationViewResults {
