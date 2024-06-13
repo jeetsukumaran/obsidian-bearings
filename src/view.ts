@@ -144,12 +144,12 @@ export class BearingsView extends ItemView {
     }
 
     async onActiveLeafChange() {
-        this.render();
+        await this.render();
     }
 
     async onOpen() {
         this.app.workspace.on('active-leaf-change', this.onActiveLeafChange);
-        this.render();
+        await this.render();
     }
 
     async render() {
@@ -177,6 +177,7 @@ export class BearingsView extends ItemView {
         }
         let focalFilePath = this.computeActiveFilePath()
         // this.focalFileHistory.push(focalFilePath);
+        console.log(`R1: ${focalFilePath}`);
         this.navigationView.render(focalFilePath);
     }
 
@@ -257,7 +258,6 @@ export class NavigationBase extends Component implements MarkdownRenderChild {
 export class NavigationView extends NavigationBase {
 
     viewContainer: HTMLElement;
-    isPinned: boolean = false;
     isClosed: boolean = true;
     isBypassFileChangeCheck: boolean = false;
     toggleOptionState: { [key: string]: boolean } = {};
@@ -289,6 +289,10 @@ export class NavigationView extends NavigationBase {
         return false;
     }
 
+    get isPinned(): boolean {
+        return this.toggleOptionState["isPinned"] ?? false;
+    }
+
     createToggleButton(
         key: string,
         controlRow: HTMLElement,
@@ -302,15 +306,18 @@ export class NavigationView extends NavigationBase {
         let button = new ButtonComponent(
             controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
         );
+        console.log("Creating toggle");
         button.setClass("bearings-control-button");
         this.toggleOptionState[key] = initialValue;
         const setToggle = () => {
             if (this.toggleOptionState[key]) {
+                console.log("TOGGLE T");
                 button.setIcon(trueGlyph);
                 button.setTooltip(trueToolTip);
                 // button.classList.add("bearings-toggle-is-true");
                 // button.removeClass("bearings-toggle-is-false");
             } else {
+                console.log("TOGGLE F");
                 button.setIcon(falseGlyph);
                 button.setTooltip(falseToolTip);
                 // button.removeClass("bearings-toggle-is-true");
@@ -329,6 +336,10 @@ export class NavigationView extends NavigationBase {
         targetFilePath: string,
         options: { [key: string]: boolean } = {},
     ) {
+        console.log(`R2: ${targetFilePath}`);
+        console.log(this.isPinned);
+        console.log(this.isBypassFileChangeCheck);
+        console.log(options);
         if (!options.isForced) {
             if (this.isPinned) {
                 return true;
@@ -340,6 +351,7 @@ export class NavigationView extends NavigationBase {
             }
         }
         this.root.empty();
+        console.log(`Rendering focal file: ${this._context._focalFilePath}`);
 
         this._context._focalFilePath = targetFilePath;
         if (!this._context._focalFilePath) {
@@ -397,10 +409,10 @@ export class NavigationView extends NavigationBase {
                 "Unpin the focal note: it will track your active file",
                 "Pin the focal note: it will not change as you switch files",
                 (value: boolean) => {
-                    this.isPinned = value;
+                    // this.isPinned = value;
                     this.refresh(options);
                 },
-                false,
+                this.isPinned,
             );
         } else {
             this.createToggleButton(
