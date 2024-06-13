@@ -236,31 +236,16 @@ export class CreateRelationshipModal extends Modal {
             );
             modal.open();
         });
+        let newButton = new ButtonComponent(
+            controlsContainer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        );
+        newButton.setClass("bearings-control-button");
+        newButton.setTooltip("New file");
+        newButton.setIcon("file-plus-2");
+        newButton.onClick(() => {
+
+        });
         return textArea;
-
-
-
-        // let controlRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
-
-        // let fdcell = controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        // let filePathDisplayEl = fdcell.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
-
-        // let findButton = new ButtonComponent(
-        //     controlRow.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        // );
-        // findButton.setClass("bearings-control-button");
-        // findButton.setTooltip("Swap focal and link paths");
-        // findButton.setIcon("search");
-        // findButton.onClick(() => {
-        //     const modal = new SelectFileModal(
-        //         this.app,
-        //         this.configuration,
-        //         onUpdate,
-        //     );
-        //     modal.open();
-        // });
-
-        // return filePathDisplayEl;
     }
 
     async loadProperties() {
