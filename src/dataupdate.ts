@@ -498,30 +498,41 @@ class CreateFileModal extends Modal {
     }
 
     onOpen() {
-        const { contentEl } = this;
-        contentEl.createEl('h2', { text: 'Create new file' });
+        const fieldEntryContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
+        const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
+        // const textArea = valueBox.createEl('textarea', {
+        //     cls: 'bearings-modal-data-entry-text-area',
+        //     text: "",
+        // });
+        const textArea = new TextComponent(this.contentEl);
+        textArea.setPlaceholder('Enter filename');
+        textArea.setValue(this.initialValue);
+        textArea.disabled = true;
 
-        const filenameInput = new TextComponent(contentEl);
-        filenameInput.setPlaceholder('Enter filename');
-        filenameInput.setValue(this.initialValue);
-
-        const buttonsContainer = contentEl.createDiv({ cls: 'modal-buttons' });
-
-        const saveButton = new ButtonComponent(buttonsContainer);
-        saveButton.setButtonText('Save');
+        const controlsContainer = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-item-controls-container' });
+        let saveButton = new ButtonComponent(
+            controlsContainer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        );
+        saveButton.setClass("bearings-control-button");
+        saveButton.setTooltip("Create file");
+        saveButton.setButtonText("Save");
         saveButton.onClick(() => {
-            const filename = filenameInput.getValue();
-            if (filename) {
-                this.onSubmit(filename);
-                this.close();
-            }
+            const filename = textArea.getValue();
+                if (filename) {
+                    this.onSubmit(filename);
+                    this.close();
+                }
         });
-
-        const cancelButton = new ButtonComponent(buttonsContainer);
-        cancelButton.setButtonText('Cancel');
+        let cancelButton = new ButtonComponent(
+            controlsContainer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        );
+        cancelButton.setClass("bearings-control-button");
+        cancelButton.setTooltip("Do not create a new file");
+        cancelButton.setButtonText("Cancel");
         cancelButton.onClick(() => {
             this.close();
         });
+        return textArea;
     }
 
     onClose() {
