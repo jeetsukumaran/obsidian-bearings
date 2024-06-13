@@ -516,19 +516,18 @@ class CreateFileModal extends Modal {
     addFooterButtons(textArea: TextComponent) {
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
-        let saveButton = new ButtonComponent(
-            footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        );
-        saveButton.setClass("bearings-control-button");
-        saveButton.setTooltip("Create file");
-        saveButton.setButtonText("Save");
-        saveButton.onClick(() => {
+        const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
+        saveButton.onclick = () => {
             const filename = textArea.getValue();
                 if (filename) {
                     this.onSubmit(filename);
                     this.close();
                 }
-        });
+            footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        };
+        // saveButton.setClass("bearings-modal-footer-button");
+        // saveButton.setTooltip("Create file");
+        // saveButton.setButtonText("Save");
     }
 
     addCancelButton(footer: HTMLElement) {
