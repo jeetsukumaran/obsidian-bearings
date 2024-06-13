@@ -177,7 +177,7 @@ export class BearingsView extends ItemView {
         }
         let focalFilePath = this.computeActiveFilePath()
         // this.focalFileHistory.push(focalFilePath);
-        console.log(`R1: ${focalFilePath}`);
+        // console.log(`R1: ${focalFilePath}`);
         this.navigationView.render(focalFilePath);
     }
 
@@ -306,18 +306,18 @@ export class NavigationView extends NavigationBase {
         let button = new ButtonComponent(
             controlRow.createEl("div", {cls: [ "bearings-control-cell", ]})
         );
-        console.log("Creating toggle");
+        // console.log("Creating toggle");
         button.setClass("bearings-control-button");
         this.toggleOptionState[key] = initialValue;
         const setToggle = () => {
             if (this.toggleOptionState[key]) {
-                console.log("TOGGLE T");
+                // console.log("TOGGLE T");
                 button.setIcon(trueGlyph);
                 button.setTooltip(trueToolTip);
                 // button.classList.add("bearings-toggle-is-true");
                 // button.removeClass("bearings-toggle-is-false");
             } else {
-                console.log("TOGGLE F");
+                // console.log("TOGGLE F");
                 button.setIcon(falseGlyph);
                 button.setTooltip(falseToolTip);
                 // button.removeClass("bearings-toggle-is-true");
@@ -336,10 +336,10 @@ export class NavigationView extends NavigationBase {
         targetFilePath: string,
         options: { [key: string]: boolean } = {},
     ) {
-        console.log(`R2: ${targetFilePath}`);
-        console.log(this.isPinned);
-        console.log(this.isBypassFileChangeCheck);
-        console.log(options);
+        // console.log(`R2: ${targetFilePath}`);
+        // console.log(this.isPinned);
+        // console.log(this.isBypassFileChangeCheck);
+        // console.log(options);
         if (!options.isForced) {
             if (this.isPinned) {
                 return true;
@@ -351,7 +351,7 @@ export class NavigationView extends NavigationBase {
             }
         }
         this.root.empty();
-        console.log(`Rendering focal file: ${this._context._focalFilePath}`);
+        // console.log(`Rendering focal file: ${this._context._focalFilePath}`);
 
         this._context._focalFilePath = targetFilePath;
         if (!this._context._focalFilePath) {
