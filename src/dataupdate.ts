@@ -498,27 +498,32 @@ class CreateFileModal extends Modal {
     }
 
     onOpen() {
+        const headerEl = this.contentEl.createEl('h3', { text: "Create new file", cls: 'bearings-modal-data-entry-heading-title' });
         const fieldEntryContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
-        // const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
-        // const textArea = valueBox.createEl('textarea', {
-        //     cls: 'bearings-modal-data-entry-text-area',
-        //     text: "",
-        // });
-        const textArea = new TextComponent(fieldEntryContainer);
-        textArea.setPlaceholder('Enter filename');
-        textArea.setValue(this.initialValue);
-        textArea.disabled = true;
+        const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
+        const textArea = valueBox.createEl('textarea', {
+            cls: 'bearings-modal-data-entry-text-area',
+            text: "",
+        });
+        // const textArea = new TextComponent(valueBox);
+        // textArea.setClass("bearings-modal-data-entry-text-area");
+        // textArea.setPlaceholder('Enter filename');
+        // textArea.setValue(this.initialValue);
+        textArea.value = this.initialValue;
+        // textArea.disabled = true;
         this.addFooterButtons(textArea);
 
         return textArea;
     }
 
-    addFooterButtons(textArea: TextComponent) {
+    // addFooterButtons(textArea: TextComponent) {
+    addFooterButtons(textArea: HTMLTextAreaElement) {
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
         const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
         saveButton.onclick = () => {
-            const filename = textArea.getValue();
+            // const filename = textArea.getValue();
+            const filename = textArea.value;
                 if (filename) {
                     this.onSubmit(filename);
                     this.close();
