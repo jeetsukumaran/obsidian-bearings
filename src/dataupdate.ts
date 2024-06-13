@@ -245,13 +245,14 @@ export class CreateRelationshipModal extends Modal {
         newButton.setTooltip("New file");
         newButton.setIcon("file-plus-2");
         newButton.onClick(() => {
-            const modal = new CreateFileModal(this.app, (filename: string) => {
-                // Assuming the file should be created in a specific path
-                const newFilePath = `${textArea.value || "Untitled"}`;
-                this.app.vault.create(newFilePath, "").then(() => {
-                    onUpdate(newFilePath);
-                });
-            });
+            const modal = new CreateFileModal(this.app, (filePath: string) => {
+                if (filePath) {
+                    this.app.vault.create(filePath, "").then(() => {
+                        onUpdate(filePath);
+                    });
+                }
+            },
+            textArea.value || "Untitled");
             modal.open();
         });
         return textArea;
@@ -491,7 +492,11 @@ class CreateFileModal extends Modal {
     onSubmit: (filename: string) => void;
     initialValue: string;
 
-    constructor(app: App, onSubmit: (filename: string) => void, initialValue: string = '') {
+    constructor(
+        app: App,
+        onSubmit: (filename: string) => void,
+        initialValue: string = ''
+    ) {
         super(app);
         this.onSubmit = onSubmit;
         this.initialValue = initialValue;
