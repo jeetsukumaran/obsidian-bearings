@@ -249,8 +249,12 @@ export class CreateRelationshipModal extends Modal {
             let initialValue: string = getCurrentValue().replace(/\.md$/,"") + "_related";
             const modal = new CreateFileModal(this.app, (filePath: string) => {
                 if (filePath) {
-                    this.app.vault.create(filePath, "").then(() => {
+                    this.app.vault.create(filePath, "")
+                    .then(() => {
                         onUpdate(filePath);
+                    })
+                    .catch( (except)=> {
+                        new Notice(`Failed to create file: ${except}`);
                     });
                 }
             },
