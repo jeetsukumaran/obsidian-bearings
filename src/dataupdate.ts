@@ -252,7 +252,7 @@ export class CreateRelationshipModal extends Modal {
                     });
                 }
             },
-            textArea.value || "Untitled");
+            "New file");
             modal.open();
         });
         return textArea;
