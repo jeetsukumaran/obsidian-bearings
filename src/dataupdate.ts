@@ -499,19 +499,25 @@ class CreateFileModal extends Modal {
 
     onOpen() {
         const fieldEntryContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
-        const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
+        // const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
         // const textArea = valueBox.createEl('textarea', {
         //     cls: 'bearings-modal-data-entry-text-area',
         //     text: "",
         // });
-        const textArea = new TextComponent(this.contentEl);
+        const textArea = new TextComponent(fieldEntryContainer);
         textArea.setPlaceholder('Enter filename');
         textArea.setValue(this.initialValue);
         textArea.disabled = true;
+        this.addFooterButtons(textArea);
 
-        const controlsContainer = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-item-controls-container' });
+        return textArea;
+    }
+
+    addFooterButtons(textArea: TextComponent) {
+        const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
+        this.addCancelButton(footer);
         let saveButton = new ButtonComponent(
-            controlsContainer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+            footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         );
         saveButton.setClass("bearings-control-button");
         saveButton.setTooltip("Create file");
@@ -523,16 +529,16 @@ class CreateFileModal extends Modal {
                     this.close();
                 }
         });
-        let cancelButton = new ButtonComponent(
-            controlsContainer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        );
-        cancelButton.setClass("bearings-control-button");
-        cancelButton.setTooltip("Do not create a new file");
-        cancelButton.setButtonText("Cancel");
-        cancelButton.onClick(() => {
-            this.close();
-        });
-        return textArea;
+    }
+
+    addCancelButton(footer: HTMLElement) {
+        const cancelButton = this.addFooterButton('Cancel', 'bearings-modal-footer-button', footer);
+        cancelButton.onclick = () => this.close();
+    }
+
+    addFooterButton(text: string, className: string, footer: HTMLElement): HTMLButtonElement {
+        const btn = footer.createEl('button', { text, cls: className });
+        return btn;
     }
 
     onClose() {
