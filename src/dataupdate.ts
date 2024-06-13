@@ -7,6 +7,8 @@ import {
     Notice,
     TFile,
     normalizePath,
+    TextComponent,
+    // TextAreaComponent,
 } from 'obsidian';
 
 import {
@@ -243,7 +245,14 @@ export class CreateRelationshipModal extends Modal {
         newButton.setTooltip("New file");
         newButton.setIcon("file-plus-2");
         newButton.onClick(() => {
-
+            const modal = new CreateFileModal(this.app, (filename: string) => {
+                // Assuming the file should be created in a specific path
+                const newFilePath = `${textArea.value || "Untitled"}`;
+                this.app.vault.create(newFilePath, "").then(() => {
+                    onUpdate(newFilePath);
+                });
+            });
+            modal.open();
         });
         return textArea;
     }
@@ -478,3 +487,45 @@ export class UpdateDisplayTitleModal extends Modal {
     }
 }
 
+class CreateFileModal extends Modal {
+    onSubmit: (filename: string) => void;
+    initialValue: string;
+
+    constructor(app: App, onSubmit: (filename: string) => void, initialValue: string = '') {
+        super(app);
+        this.onSubmit = onSubmit;
+        this.initialValue = initialValue;
+    }
+
+    onOpen() {
+        const { contentEl } = this;
+        contentEl.createEl('h2', { text: 'Create new file' });
+
+        const filenameInput = new TextComponent(contentEl);
+        filenameInput.setPlaceholder('Enter filename');
+        filenameInput.setValue(this.initialValue);
+
+        const buttonsContainer = contentEl.createDiv({ cls: 'modal-buttons' });
+
+        const saveButton = new ButtonComponent(buttonsContainer);
+        saveButton.setButtonText('Save');
+        saveButton.onClick(() => {
+            const filename = filenameInput.getValue();
+            if (filename) {
+                this.onSubmit(filename);
+                this.close();
+            }
+        });
+
+        const cancelButton = new ButtonComponent(buttonsContainer);
+        cancelButton.setButtonText('Cancel');
+        cancelButton.onClick(() => {
+            this.close();
+        });
+    }
+
+    onClose() {
+        const { contentEl } = this;
+        contentEl.empty();
+    }
+}
