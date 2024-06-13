@@ -377,7 +377,7 @@ export class NavigationView extends NavigationBase {
             );
             findButton.setClass("bearings-control-button");
             findButton.setIcon("search");
-            findButton.setTooltip("Find file");
+            findButton.setTooltip("Change the view focal note without changing the active note");
             const findAction = () => {
                 const modal = new SelectFileModal(
                     this._context.app,
@@ -394,10 +394,11 @@ export class NavigationView extends NavigationBase {
                 "circle-dot-dashed",
                 // "radius",
                 // "refresh-ccw-dot",
-                "Unpin the focal note",
-                "Pin the focal note",
+                "Unpin the focal note: it will track your active file",
+                "Pin the focal note: it will not change as you switch files",
                 (value: boolean) => {
                     this.isPinned = value;
+                    this.refresh(options);
                 },
                 false,
             );
