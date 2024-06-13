@@ -212,8 +212,9 @@ export class CreateRelationshipModal extends Modal {
         this.primaryRelationshipValueEl.setText(linkDisplayText);
     }
 
-    createFileControl(
+    buildFileNodeViewBox(
         onUpdate: (path: string) => void,
+        getCurrentValue: () => string,
     ): HTMLElement {
         const fieldEntryContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
@@ -245,6 +246,7 @@ export class CreateRelationshipModal extends Modal {
         newButton.setTooltip("New file");
         newButton.setIcon("file-plus-2");
         newButton.onClick(() => {
+            let initialValue: string = getCurrentValue().replace(/\.md$/,"") + "_related";
             const modal = new CreateFileModal(this.app, (filePath: string) => {
                 if (filePath) {
                     this.app.vault.create(filePath, "").then(() => {
@@ -252,7 +254,8 @@ export class CreateRelationshipModal extends Modal {
                     });
                 }
             },
-            "New file");
+            initialValue,
+            );
             modal.open();
         });
         return textArea;
@@ -269,11 +272,12 @@ export class CreateRelationshipModal extends Modal {
 
         this.contentEl.createEl('div', {text: `The focal file source:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.focalFilePathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
-        this.focalFilePathDisplayEl = this.createFileControl(
+        this.focalFilePathDisplayEl = this.buildFileNodeViewBox(
             (path: string) => {
                 this.focalFilePath = path;
                 this.selectionUpdate();
             },
+            () => this.focalFilePath,
         );
 
         let swapRow = this.contentEl.createEl('div', {cls: 'bearings-data-entry-control-row'});
@@ -292,11 +296,12 @@ export class CreateRelationshipModal extends Modal {
 
         swapRow.createEl('div', {text: `will designate:`, cls: 'bearings-modal-data-entry-item-label'});
         // this.linkPathDisplayEl = this.contentEl.createEl('div', { text: "", cls: 'bearings-modal-data-entry-fileinfo' });
-        this.linkPathDisplayEl = this.createFileControl(
+        this.linkPathDisplayEl = this.buildFileNodeViewBox(
             (path: string) => {
                 this.linkPath = path;
                 this.selectionUpdate();
             },
+            () => this.linkPath,
         );
 
 
