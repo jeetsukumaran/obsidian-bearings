@@ -544,62 +544,55 @@ export class CreateFileModal extends Modal {
         return textArea;
     }
 
+   private async showUpdateDisplayTitleModal(filepath: string): Promise<void> {
+        return new Promise<void>((resolve) => {
+            const modal = new UpdateDisplayTitleModal(
+                this.app,
+                this.configuration,
+                filepath,
+                async () => {
+                    resolve();
+                }
+            );
+            modal.open();
+        });
+    }
+
     // addFooterButtons(textArea: TextComponent) {
     addFooterButtons(textArea: HTMLTextAreaElement) {
         let createFile = (isOpen: boolean) => {
             // const filename = textArea.getValue();
             const filepath = normalizePath(textArea.value.replace(/.md$/,""));
             if (filepath) {
-                let fullFilePath = `${filepath}.md`;
-                // let fullFilePath = filepath;
+                const fullFilePath = `${filepath}.md`;
                 this.app.vault.create(fullFilePath, "")
-                .then(() => {
-                    // TODO: test for file existing
-                    this.onSubmit(fullFilePath);
-                })
-                .catch( (except)=> {
-                    new Notice(`Failed to create file: ${except}`);
-                });
-                // if (true) {
-                //     const modal = new UpdateDisplayTitleModal(
-                //         this.app,
-                //         this.configuration,
-                //         filepath,
-                //         async () => {},
-                //     );
-                //     modal.open();
-                // }
-                if (isOpen) {
-                    this.app.workspace.openLinkText(
-                    filepath,
-                    "",
-                    "split",
-                    { active: false, }
-                    )
-                }
+                    .then( (file: TFile) => {
+                        this.showUpdateDisplayTitleModal(fullFilePath)
+                            .then( () => {
+                                if (isOpen) {
+                                    this.app.workspace.openLinkText(
+                                        fullFilePath,
+                                        "",
+                                        "split",
+                                        { active: false }
+                                    );
+                                }
+                                this.onSubmit(fullFilePath);
+                            })
+                    })
+                    .catch( (error) => {
+                        new Notice(`Failed to create file: ${error}`);
+                    })
             }
             footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         };
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
-        // const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
-        // saveButton.onclick = () => {
-        //     createFile(false);
-        //     this.close();
-        // }
-        // const openButton = this.addFooterButton("Open", "bearings-modal-footer-button", footer)
-        // openButton.onclick = () => {
-        //     createFile(true);
-        //     this.close();
-        // }
         const createButton = this.addFooterButton("Create", "bearings-modal-footer-button", footer)
         createButton.onclick = () => {
             createFile(true);
             this.close();
         }
-        // saveButton.setClass("bearings-modal-footer-button");
-        // saveButton.setTooltip("Create file");
-        // saveButton.setButtonText("Save");
     }
 
     addCancelButton(footer: HTMLElement) {
