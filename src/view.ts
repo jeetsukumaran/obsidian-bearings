@@ -141,6 +141,7 @@ export class BearingsView extends ItemView {
 
     async refresh() {
         // await this.dataService.refresh();
+        await this.render();
     }
 
     async onActiveLeafChange() {
@@ -148,6 +149,7 @@ export class BearingsView extends ItemView {
     }
 
     async onOpen() {
+        // this.app.plugins.plugins.dataview.index.on("reload", () => { await th})
         this.app.workspace.on('active-leaf-change', this.onActiveLeafChange);
         await this.render();
     }

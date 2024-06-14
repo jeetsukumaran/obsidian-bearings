@@ -51,140 +51,132 @@ export default class BearingsPlugin extends Plugin {
 
     async onload() {
 
-        /* Setup */
         await this.loadSettings();
-        this.dataService = new DataService(this.app, this.configuration);
+        this.app.workspace.onLayoutReady( () => {
+            this.dataService = new DataService(this.app, this.configuration);
 
-        /* Code block */
-        this.registerMarkdownCodeBlockProcessor(
-            "bearings",
-            (source, el, ctx) => {
-                // source = source.trim();
-                // let trimmedSource = source.trim()
-                // if (!trimmedSource || trimmedSource === ":self:") {
-                //     source = inventorizeSelfSpec;
-                // } else if (trimmedSource === ":children:") {
-                //     source = inventorizeChildrenSpec;
-                // }
-                let root = el;
-                this.dataService.refresh()
-                let navigationContext = new NavigationContext(
-                    this.app,
+            /* Code block */
+            this.registerMarkdownCodeBlockProcessor(
+                "bearings",
+                (source, el, ctx) => {
+                    // source = source.trim();
+                    // let trimmedSource = source.trim()
+                    // if (!trimmedSource || trimmedSource === ":self:") {
+                    //     source = inventorizeSelfSpec;
+                    // } else if (trimmedSource === ":children:") {
+                    //     source = inventorizeChildrenSpec;
+                    // }
+                    let root = el;
+                    this.dataService.refresh()
+                    let navigationContext = new NavigationContext(
+                        this.app,
+                        this.configuration,
+                        this.dataService,
+                        "",
+                        // this.codeBlockRefresh,
+                        this.refresh,
+                        true,
+                    );
+                    let navigationView = new NavigationView(
+                        navigationContext,
+                        root,
+                    );
+                    let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
+                    navigationView.render(activeFilePath, {
+                        isCodeBlock: true,
+                        isForce: true,
+                    });
+                    this.activeNavigators.push(navigationView)
+                });
+
+            this.addCommand({
+                id: 'refresh-bearings-code-blocks',
+                name: 'Navigation code blocks: refresh',
+                // callback: this.codeBlockRefresh,
+                callback: this.refresh,
+            });
+
+            this.addCommand({
+                id: 'create-bearings-relationship',
+                name: 'Add relationship link ...',
+                callback: () => this.addRelationship(),
+            });
+
+            /* Sidebar view */
+            this.registerView(
+                NAVIGATOR_VIEW_TYPE,
+                (leaf) => new BearingsView(
+                    leaf,
+                    this,
                     this.configuration,
                     this.dataService,
-                    "",
-                    // this.codeBlockRefresh,
-                    this.refresh,
-                    true,
-                );
-                let navigationView = new NavigationView(
-                    navigationContext,
-                    root,
-                );
-                // let hoverSourceId = NAVIGATOR_VIEW_TYPE;
-                // this.registerHoverLinkSource(
-                //     hoverSourceId,
-                //     {
-                //         defaultMod: false, /* require ctrl key trigger */
-                //         display: NAVIGATOR_VIEW_TYPE,
-                //     }
-                // );
-                let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
-                navigationView.render(activeFilePath, {
-                    isCodeBlock: true,
-                    isForce: true,
-                });
-                this.activeNavigators.push(navigationView)
+                )
+            );
+
+            this.addRibbonIcon("radar", "Open the navigator", () => {
+                this.activateView();
             });
-        this.addCommand({
-            id: 'refresh-bearings-code-blocks',
-            name: 'Navigation code blocks: refresh',
-            // callback: this.codeBlockRefresh,
-            callback: this.refresh,
-        });
 
-        this.addCommand({
-            id: 'create-bearings-relationship',
-            name: 'Add relationship link ...',
-            callback: () => this.addRelationship(),
-        });
+            this.addRibbonIcon("git-branch-plus", "Add relationship link", () => {
+                this.addRelationship();
+            });
+
+            this.addCommand({
+                id: 'open-bearings-navigator',
+                name: 'Sidebar navigator: open',
+                callback: () => {
+                    this.activateView();
+                }
+            });
+
+            this.addCommand({
+                id: 'toggle-bearings-navigator',
+                name: 'Sidebar navigator: toggle',
+                callback: () => {
+                    if (this.app.workspace.rightSplit.collapsed) {
+                        // this.app.workspace.rightSplit.expand();
+                        this.activateView();
+                    } else {
+                        this.app.workspace.rightSplit.collapse();
+                    }
+                }
+            });
 
 
-        /* Sidebar view */
-        this.registerView(
-            NAVIGATOR_VIEW_TYPE,
-            (leaf) => new BearingsView(
-                leaf,
+            /* File menu */
+
+            this.registerEvent(
+                this.app.workspace.on("file-menu", (menu, file) => {
+                    // let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
+                    buildLinkTargetEditMenu(
+                        this.app,
+                        this.configuration,
+                        menu,
+                        file.path,
+                        async () => {},
+                        true,
+                    );
+                    buildLinkCopyMenu(menu, file.path)
+
+                })
+            );
+
+            this.registerEvent(
+                this.app.workspace.on("editor-menu", (menu, editor, view) => {
+                    if (menu && view?.file?.path) {
+                        buildLinkCopyMenu(menu, view.file.path)
+                    }
+                })
+            );
+
+            /* Settings */
+            this.addSettingTab(new BearingsSettingsTab(
+                this.app,
                 this,
                 this.configuration,
-                this.dataService,
-            )
-        );
-
-        this.addRibbonIcon("radar", "Open the navigator", () => {
-            this.activateView();
+                () => this.saveSettings(),
+            ));
         });
-
-        this.addRibbonIcon("git-branch-plus", "Add relationship link", () => {
-            this.addRelationship();
-        });
-
-        this.addCommand({
-            id: 'open-bearings-navigator',
-            name: 'Sidebar navigator: open',
-            callback: () => {
-                this.activateView();
-            }
-        });
-
-        this.addCommand({
-            id: 'toggle-bearings-navigator',
-            name: 'Sidebar navigator: toggle',
-            callback: () => {
-                if (this.app.workspace.rightSplit.collapsed) {
-                    // this.app.workspace.rightSplit.expand();
-                    this.activateView();
-                } else {
-                    this.app.workspace.rightSplit.collapse();
-                }
-            }
-        });
-
-
-        /* File menu */
-
-        this.registerEvent(
-            this.app.workspace.on("file-menu", (menu, file) => {
-                // let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
-                buildLinkTargetEditMenu(
-                    this.app,
-                    this.configuration,
-                    menu,
-                    file.path,
-                    async () => {},
-                    true,
-                );
-                buildLinkCopyMenu(menu, file.path)
-
-            })
-        );
-
-        this.registerEvent(
-            this.app.workspace.on("editor-menu", (menu, editor, view) => {
-                if (menu && view?.file?.path) {
-                    buildLinkCopyMenu(menu, view.file.path)
-                }
-            })
-        );
-
-        /* Settings */
-		this.addSettingTab(new BearingsSettingsTab(
-            this.app,
-            this,
-            this.configuration,
-            () => this.saveSettings(),
-		));
-
     }
 
     onunload() {
