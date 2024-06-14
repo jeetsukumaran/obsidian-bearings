@@ -44,6 +44,19 @@ import {
     NavigationView,
 } from "./view";
 
+
+interface AppWithPlugins extends App {
+    plugins: {
+        plugins: {
+            "obsidian-dataview": {
+                index: {
+                    on: (event: string, callback: () => void) => void;
+                };
+            };
+        };
+    };
+}
+
 export default class BearingsPlugin extends Plugin {
     configuration: BearingsConfiguration;
     dataService: DataService;
@@ -53,6 +66,7 @@ export default class BearingsPlugin extends Plugin {
 
         await this.loadSettings();
         // https://forum.obsidian.md/t/how-to-access-other-plugins-as-dependencies/14469
+        // (this.app as AppWithPlugins).plugins.plugins['obsidian-dataview'].index.on("reload", this.refresh.bind(this));
         this.app.workspace.onLayoutReady( async () => {
             this.dataService = new DataService(this.app, this.configuration);
             await this.dataService.reload();
