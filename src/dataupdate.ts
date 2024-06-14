@@ -264,18 +264,6 @@ export class CreateRelationshipModal extends Modal {
                         titleModal.open();
                     }
                 },
-                // onUpdate,
-                // (filePath: string) => {
-                //     if (filePath) {
-                //         this.app.vault.create(filePath, "")
-                //         .then(() => {
-                //             onUpdate(filePath);
-                //         })
-                //         .catch( (except)=> {
-                //             new Notice(`Failed to create file: ${except}`);
-                //         });
-                //     }
-                // },
                 initialValue,
             );
             modal.open();

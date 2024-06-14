@@ -60,8 +60,6 @@ export function buildLinkTargetEditMenu(
     menu.addItem((item) =>
                     item
                     .setTitle(`Add relationship link to ...`)
-                    // .setIcon("git-branch-plus")
-                    // .setIcon("git-fork")
                     .setIcon("git-pull-request")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
@@ -77,9 +75,7 @@ export function buildLinkTargetEditMenu(
     menu.addItem((item) =>
                     item
                     .setTitle(`Add relationship link from ...`)
-                    // .setIcon("git-branch-plus")
                     .setIcon("git-pull-request-arrow")
-                    // .setIcon("git-fork")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
                             app,
@@ -90,42 +86,6 @@ export function buildLinkTargetEditMenu(
                         );
                         modal.open();
                     }));
-
-    // menu.addItem((item) =>
-    //                 item
-    //                 .setTitle(`Create new file with relationship to ...`)
-    //                 .setIcon("git-pull-request-create")
-    //                 // .setIcon("file-input")
-    //                 .onClick( () => {
-    //                     let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
-    //                     const modal = new CreateFileModal(
-    //                         app,
-    //                         configuration,
-    //                         (newPath: string) => {
-    //                             if (newPath) {
-    //                                 const modal = new CreateRelationshipModal(
-    //                                     app,
-    //                                     configuration,
-    //                                     newPath,
-    //                                     linkPath,
-    //                                     async () => {
-    //                                         const modal = new UpdateDisplayTitleModal(
-    //                                             app,
-    //                                             configuration,
-    //                                             newPath,
-    //                                             async () => {
-    //                                                 updateCallbackFn()
-    //                                             }
-    //                                         );
-    //                                     modal.open();
-    //                                     },
-    //                                 );
-    //                                 modal.open();
-    //                             }
-    //                         },
-    //                         initialPath);
-    //                     modal.open();
-    //                 }));
     menu.addItem((item) =>
                     item
                     .setTitle(`Create new file with relationship to ...`)
