@@ -38,6 +38,14 @@ export interface DataviewPage {
 export type FileNodeDataRecords = DataviewPage;
 export type FileNodeDataType = Literal;
 
+
+export function mapDataviewRecords(page: Record<string, Literal>): FileNodeDataRecords {
+        let result = {
+            file: page.file,
+            frontMatterCache: page,
+        };
+        return result;
+}
 // From: <https://forum.obsidian.md/t/getting-backlinks-tags-and-frontmatter-entries-for-a-note/34082/2>
 //
 // ```
@@ -143,7 +151,7 @@ export function getDisplayTitle(
 
 export function getFrontMatterDisplayTitle(
     configuration: BearingsConfiguration,
-    frontMatterCache: FrontMatterCache | null,
+    frontMatterCache: FrontMatterCache | undefined,
     defaultTitle: string): string {
     let result: string = defaultTitle;
     let propertyNames: string[] = configuration.options["titleField"] || DEFAULT_TITLE_FIELDS;
@@ -283,23 +291,22 @@ export class DataService {
         return this._glyphFilePathNodeMap;
     }
 
+
     readFileNodeDataRecords(filePath: string): FileNodeDataRecords | null {
         // Need to transform strings in lists to links
         // let frontmatter = getFrontMatter(this.app, filePath, undefined);
         // return this.postProcessMetadata(frontmatter);
-        return this.dataviewApi?.page(filePath) || null;
+        // return this.dataviewApi?.page(filePath) || null;
+        let page = this.dataviewApi?.page(filePath) || null;
+        if (page === null) {
+            return null;
+        }
+        return mapDataviewRecords(page);
     }
 
     refresh(): FileNodeDataRecords[] {
         // this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
-        this._vaultFileRecords = (this.dataviewApi?.pages()?.array() || [])
-            .map( (page: Record<string, Literal>) => {
-                let result = {
-                    file: page.file,
-                    frontMatterCache: page,
-                }
-                return result;
-            });
+        this._vaultFileRecords = (this.dataviewApi?.pages()?.array() || []).map(mapDataviewRecords);
         // this._vaultFileRecords = this.app.vault
         //     .getMarkdownFiles()
         //     .map((file: TFile) => {
@@ -899,18 +906,32 @@ export class FileNode {
     }
 
     get indexEntryText(): string {
-        return this._memoize(
-          "indexEntry",
-          () => this.displayText
-            || getFrontMatterDisplayTitle(
-                this.dataService.configuration,
-                this.fileData?.frontMatterCache || null,
-                this.fileBaseName,
-               )
-            || this.filePath
-            || "(?)"
-            .trim()
-          );
+        let dt = (
+                this.displayText
+                || getFrontMatterDisplayTitle(
+                    this.dataService.configuration,
+                    this.fileData?.frontMatterCache,
+                    this.fileBaseName,
+                    )
+                || this.filePath
+                || "(?)"
+            )
+            .trim();
+        return dt;
+        // return this._memoize( "indexEntry", () => {
+        //     let dt = (
+        //             this.displayText
+        //             || getFrontMatterDisplayTitle(
+        //                 this.dataService.configuration,
+        //                 this.fileData?.frontMatterCache,
+        //                 this.fileBaseName,
+        //                 )
+        //             || this.filePath
+        //             || "(?)"
+        //         )
+        //         .trim();
+        //     return dt;
+        // });
     }
 
     sort_key(other: FileNode): number {
