@@ -108,7 +108,17 @@ export function buildLinkTargetEditMenu(
                                         configuration,
                                         newPath,
                                         linkPath,
-                                        updateCallbackFn,
+                                        async () => {
+                                            const modal = new UpdateDisplayTitleModal(
+                                                app,
+                                                configuration,
+                                                newPath,
+                                                async () => {
+                                                    updateCallbackFn()
+                                                }
+                                            );
+                                        modal.open();
+                                        },
                                     );
                                     modal.open();
                                 }

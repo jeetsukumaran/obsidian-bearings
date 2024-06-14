@@ -575,10 +575,15 @@ export class CreateFileModal extends Modal {
                                 { active: false }
                             );
                         }
-                        this.showUpdateDisplayTitleModal(fullFilePath)
-                            .then( () => {
-                                this.onSubmit(fullFilePath);
+                        if (false) {
+                            // folow violation?
+                            this.showUpdateDisplayTitleModal(fullFilePath)
+                                .then( () => {
+                                    this.onSubmit(fullFilePath);
                             })
+                        } else {
+                            this.onSubmit(fullFilePath);
+                        }
                     })
                     .catch( (error) => {
                         new Notice(`Failed to create file: ${error}`);
