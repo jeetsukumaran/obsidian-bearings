@@ -173,14 +173,24 @@ export function buildLinkTargetEditMenu(
                             configuration,
                             (newPath: string) => {
                                 if (newPath) {
-                                    const modal = new CreateRelationshipModal(
+                                    const titleModal = new UpdateDisplayTitleModal(
                                         app,
                                         configuration,
-                                        linkPath,
                                         newPath,
-                                        updateCallbackFn,
+                                        async () => {
+                                            const relModal = new CreateRelationshipModal(
+                                                app,
+                                                configuration,
+                                                linkPath,
+                                                newPath,
+                                                async () => {
+                                                    updateCallbackFn()
+                                                }
+                                            );
+                                        relModal.open();
+                                        },
                                     );
-                                    modal.open();
+                                    titleModal.open();
                                 }
                             },
                             initialPath);

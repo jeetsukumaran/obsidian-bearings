@@ -251,7 +251,20 @@ export class CreateRelationshipModal extends Modal {
             const modal = new CreateFileModal(
                 this.app,
                 this.configuration,
-                onUpdate,
+                (newPath: string) => {
+                    if (newPath) {
+                        const titleModal = new UpdateDisplayTitleModal(
+                            this.app,
+                            this.configuration,
+                            newPath,
+                            async () => {
+                                onUpdate(newPath);
+                            },
+                        );
+                        titleModal.open();
+                    }
+                },
+                // onUpdate,
                 // (filePath: string) => {
                 //     if (filePath) {
                 //         this.app.vault.create(filePath, "")
