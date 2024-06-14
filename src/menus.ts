@@ -121,13 +121,22 @@ export function buildLinkTargetEditMenu(
                     .setIcon("git-pull-request-create-arrow")
                     // .setIcon("file-output")
                     .onClick( () => {
-                        const modal = new CreateRelationshipModal(
+                        let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
+                        const modal = new CreateFileModal(
                             app,
-                            configuration,
-                            linkPath,
-                            "",
-                            updateCallbackFn,
-                        );
+                            (newPath: string) => {
+                                if (newPath) {
+                                    const modal = new CreateRelationshipModal(
+                                        app,
+                                        configuration,
+                                        linkPath,
+                                        newPath,
+                                        updateCallbackFn,
+                                    );
+                                    modal.open();
+                                }
+                            },
+                            initialPath);
                         modal.open();
                     }));
 }
