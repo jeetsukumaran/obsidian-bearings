@@ -563,13 +563,18 @@ export class CreateFileModal extends Modal {
         };
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
-        const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
-        saveButton.onclick = () => {
-            createFile(false);
-            this.close();
-        }
-        const openButton = this.addFooterButton("Open", "bearings-modal-footer-button", footer)
-        openButton.onclick = () => {
+        // const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
+        // saveButton.onclick = () => {
+        //     createFile(false);
+        //     this.close();
+        // }
+        // const openButton = this.addFooterButton("Open", "bearings-modal-footer-button", footer)
+        // openButton.onclick = () => {
+        //     createFile(true);
+        //     this.close();
+        // }
+        const createButton = this.addFooterButton("Create", "bearings-modal-footer-button", footer)
+        createButton.onclick = () => {
             createFile(true);
             this.close();
         }
