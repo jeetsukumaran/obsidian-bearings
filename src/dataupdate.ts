@@ -165,10 +165,11 @@ export class CreateRelationshipModal extends Modal {
 
     async selectionUpdate() {
         let currentSelection = this.currentSelection;
-        if (!this.focalFilePath && !this.linkPath) {
-            // this.saveButton.tooltip = "Focal file source and link target file are unspecified";
-            this.saveButton.disabled = true;
-        } else if (!this.focalFilePath) {
+        // if (!this.focalFilePath && !this.linkPath) {
+        //     // this.saveButton.tooltip = "Focal file source and link target file are unspecified";
+        //     this.saveButton.disabled = true;
+        // } else
+        if (!this.focalFilePath) {
             // this.saveButton.tooltip = "Focal file source is unspecified";
             this.saveButton.disabled = true;
         } else if (!this.linkPath) {
@@ -535,26 +536,43 @@ export class CreateFileModal extends Modal {
 
     // addFooterButtons(textArea: TextComponent) {
     addFooterButtons(textArea: HTMLTextAreaElement) {
+        let createFile = (isOpen: boolean) => {
+            // const filename = textArea.getValue();
+            const filepath = normalizePath(textArea.value.replace(/.md$/,""));
+            if (filepath) {
+                let fullFilePath = `${filepath}.md`;
+                // let fullFilePath = filepath;
+                this.app.vault.create(fullFilePath, "")
+                .then(() => {
+                    // TODO: test for file existing
+                    this.onSubmit(fullFilePath);
+                })
+                .catch( (except)=> {
+                    new Notice(`Failed to create file: ${except}`);
+                });
+                if (isOpen) {
+                    this.app.workspace.openLinkText(
+                    filepath,
+                    "",
+                    "split",
+                    { active: false, }
+                    )
+                }
+            }
+            footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
+        };
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
         const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
         saveButton.onclick = () => {
-            // const filename = textArea.getValue();
-                const filepath = normalizePath(textArea.value.replace(/.md$/,""));
-                if (filepath) {
-                    let fullFilePath = `${filepath}.md`;
-                    // let fullFilePath = filepath;
-                    this.app.vault.create(fullFilePath, "")
-                    .then(() => {
-                        this.onSubmit(fullFilePath);
-                    })
-                    .catch( (except)=> {
-                        new Notice(`Failed to create file: ${except}`);
-                    });
-                    this.close();
-                }
-            footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        };
+            createFile(false);
+            this.close();
+        }
+        const openButton = this.addFooterButton("Open", "bearings-modal-footer-button", footer)
+        openButton.onclick = () => {
+            createFile(true);
+            this.close();
+        }
         // saveButton.setClass("bearings-modal-footer-button");
         // saveButton.setTooltip("Create file");
         // saveButton.setButtonText("Save");
