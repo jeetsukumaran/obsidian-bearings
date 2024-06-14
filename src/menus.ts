@@ -58,8 +58,10 @@ export function buildLinkTargetEditMenu(
     let activeFilePath: string = app.workspace.getActiveFile()?.path || "";
     menu.addItem((item) =>
                     item
-                    .setTitle(`Add relationship to ...`)
-                    .setIcon("git-branch-plus")
+                    .setTitle(`Add relationship link to ...`)
+                    // .setIcon("git-branch-plus")
+                    // .setIcon("git-fork")
+                    .setIcon("git-pull-request")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
                             app,
@@ -73,14 +75,47 @@ export function buildLinkTargetEditMenu(
                     }));
     menu.addItem((item) =>
                     item
-                    .setTitle(`Add relationship from ...`)
-                    .setIcon("git-branch-plus")
+                    .setTitle(`Add relationship link from ...`)
+                    // .setIcon("git-branch-plus")
+                    .setIcon("git-pull-request-arrow")
+                    // .setIcon("git-fork")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
                             app,
                             configuration,
                             linkPath,
                             activeFilePath,
+                            updateCallbackFn,
+                        );
+                        modal.open();
+                    }));
+
+    menu.addItem((item) =>
+                    item
+                    .setTitle(`Create new file with relationship to ...`)
+                    .setIcon("git-pull-request-create")
+                    // .setIcon("file-input")
+                    .onClick( () => {
+                        const modal = new CreateRelationshipModal(
+                            app,
+                            configuration,
+                            "",
+                            linkPath,
+                            updateCallbackFn,
+                        );
+                        modal.open();
+                    }));
+    menu.addItem((item) =>
+                    item
+                    .setTitle(`Create new file with relationship from ...`)
+                    .setIcon("git-pull-request-create-arrow")
+                    // .setIcon("file-output")
+                    .onClick( () => {
+                        const modal = new CreateRelationshipModal(
+                            app,
+                            configuration,
+                            linkPath,
+                            "",
                             updateCallbackFn,
                         );
                         modal.open();
