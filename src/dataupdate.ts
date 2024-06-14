@@ -616,3 +616,42 @@ export class CreateFileModal extends Modal {
         contentEl.empty();
     }
 }
+
+export const createFileWithModals = (
+    app: App,
+    configuration: any,
+    linkPath: string | null,
+    updateCallbackFn: () => void,
+    relationshipType: 'to' | 'from',
+) => {
+    const initialPath = linkPath ? `${linkPath.replace(/.md$/, "")}_related` : "NewRelationFile";
+    const createFileModal = new CreateFileModal(
+        app,
+        configuration,
+        (newPath: string) => {
+            if (newPath) {
+                const titleModal = new UpdateDisplayTitleModal(
+                    app,
+                    configuration,
+                    newPath,
+                    async () => {
+                        const relModal = new CreateRelationshipModal(
+                            app,
+                            configuration,
+                            relationshipType === 'to' ? newPath : (linkPath || ""),
+                            relationshipType === 'to' ? (linkPath || "") : newPath,
+                            async () => {
+                                updateCallbackFn();
+                            }
+                        );
+                        relModal.open();
+                    },
+                );
+                titleModal.open();
+            }
+        },
+        initialPath
+    );
+    createFileModal.open();
+};
+

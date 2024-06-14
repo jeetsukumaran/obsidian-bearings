@@ -22,6 +22,7 @@ import {
     CreateRelationshipModal,
     appendFrontmatterLists,
     CreateFileModal,
+    createFileWithModals,
 } from "./dataupdate"
 
 export function buildLinkTargetEditMenu(
@@ -92,34 +93,41 @@ export function buildLinkTargetEditMenu(
                     .setIcon("git-pull-request-create")
                     // .setIcon("file-input")
                     .onClick( () => {
-                        let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
-                        const modal = new CreateFileModal(
+                        createFileWithModals(
                             app,
                             configuration,
-                            (newPath: string) => {
-                                if (newPath) {
-                                    const titleModal = new UpdateDisplayTitleModal(
-                                        app,
-                                        configuration,
-                                        newPath,
-                                        async () => {
-                                            const relModal = new CreateRelationshipModal(
-                                                app,
-                                                configuration,
-                                                newPath,
-                                                linkPath,
-                                                async () => {
-                                                    updateCallbackFn()
-                                                }
-                                            );
-                                        relModal.open();
-                                        },
-                                    );
-                                    titleModal.open();
-                                }
-                            },
-                            initialPath);
-                        modal.open();
+                            linkPath,
+                            updateCallbackFn,
+                            'to',
+                        );
+                        // let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
+                        // const modal = new CreateFileModal(
+                        //     app,
+                        //     configuration,
+                        //     (newPath: string) => {
+                        //         if (newPath) {
+                        //             const titleModal = new UpdateDisplayTitleModal(
+                        //                 app,
+                        //                 configuration,
+                        //                 newPath,
+                        //                 async () => {
+                        //                     const relModal = new CreateRelationshipModal(
+                        //                         app,
+                        //                         configuration,
+                        //                         newPath,
+                        //                         linkPath,
+                        //                         async () => {
+                        //                             updateCallbackFn()
+                        //                         }
+                        //                     );
+                        //                 relModal.open();
+                        //                 },
+                        //             );
+                        //             titleModal.open();
+                        //         }
+                        //     },
+                        //     initialPath);
+                        // modal.open();
                     }));
     menu.addItem((item) =>
                     item
@@ -127,34 +135,41 @@ export function buildLinkTargetEditMenu(
                     .setIcon("git-pull-request-create-arrow")
                     // .setIcon("file-output")
                     .onClick( () => {
-                        let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
-                        const modal = new CreateFileModal(
+                        createFileWithModals(
                             app,
                             configuration,
-                            (newPath: string) => {
-                                if (newPath) {
-                                    const titleModal = new UpdateDisplayTitleModal(
-                                        app,
-                                        configuration,
-                                        newPath,
-                                        async () => {
-                                            const relModal = new CreateRelationshipModal(
-                                                app,
-                                                configuration,
-                                                linkPath,
-                                                newPath,
-                                                async () => {
-                                                    updateCallbackFn()
-                                                }
-                                            );
-                                        relModal.open();
-                                        },
-                                    );
-                                    titleModal.open();
-                                }
-                            },
-                            initialPath);
-                        modal.open();
+                            linkPath,
+                            updateCallbackFn,
+                            'from'
+                        );
+                        // let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
+                        // const modal = new CreateFileModal(
+                        //     app,
+                        //     configuration,
+                        //     (newPath: string) => {
+                        //         if (newPath) {
+                        //             const titleModal = new UpdateDisplayTitleModal(
+                        //                 app,
+                        //                 configuration,
+                        //                 newPath,
+                        //                 async () => {
+                        //                     const relModal = new CreateRelationshipModal(
+                        //                         app,
+                        //                         configuration,
+                        //                         linkPath,
+                        //                         newPath,
+                        //                         async () => {
+                        //                             updateCallbackFn()
+                        //                         }
+                        //                     );
+                        //                 relModal.open();
+                        //                 },
+                        //             );
+                        //             titleModal.open();
+                        //         }
+                        //     },
+                        //     initialPath);
+                        // modal.open();
                     }));
 }
 
