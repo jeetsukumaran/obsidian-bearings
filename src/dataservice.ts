@@ -286,6 +286,20 @@ export class DataService {
         return this.dataviewApi?.page(filePath)
     }
 
+    async reload(): Promise<FileNodeDataRecords[]> {
+        this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
+        // this._vaultFileRecords = this.app.vault
+        //     .getMarkdownFiles()
+        //     .map((file: TFile) => {
+        //         // let fileMetadata = getMetadata(this.app, file);
+        //         // let frontmatter = fileMetadata?.frontmatter || {};
+        //         let frontmatter = getFrontMatter(this.app, undefined, file);
+        //         // Need to transform strings in lists to links
+        //         return frontmatter;
+        //     });
+        this._glyphFilePathNodeMap = new Map<FilePathType, FileNode>();
+        return this._vaultFileRecords;
+    }
     refresh(): FileNodeDataRecords[] {
         // this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
         this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];

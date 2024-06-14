@@ -53,8 +53,10 @@ export default class BearingsPlugin extends Plugin {
 
         await this.loadSettings();
         // https://forum.obsidian.md/t/how-to-access-other-plugins-as-dependencies/14469
-        this.app.workspace.onLayoutReady( () => {
+        this.app.workspace.onLayoutReady( async () => {
             this.dataService = new DataService(this.app, this.configuration);
+            await this.dataService.reload();
+            console.log(this.dataService.vaultFileRecords);
 
             /* Code block */
             this.registerMarkdownCodeBlockProcessor(
