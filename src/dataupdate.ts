@@ -560,15 +560,15 @@ export class CreateFileModal extends Modal {
                 .catch( (except)=> {
                     new Notice(`Failed to create file: ${except}`);
                 });
-                if (true) {
-                    const modal = new UpdateDisplayTitleModal(
-                        this.app,
-                        this.configuration,
-                        filepath,
-                        async () => {},
-                    );
-                    modal.open();
-                }
+                // if (true) {
+                //     const modal = new UpdateDisplayTitleModal(
+                //         this.app,
+                //         this.configuration,
+                //         filepath,
+                //         async () => {},
+                //     );
+                //     modal.open();
+                // }
                 if (isOpen) {
                     this.app.workspace.openLinkText(
                     filepath,
