@@ -91,6 +91,41 @@ export function buildLinkTargetEditMenu(
                         modal.open();
                     }));
 
+    // menu.addItem((item) =>
+    //                 item
+    //                 .setTitle(`Create new file with relationship to ...`)
+    //                 .setIcon("git-pull-request-create")
+    //                 // .setIcon("file-input")
+    //                 .onClick( () => {
+    //                     let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
+    //                     const modal = new CreateFileModal(
+    //                         app,
+    //                         configuration,
+    //                         (newPath: string) => {
+    //                             if (newPath) {
+    //                                 const modal = new CreateRelationshipModal(
+    //                                     app,
+    //                                     configuration,
+    //                                     newPath,
+    //                                     linkPath,
+    //                                     async () => {
+    //                                         const modal = new UpdateDisplayTitleModal(
+    //                                             app,
+    //                                             configuration,
+    //                                             newPath,
+    //                                             async () => {
+    //                                                 updateCallbackFn()
+    //                                             }
+    //                                         );
+    //                                     modal.open();
+    //                                     },
+    //                                 );
+    //                                 modal.open();
+    //                             }
+    //                         },
+    //                         initialPath);
+    //                     modal.open();
+    //                 }));
     menu.addItem((item) =>
                     item
                     .setTitle(`Create new file with relationship to ...`)
@@ -103,24 +138,24 @@ export function buildLinkTargetEditMenu(
                             configuration,
                             (newPath: string) => {
                                 if (newPath) {
-                                    const modal = new CreateRelationshipModal(
+                                    const titleModal = new UpdateDisplayTitleModal(
                                         app,
                                         configuration,
                                         newPath,
-                                        linkPath,
                                         async () => {
-                                            const modal = new UpdateDisplayTitleModal(
+                                            const relModal = new CreateRelationshipModal(
                                                 app,
                                                 configuration,
                                                 newPath,
+                                                linkPath,
                                                 async () => {
                                                     updateCallbackFn()
                                                 }
                                             );
-                                        modal.open();
+                                        relModal.open();
                                         },
                                     );
-                                    modal.open();
+                                    titleModal.open();
                                 }
                             },
                             initialPath);
