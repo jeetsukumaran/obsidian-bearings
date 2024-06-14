@@ -849,7 +849,7 @@ export class FileNode {
         }
         this.dataService.glyphFilePathNodeMap.set(this.filePath, this);
         propertyNames.forEach( (propertyKey: string) => {
-                (this.fileData?.frontMatterCache[propertyKey] || [])
+                (this.fileData?.frontMatterCache?.[propertyKey] || [])
                 .forEach( (fieldValue: FileNodeDataType) => {
                     if (fieldValue.path !== undefined) {
                         let referencedGlyphPath = fieldValue.path;
@@ -871,7 +871,7 @@ export class FileNode {
     }
 
     readPropertyStringList(key: string,): string[] {
-        const propertyValue = this.fileData?.frontMatterCache[key] || ""
+        const propertyValue = this.fileData?.frontMatterCache?.[key] || ""
         if (!propertyValue) {
             return [];
         }
