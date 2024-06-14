@@ -250,6 +250,7 @@ export class CreateRelationshipModal extends Modal {
             let initialValue: string = getCurrentValue().replace(/\.md$/,"") + "_related";
             const modal = new CreateFileModal(
                 this.app,
+                this.configuration,
                 onUpdate,
                 // (filePath: string) => {
                 //     if (filePath) {
@@ -418,16 +419,22 @@ export class UpdateDisplayTitleModal extends Modal {
     private propertyFields: PropertyField[] = [];
     public updateCallbackFn: () => Promise<void>;
 
-    constructor(options: FrontMatterUpdateOptions) {
-        super(options.app);
-        this.file = this.app.vault.getAbstractFileByPath(options.path) as TFile;
-        if (!this.file) {
+    constructor(
+        app: App,
+        configuration: BearingsConfiguration,
+        file: TFile | string,
+        updateCallbackFn: () => Promise<void>,
+    ) {
+        super(app);
+        const afile: TFile | null = (typeof file === "string") ? app.vault.getFileByPath(file) : file;
+        if (afile === null) {
             new Notice('File not found.');
             this.close();
             return;
         }
-        this.updateCallbackFn = options.updateCallbackFn;
-        this.loadProperties(options.propertyNames);
+        this.file = afile;
+        this.updateCallbackFn = updateCallbackFn;
+        this.loadProperties(configuration.titleFields);
     }
 
     async loadProperties(propertyNames: string[]) {
@@ -502,15 +509,18 @@ export class UpdateDisplayTitleModal extends Modal {
 }
 
 export class CreateFileModal extends Modal {
+    configuration: BearingsConfiguration;
     onSubmit: (filename: string) => void;
     initialValue: string;
 
     constructor(
         app: App,
+        configuration: BearingsConfiguration,
         onSubmit: (filename: string) => void,
         initialValue: string = ''
     ) {
         super(app);
+        this.configuration = configuration;
         this.onSubmit = onSubmit;
         this.initialValue = initialValue;
     }
@@ -550,6 +560,15 @@ export class CreateFileModal extends Modal {
                 .catch( (except)=> {
                     new Notice(`Failed to create file: ${except}`);
                 });
+                if (true) {
+                    const modal = new UpdateDisplayTitleModal(
+                        this.app,
+                        this.configuration,
+                        filepath,
+                        async () => {},
+                    );
+                    modal.open();
+                }
                 if (isOpen) {
                     this.app.workspace.openLinkText(
                     filepath,

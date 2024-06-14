@@ -43,12 +43,12 @@ export function buildLinkTargetEditMenu(
                 const normalizedPath = normalizePath(linkPath);
                 const file = app.vault.getAbstractFileByPath(normalizedPath);
                 if (file instanceof TFile) {
-                    const modal = new UpdateDisplayTitleModal({
-                        app: app,
-                        path: normalizedPath,
-                        propertyNames: configuration.titleFields,
-                        updateCallbackFn: updateCallbackFn,
-                    });
+                    const modal = new UpdateDisplayTitleModal(
+                        app,
+                        configuration,
+                        file,
+                        updateCallbackFn,
+                    );
                     modal.open();
                 } else {
                     new Notice("File not found or the path is not a valid file.");
@@ -100,6 +100,7 @@ export function buildLinkTargetEditMenu(
                         let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
                         const modal = new CreateFileModal(
                             app,
+                            configuration,
                             (newPath: string) => {
                                 if (newPath) {
                                     const modal = new CreateRelationshipModal(
@@ -124,6 +125,7 @@ export function buildLinkTargetEditMenu(
                         let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
                         const modal = new CreateFileModal(
                             app,
+                            configuration,
                             (newPath: string) => {
                                 if (newPath) {
                                     const modal = new CreateRelationshipModal(
