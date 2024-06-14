@@ -3,6 +3,7 @@ import {
     normalizePath,
     FrontMatterCache,
     TFile,
+    CachedMetadata,
     App,
 } from 'obsidian';
 
@@ -32,6 +33,76 @@ import {
 export type DataviewPage = Record<string, Literal>; // aka Dataview "page"
 export type FileNodeDataRecords = DataviewPage;
 export type FileNodeDataType = Literal;
+
+// From: <https://forum.obsidian.md/t/getting-backlinks-tags-and-frontmatter-entries-for-a-note/34082/2>
+//
+// ```
+// file = app.vault.getAbstractFileByPath("your/file.md")
+// ```
+// - `metadata` contains all values except backlinks: <https://github.com/obsidianmd/obsidian-api/blob/c01fc3074deeb3dfc6ee02546d113b448735b294/obsidian.d.ts#L388-L425>
+//
+// links?: LinkCache[];
+// embeds?: EmbedCache[];
+// tags?: TagCache[];
+// headings?: HeadingCache[];
+// sections?: SectionCache[];
+// listItems?: ListItemCache[];
+// frontmatter?: FrontMatterCache;
+// blocks?: Record<string, BlockCache
+//
+// - If a file has no frontmatter, `metadata.frontmatter` will not exist
+// - Tags need to be collected in two places:
+//  -   `metadata.frontmatter.tags`
+//  -   `metadata.tags`
+// ```
+// metadata = app.metadataCache.getFileCache(file)
+// ```
+
+// ```
+// backlinks = app.vault.metadataCache.getBacklinksForFile(file)
+// ```
+
+export function getMetadata(
+    app: App,
+    filePathOrFile?: string | TFile,
+): CachedMetadata | null {
+    let file: TFile | undefined;
+
+    if (typeof filePathOrFile === 'string') {
+        file = app.vault.getAbstractFileByPath(normalizePath(filePathOrFile)) as TFile;
+    } else if (filePathOrFile instanceof TFile) {
+        file = filePathOrFile;
+    }
+
+    if (!file) {
+        return null;
+    }
+
+    return app.metadataCache.getFileCache(file) || null;
+}
+
+export function extractTags(metadata: CachedMetadata | null): string[] {
+    if (metadata === null) {
+        return [];
+    }
+    const tagSet = new Set<string>();
+
+    // Collect tags from metadata.tags
+    if (metadata.tags) {
+        metadata.tags.forEach((tag) => {
+            tagSet.add(tag.tag.replace(/^#/,""));
+        });
+    }
+
+    // Collect tags from metadata.frontmatter.tags
+    if (metadata.frontmatter && Array.isArray(metadata.frontmatter.tags)) {
+        metadata.frontmatter.tags.forEach((tag: string) => {
+            tagSet.add(tag);
+        });
+    }
+
+    return Array.from(tagSet);
+}
 
 export function getFrontMatter(
     app: App,
@@ -209,11 +280,24 @@ export class DataService {
     }
 
     readFileNodeDataRecords(filePath: string): FileNodeDataRecords | undefined {
+        // Need to transform strings in lists to links
+        // let frontmatter = getFrontMatter(this.app, filePath, undefined);
+        // return this.postProcessMetadata(frontmatter);
         return this.dataviewApi?.page(filePath)
     }
 
     refresh(): FileNodeDataRecords[] {
+        // this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
         this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
+        // this._vaultFileRecords = this.app.vault
+        //     .getMarkdownFiles()
+        //     .map((file: TFile) => {
+        //         // let fileMetadata = getMetadata(this.app, file);
+        //         // let frontmatter = fileMetadata?.frontmatter || {};
+        //         let frontmatter = getFrontMatter(this.app, undefined, file);
+        //         // Need to transform strings in lists to links
+        //         return frontmatter;
+        //     });
         this._glyphFilePathNodeMap = new Map<FilePathType, FileNode>();
         return this._vaultFileRecords;
     }
