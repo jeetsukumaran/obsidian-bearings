@@ -292,18 +292,25 @@ export class DataService {
 
     refresh(): FileNodeDataRecords[] {
         // this._vaultFileRecords = this.dataviewApi?.pages()?.array() || [];
-        // this._vaultFileRecords = (this.dataviewApi?.pages()?.array() || []);
-        this._vaultFileRecords = this.app.vault
-            .getMarkdownFiles()
-            .map((file: TFile) => {
-                // let fileMetadata = getMetadata(this.app, file);
-                // let frontmatter = fileMetadata?.frontmatter || {};
-                return {
-                    file: file,
-                    frontMatterCache: getFrontMatter(this.app, undefined, file),
+        this._vaultFileRecords = (this.dataviewApi?.pages()?.array() || [])
+            .map( (page: Record<string, Literal>) => {
+                let result = {
+                    file: page.file,
+                    frontMatterCache: page,
                 }
-                // Need to transform strings in lists to links
+                return result;
             });
+        // this._vaultFileRecords = this.app.vault
+        //     .getMarkdownFiles()
+        //     .map((file: TFile) => {
+        //         // let fileMetadata = getMetadata(this.app, file);
+        //         // let frontmatter = fileMetadata?.frontmatter || {};
+        //         return {
+        //             file: file,
+        //             frontMatterCache: getFrontMatter(this.app, undefined, file),
+        //         }
+        //         // Need to transform strings in lists to links
+        //     });
         this._glyphFilePathNodeMap = new Map<FilePathType, FileNode>();
         return this._vaultFileRecords;
     }
@@ -477,7 +484,7 @@ export class FileNode {
         propertyName: string,
         pathAliases?: PathAliasesMapType,
     ): string[] {
-        const propertyValue = this.fileData?.frontMatterCache[propertyName] || "";
+        const propertyValue = this.fileData?.frontMatterCache?.[propertyName] || "";
         if (!propertyValue) {
             return [];
         }
