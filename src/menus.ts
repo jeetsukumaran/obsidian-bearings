@@ -60,7 +60,7 @@ export function buildLinkTargetEditMenu(
     let activeFilePath: string = app.workspace.getActiveFile()?.path || "";
     menu.addItem((item) =>
                     item
-                    .setTitle(`Add relationship link to ...`)
+                    .setTitle(`Create relationship to ...`)
                     .setIcon("git-pull-request")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
@@ -75,7 +75,7 @@ export function buildLinkTargetEditMenu(
                     }));
     menu.addItem((item) =>
                     item
-                    .setTitle(`Add relationship link from ...`)
+                    .setTitle(`Create relationship from ...`)
                     .setIcon("git-pull-request-arrow")
                     .onClick( () => {
                         const modal = new CreateRelationshipModal(
@@ -90,8 +90,8 @@ export function buildLinkTargetEditMenu(
     menu.addItem((item) =>
                     item
                     .setTitle(`Create new file with relationship to ...`)
-                    .setIcon("git-pull-request-create")
                     // .setIcon("file-input")
+                    .setIcon("git-pull-request-create-arrow")
                     .onClick( () => {
                         createFileWithModals(
                             app,
@@ -132,7 +132,7 @@ export function buildLinkTargetEditMenu(
     menu.addItem((item) =>
                     item
                     .setTitle(`Create new file with relationship from ...`)
-                    .setIcon("git-pull-request-create-arrow")
+                    .setIcon("git-pull-request-create")
                     // .setIcon("file-output")
                     .onClick( () => {
                         createFileWithModals(
