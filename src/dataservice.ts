@@ -30,7 +30,11 @@ import {
     Literal,
     getAPI,
 } from "obsidian-dataview";
-export type DataviewPage = Record<string, Literal>; // aka Dataview "page"
+// export type DataviewPage = Record<string, Literal>; // aka Dataview "page"
+export interface DataviewPage {
+    file: { [key: string]: any },
+    frontMatterCache: FrontMatterCache,
+};
 export type FileNodeDataRecords = DataviewPage;
 export type FileNodeDataType = Literal;
 
@@ -139,12 +143,12 @@ export function getDisplayTitle(
 
 export function getFrontMatterDisplayTitle(
     configuration: BearingsConfiguration,
-    frontMatterCache: FrontMatterCache,
+    frontMatterCache: FrontMatterCache | null,
     defaultTitle: string): string {
     let result: string = defaultTitle;
     let propertyNames: string[] = configuration.options["titleField"] || DEFAULT_TITLE_FIELDS;
     propertyNames.forEach( (propertyName: string) => {
-        if (frontMatterCache[propertyName]) {
+        if (frontMatterCache && frontMatterCache[propertyName]) {
             result = String(frontMatterCache[propertyName]);
             return result;
         }
@@ -279,11 +283,11 @@ export class DataService {
         return this._glyphFilePathNodeMap;
     }
 
-    readFileNodeDataRecords(filePath: string): FileNodeDataRecords | undefined {
+    readFileNodeDataRecords(filePath: string): FileNodeDataRecords | null {
         // Need to transform strings in lists to links
         // let frontmatter = getFrontMatter(this.app, filePath, undefined);
         // return this.postProcessMetadata(frontmatter);
-        return this.dataviewApi?.page(filePath)
+        return this.dataviewApi?.page(filePath) || null;
     }
 
     refresh(): FileNodeDataRecords[] {
@@ -406,7 +410,7 @@ export class FileNode {
     filePath: string;
     fileBaseName: string;
     dataService: DataService;
-    fileData: FileNodeDataRecords;
+    fileData: FileNodeDataRecords | null;
     _superordinateChains: SuperordinateChains;
     displayText: string | null;
     relationships: { [filePath: FilePathType]: RelationshipLinkedPathDataType[] } = {};
@@ -421,7 +425,7 @@ export class FileNode {
         this.filePath = filePath;
         this.dataService = dataService;
         this.fileBaseName = getFileBaseName(filePath);
-        this.fileData = this.dataService.readFileNodeDataRecords(filePath) || {};
+        this.fileData = this.dataService.readFileNodeDataRecords(filePath);
         this.displayText = displayText;
     }
 
@@ -471,7 +475,7 @@ export class FileNode {
         propertyName: string,
         pathAliases?: PathAliasesMapType,
     ): string[] {
-        const propertyValue = this.fileData[propertyName] || "";
+        const propertyValue = this.fileData?.frontMatterCache[propertyName] || "";
         if (!propertyValue) {
             return [];
         }
@@ -507,7 +511,7 @@ export class FileNode {
         // let fileRecords = this.dataService.dataviewApi.pages().array()
         fileRecords
             .forEach( (fileNodeRecords: FileNodeDataRecords) => {
-                const fileNodePropertyValues = fileNodeRecords?.[propertyName];
+                const fileNodePropertyValues = fileNodeRecords?.frontMatterCache[propertyName];
                 if (fileNodePropertyValues && Array.isArray(fileNodePropertyValues)) {
                     fileNodePropertyValues.forEach( (pagePropertyItem: FileNodeDataType) => {
                         if (pagePropertyItem && pagePropertyItem.path === this.filePath) {
@@ -836,7 +840,7 @@ export class FileNode {
         }
         this.dataService.glyphFilePathNodeMap.set(this.filePath, this);
         propertyNames.forEach( (propertyKey: string) => {
-                (this.fileData[propertyKey] || [])
+                (this.fileData?.frontMatterCache[propertyKey] || [])
                 .forEach( (fieldValue: FileNodeDataType) => {
                     if (fieldValue.path !== undefined) {
                         let referencedGlyphPath = fieldValue.path;
@@ -858,7 +862,7 @@ export class FileNode {
     }
 
     readPropertyStringList(key: string,): string[] {
-        const propertyValue = this.fileData[key] || ""
+        const propertyValue = this.fileData?.frontMatterCache[key] || ""
         if (!propertyValue) {
             return [];
         }
@@ -891,7 +895,7 @@ export class FileNode {
           () => this.displayText
             || getFrontMatterDisplayTitle(
                 this.dataService.configuration,
-                this.fileData,
+                this.fileData?.frontMatterCache || null,
                 this.fileBaseName,
                )
             || this.filePath
