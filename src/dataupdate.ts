@@ -247,18 +247,21 @@ export class CreateRelationshipModal extends Modal {
         newButton.setIcon("file-plus-2");
         newButton.onClick(() => {
             let initialValue: string = getCurrentValue().replace(/\.md$/,"") + "_related";
-            const modal = new CreateFileModal(this.app, (filePath: string) => {
-                if (filePath) {
-                    this.app.vault.create(filePath, "")
-                    .then(() => {
-                        onUpdate(filePath);
-                    })
-                    .catch( (except)=> {
-                        new Notice(`Failed to create file: ${except}`);
-                    });
-                }
-            },
-            initialValue,
+            const modal = new CreateFileModal(
+                this.app,
+                onUpdate,
+                // (filePath: string) => {
+                //     if (filePath) {
+                //         this.app.vault.create(filePath, "")
+                //         .then(() => {
+                //             onUpdate(filePath);
+                //         })
+                //         .catch( (except)=> {
+                //             new Notice(`Failed to create file: ${except}`);
+                //         });
+                //     }
+                // },
+                initialValue,
             );
             modal.open();
         });
@@ -497,7 +500,7 @@ export class UpdateDisplayTitleModal extends Modal {
     }
 }
 
-class CreateFileModal extends Modal {
+export class CreateFileModal extends Modal {
     onSubmit: (filename: string) => void;
     initialValue: string;
 
@@ -537,9 +540,17 @@ class CreateFileModal extends Modal {
         const saveButton = this.addFooterButton("Save", "bearings-modal-footer-button", footer)
         saveButton.onclick = () => {
             // const filename = textArea.getValue();
-            const filename = textArea.value;
-                if (filename) {
-                    this.onSubmit(filename);
+                const filepath = normalizePath(textArea.value.replace(/.md$/,""));
+                if (filepath) {
+                    let fullFilePath = `${filepath}.md`;
+                    // let fullFilePath = filepath;
+                    this.app.vault.create(fullFilePath, "")
+                    .then(() => {
+                        this.onSubmit(fullFilePath);
+                    })
+                    .catch( (except)=> {
+                        new Notice(`Failed to create file: ${except}`);
+                    });
                     this.close();
                 }
             footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
