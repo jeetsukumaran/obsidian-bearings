@@ -567,16 +567,16 @@ export class CreateFileModal extends Modal {
                 const fullFilePath = `${filepath}.md`;
                 this.app.vault.create(fullFilePath, "")
                     .then( (file: TFile) => {
+                        if (isOpen) {
+                            this.app.workspace.openLinkText(
+                                fullFilePath,
+                                "",
+                                "split",
+                                { active: false }
+                            );
+                        }
                         this.showUpdateDisplayTitleModal(fullFilePath)
                             .then( () => {
-                                if (isOpen) {
-                                    this.app.workspace.openLinkText(
-                                        fullFilePath,
-                                        "",
-                                        "split",
-                                        { active: false }
-                                    );
-                                }
                                 this.onSubmit(fullFilePath);
                             })
                     })
