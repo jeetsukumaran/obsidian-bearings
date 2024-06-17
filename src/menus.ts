@@ -14,10 +14,6 @@ import {
 } from "./dataservice";
 
 import {
-    copyYamlFrontmatterProperties,
-} from "./fileservice";
-
-import {
     BearingsConfiguration,
 } from "./settings";
 
@@ -25,6 +21,7 @@ import {
     UpdateDisplayTitleModal,
     CreateRelationshipModal,
     appendFrontmatterLists,
+    copyYamlFrontmatterProperties,
 } from "./dataupdate"
 
 import {

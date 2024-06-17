@@ -60,6 +60,39 @@ export async function updateFrontmatterStrings(
     });
 }
 
+export async function copyYamlFrontmatterProperties(
+    app: App,
+    sourcePath: string,
+    destinationPath: string,
+    includedPropertyNames: string[]
+): Promise<void> {
+    const sourceFile = app.vault.getAbstractFileByPath(sourcePath) as TFile;
+    const destinationFile = app.vault.getAbstractFileByPath(destinationPath) as TFile;
+
+    if (sourceFile && destinationFile) {
+        try {
+            let copyFrontmatter: { [key: string]: any } = {};
+            await app.fileManager.processFrontMatter(sourceFile, (sourceFrontmatter: { [key: string]: any }) => {
+                // Object.keys(sourceFrontmatter).forEach( (key: string) => {
+                //     let value = sourceFrontmatter[key];
+                //     console.log(`${key}: ${value}`);
+                // });
+                for (let key of includedPropertyNames) {
+                    if (sourceFrontmatter[key]) {
+                        copyFrontmatter[key] = sourceFrontmatter[key];
+                    }
+                }
+            });
+            Object.keys(copyFrontmatter).forEach( async (key: string) => {
+                await appendFrontmatterLists(this.app, destinationFile, key, copyFrontmatter[key]);
+            });
+            // new Notice('Front matter updated.');
+        } catch (error) {
+            new Notice(`Failed to read front matter: ${error.message}`);
+        }
+    }
+}
+
 export async function appendFrontmatterLists(
     app: App,
     file: TFile,
