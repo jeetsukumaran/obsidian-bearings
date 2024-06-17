@@ -1002,9 +1002,13 @@ export class NavigationEntryFrame extends NavigationBase {
         }
         if (relationships.length > 0) {
             let relationshipDesc: string[] = relationships.map( (relationship: RelationshipLinkedPathDataType) => {
-                return relationship.relationshipKey;
+                if (relationship.isInlink) {
+                    return `${relationship.relationshipKey}${INLINKED_RELATIONSHIP_GLYPH}`;
+                } else {
+                    return `${OUTLINKED_RELATIONSHIP_GLYPH}${relationship.relationshipKey}`;
+                }
             });
-            // console.log(relationshipDesc);
+            relationshipDesc = [ ... new Set<string>(relationshipDesc)].sort()
             const complementaryRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
             let relationshipPolarityGlyph: string = "";
             if (complementaryRelationships.length === 0) {
