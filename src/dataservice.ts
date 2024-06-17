@@ -248,6 +248,7 @@ export type SuperordinateChains = {
 }
 
 export type RelationshipLinkedPathDataType = {
+    relationshipKey: string,
     isInlink: boolean,
 };
 export type FilePathNodeMapType = Map<FilePathType, FileNode>;
@@ -585,6 +586,7 @@ export class FileNode {
                 {
                     // Are new elements inlinks to the current note;?
                     // They are if they used an outlink to connect to the note
+                    relationshipKey: primaryRelationshipKey,
                     isInlink: isInvertLinkPolarity ? true : false,
                 },
                 // isInvertLinkPolarity ? true : false, // are new elements inlinks?
@@ -597,6 +599,7 @@ export class FileNode {
                 inlinkedPaths,
                 linkedNotesystemPaths,
                 {
+                    relationshipKey: inlinkedRelationshipKey,
                     isInlink: isInvertLinkPolarity ? false : true, // are new elements inlinks?
                 },
                 // isInvertLinkPolarity ? false : true, // are new elements inlinks?

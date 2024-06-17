@@ -1001,6 +1001,10 @@ export class NavigationEntryFrame extends NavigationBase {
             relationships.push( ... entryData?.value?.relationships[parentFileNode.filePath]);
         }
         if (relationships.length > 0) {
+            let relationshipDesc: string[] = relationships.map( (relationship: RelationshipLinkedPathDataType) => {
+                return relationship.relationshipKey;
+            });
+            // console.log(relationshipDesc);
             const complementaryRelationships: RelationshipLinkedPathDataType[] = relationships.filter( (relationship: RelationshipLinkedPathDataType) => relationship.isInlink );
             let relationshipPolarityGlyph: string = "";
             if (complementaryRelationships.length === 0) {
@@ -1018,6 +1022,7 @@ export class NavigationEntryFrame extends NavigationBase {
                     cls: ["bearings-entry-node-connection-cell"],
                 });
                 relEl.innerText = relationshipPolarityGlyph;
+                relEl.setAttribute("title", relationshipDesc.join("; "));
             }
         }
 
