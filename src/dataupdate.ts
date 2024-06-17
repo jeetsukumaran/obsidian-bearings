@@ -84,9 +84,9 @@ export async function copyYamlFrontmatterProperties(
                 }
             });
             Object.keys(copyFrontmatter).forEach( async (key: string) => {
-                await appendFrontmatterLists(this.app, destinationFile, key, copyFrontmatter[key]);
+                await appendFrontmatterLists(this.app, destinationFile, key, copyFrontmatter[key], false);
             });
-            // new Notice('Front matter updated.');
+            new Notice('Front matter updated.');
         } catch (error) {
             new Notice(`Failed to read front matter: ${error.message}`);
         }
@@ -98,6 +98,7 @@ export async function appendFrontmatterLists(
     file: TFile,
     propertyName: string,
     newItemValue: string,
+    isAddUpdateNotice: boolean = true,
 ) {
     await app.fileManager.processFrontMatter(file, (frontmatter: { [key: string]: any }) => {
         // Update each key in the new front matter data
@@ -115,7 +116,9 @@ export async function appendFrontmatterLists(
             newValue.push(... newItemValue);
         }
         frontmatter[propertyName] = [ ... new Set<string>(newValue) ]
-        new Notice('Front matter updated.');
+        if (isAddUpdateNotice) {
+            new Notice('Front matter updated.');
+        }
     }).catch((error) => {
         new Notice(`Failed to update front matter: ${error.message}`);
     });
