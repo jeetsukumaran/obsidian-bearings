@@ -474,14 +474,14 @@ export class UpdateDisplayTitleModal extends Modal {
     addFooterButtons() {
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
         this.addCancelButton(footer);
-        const restoreAllButton = this.addFooterButton('Restore All', 'bearings-modal-footer-button', footer);
+        const restoreAllButton = this.addFooterButton('Restore', 'bearings-modal-footer-button', footer);
         restoreAllButton.onclick = () => {
             this.propertyFields.forEach(field => {
                 field.textArea.value = field.textArea.dataset.initialValue || '';
             });
         };
 
-        const saveAllButton = this.addFooterButton('Save All', 'bearings-modal-footer-button', footer);
+        const saveAllButton = this.addFooterButton('Save', 'bearings-modal-footer-button', footer);
         saveAllButton.onclick = async () => {
             const newFrontMatter = this.propertyFields.reduce((acc, field) => ({
                 ...acc,

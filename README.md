@@ -81,7 +81,7 @@ To test Beta builds of this plugin follow these steps:
 
 - Copy over `main.js`, `manifest.json` to your vault `${VAULT}/.obsidian/plugins/obsidian-bearings/` from [https://github.com/jeetsukumaran/obsidian-bearings/releases](https://github.com/jeetsukumaran/obsidian-bearings).
 
-## Usage
+## Basic usage
 
 
 Relationships can be either superordinate (e.g., superordinate/subordinates, parent/child, classifier/classified) or flat (e.g. coordinate, related, adjacent, see-also).
@@ -108,29 +108,40 @@ Hovering over links opens up the Hover Editor (if installed).
 
 ## Relationships
 
-### Default relationships
+### Example relationships
+
+(Note: here the naming convention of the relationships
 
 
-| Name                        | Category               | Focal note property    | Focal note role   | Linked note role  |
-|-----------------------------|------------------------|------------------------|-------------------|-------------------|
-| Parent                      | superordinate          | `entry-parents`        | "child"           | "parent"          |
-| Child                       | (implicit subordinate) | `entry-children`       | "parent"          | "child"           |
-|                             |                        |                        |                   |                   |
-| Classifier                  | superordinate          | `entry-classifiers`    | "classification"  | "classifier"      |
-| Classification              | (implicit subordinate) | `entry-classifieds`    | "classifier"      | "classification"  |
-|                             |                        |                        |                   |                   |
-| Holding                     | superordinate          | `entry-collections`    | "holding"         | "collection"      |
-| Collection                  | (implicit subordinate) | `entry-holdings`       | "collection"      | "holding"         |
-|                             |                        |                        |                   |                   |
-| Source                      | superordinate          | `source-authors`       | "source"          | "author"          |
-| Author                      | (implicit subordinate) | `source-sources`       | "author"          | "source"          |
-|                             |                        |                        |                   |                   |
-| Collaborator                | superordinate          | `entry-collaborators`  | "production"      | "collaborator"    |
-| Production                  | (implicit subordinate) | `entry-collaborations` | "collaborator"    | "production"      |
-|                             |                        |                        |                   |                   |
-| Reference (bibliographical) | coordinate             | `entry-references`     |                   | "reference"       |
-| Association                 | coordinate             | `entry-associations`   | "associated"      | "associated"      |
-| Referral                    | coordinate             | `entry-referral`       | "cross-reference" | "cross-reference" |
+| Name         | Category               | Focal note property     | Focal note role  | Linked note role |
+|--------------|------------------------|-------------------------|------------------|------------------|
+| Parent       | superordinate          | `entry-parents`         | "Parent"         | "Child"          |
+|              | (implicit subordinate) | `entry-children`        | "Child"          | "Parent"         |
+|              |                        |                         |                  |                  |
+| Classifier   | superordinate          | `entry-classifiers`     | "Classifier"     | "Classification" |
+|              | (implicit subordinate) | `entry-classifications` | "Classification" | "Classifier"     |
+|              |                        |                         |                  |                  |
+| Collection   | superordinate          | `entry-collections`     | "Collection"     | "Item"           |
+|              | (implicit subordinate) | `entry-items`           | "Item"           | "Collection"     |
+|              |                        |                         |                  |                  |
+| Author       | superordinate          | `source-authors`        | "Author"         | "Bibliography"   |
+|              | (implicit subordinate) | `entry-bibliography`    | "Bibliography"   | "Author"         |
+|              |                        |                         |                  |                  |
+| Collaborator | superordinate          | `entry-collaborators`   | "Collaborator"   | "Collaboration"  |
+|              | (implicit subordinate) | `entry-collaborations`  | "Collaboration"  | "Collaborator"   |
+|              |                        |                         |                  |                  |
+| Reference    | superordinate          | `entry-bibliography`    | "Reference"      |                  |
+|              |                        |                         |                  |                  |
+| Next         | superordinate          | `entry-next`            | "Next"           | "Previous"       |
+|              | (implicit subordinate) | `entry-previous`        | "Previous"       | "Next"           |
+|              |                        |                         |                  |                  |
+| Attachment   | superordinate          | `entry-attachments`     |                  | "Attachment"     |
+|              |                        |                         |                  |                  |
+| Topic        | superordinate          | `entry-topics`          | "Topic"          | "Case"           |
+|              | (implicit subordinate) | `entry-cases`           | "Case"           | "Topic"          |
+|              |                        |                         |                  |                  |
+| Referral     | symmetrical            | `entry-referrals`       | "Referral"       | "Referral"       |
+
 
 
 ### Custom relationships
