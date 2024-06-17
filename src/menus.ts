@@ -21,9 +21,50 @@ import {
     UpdateDisplayTitleModal,
     CreateRelationshipModal,
     appendFrontmatterLists,
-    CreateFileModal,
-    createFileWithModals,
 } from "./dataupdate"
+
+import {
+    CreateFileModal,
+} from "./CreateFile";
+
+export const createNewRelationshipFile = (
+    app: App,
+    configuration: any,
+    linkPath: string | null,
+    updateCallbackFn: () => void,
+    relationshipType: 'to' | 'from',
+) => {
+    const initialPath = linkPath ? `${linkPath.replace(/.md$/, "")}_related` : "NewRelationFile";
+    const createFileModal = new CreateFileModal(
+        app,
+        configuration,
+        (newPath: string) => {
+            if (newPath) {
+                const titleModal = new UpdateDisplayTitleModal(
+                    app,
+                    configuration,
+                    newPath,
+                    async () => {
+                        const relModal = new CreateRelationshipModal(
+                            app,
+                            configuration,
+                            relationshipType === 'to' ? newPath : (linkPath || ""),
+                            relationshipType === 'to' ? (linkPath || "") : newPath,
+                            async () => {
+                                updateCallbackFn();
+                            }
+                        );
+                        relModal.open();
+                    },
+                );
+                titleModal.open();
+            }
+        },
+        initialPath
+    );
+    createFileModal.open();
+};
+
 
 export function buildLinkTargetEditMenu(
     app: App,
@@ -95,7 +136,7 @@ export function buildLinkTargetEditMenu(
                     // .setIcon("file-input")
                     .setIcon("git-pull-request-create-arrow")
                     .onClick( () => {
-                        createFileWithModals(
+                        createNewRelationshipFile(
                             app,
                             configuration,
                             linkPath,
@@ -137,7 +178,7 @@ export function buildLinkTargetEditMenu(
                     .setIcon("git-pull-request-create")
                     // .setIcon("file-output")
                     .onClick( () => {
-                        createFileWithModals(
+                        createNewRelationshipFile(
                             app,
                             configuration,
                             linkPath,
@@ -173,6 +214,31 @@ export function buildLinkTargetEditMenu(
                         //     initialPath);
                         // modal.open();
                     }));
+    menu.addItem((item) =>
+                    item
+                    .setTitle(`Create new file duplicating relationships from ...`)
+                    .setIcon("git-fork")
+                    .onClick( () => {
+                        let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
+                        const modal = new CreateFileModal(
+                            app,
+                            configuration,
+                            (newPath: string) => {
+                                if (newPath) {
+                                    // chatgpt: here if newPath is not
+                                    const titleModal = new UpdateDisplayTitleModal(
+                                        app,
+                                        configuration,
+                                        newPath,
+                                        updateCallbackFn,
+                                    );
+                                    titleModal.open();
+                                }
+                            },
+                            initialPath);
+                        modal.open();
+                    }));
+
 }
 
 export function buildLinkOpenMenu(
