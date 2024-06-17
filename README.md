@@ -83,7 +83,6 @@ To test Beta builds of this plugin follow these steps:
 
 ## Basic usage
 
-
 Relationships can be either superordinate (e.g., superordinate/subordinates, parent/child, classifier/classified) or flat (e.g. coordinate, related, adjacent, see-also).
 
 Relationships are defined by specifying a link to another note in a given note's frontmatter properties.
@@ -106,9 +105,9 @@ Nodes are independently expandable or collapsible.
 
 Hovering over links opens up the Hover Editor (if installed).
 
-## Relationships
+### Relationships
 
-### Example relationships
+#### Example relationships
 
 (Note: here the naming convention of the relationships
 
@@ -144,7 +143,7 @@ Hovering over links opens up the Hover Editor (if installed).
 
 
 
-### Custom relationships
+#### Custom relationships
 
 You may add, delete, override the default relationships in the settings.
 
@@ -158,7 +157,7 @@ You may add, delete, override the default relationships in the settings.
 > Future plans include custom views, which will include support for custom category filters, but for now a relationships needs to be associated with one of these two categories.
 
 
-## Views
+### Views
 
 Views are dynamically-scoped collapsible hierarchical lists or "trees" of subgraphs rooted at the current note, considering the union of connections under a particular set of relationshions.
 
@@ -166,7 +165,7 @@ For example, the main "Positions" view shows all logically hierarchical relation
 
 Future plans include custom views and dynamically custom views, but, for now, view are predefined.
 
-### "Positions"
+#### "Positions"
 
 All superordinate relationships of the current note, with superordinate relationships tracked as a chain of superordinates to their roots, and all subordinate relationships expanded into full subtrees (tracked to their leaves or until the specifed depth).
 
@@ -174,19 +173,19 @@ All superordinate relationships of the current note, with superordinate relation
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/e1989f7a-fe3c-4322-b811-f4cf24d305cc)
 
 
-### "Parallels"
+#### "Parallels"
 
 Full subtree expansions of all *immediate* superordinates (e.g., all children of all parents of the current note) expanded into full subtrees (tracked to their leaves or until the specifed depth).
 
-### "Referrals"
+#### "Referrals"
 
 All coordinate relationships.
 
-### "Backlinks"
+#### "Backlinks"
 
 All inlinks/backlinks to this note.
 
-## Code blocks
+### Code blocks
 
 The navigational views can be embedded into a note using the code block identifier "`bearings`"
 
@@ -196,4 +195,13 @@ The navigational views can be embedded into a note using the code block identifi
 ~~~
 
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/ea16e33c-a716-4093-b5cf-eb488e655f5e)
+
+
+## Design considerations
+
+### Mechanisms
+
+- All relationships will be expressed by a single mechanism: Obsidian internal links in the frontmatter YAML.
+    - **Justification:** These are supported natively by Obsidian at the time of writing.
+
 
