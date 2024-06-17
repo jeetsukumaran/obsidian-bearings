@@ -109,7 +109,11 @@ export async function appendFrontmatterLists(
         } else {
             newValue.push(... currentValue);
         }
-        newValue.push(newItemValue)
+        if (!Array.isArray(newItemValue)) {
+            newValue.push(newItemValue);
+        } else {
+            newValue.push(... newItemValue);
+        }
         frontmatter[propertyName] = [ ... new Set<string>(newValue) ]
         new Notice('Front matter updated.');
     }).catch((error) => {
