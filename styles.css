@@ -369,6 +369,7 @@ input:disabled {
     color: var(--text-muted);
     font-size: var(--bearings-font-base-size);
     /* opacity: 1.0; */
+    z-index: 100;
 }
 
 .bearings-entry-node-toggle-container.bearings-node-closed {
