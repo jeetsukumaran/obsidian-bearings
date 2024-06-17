@@ -339,6 +339,7 @@ input:disabled {
 }
 
 .bearings-entry-node-connection-cell {
+    position: absolute;
 }
 
 
@@ -346,10 +347,11 @@ input:disabled {
 .bearings-entry-node-toggle-container {
     cursor: pointer;
     position: absolute;
-    top: 0.42rem;
-    left: -0.65rem;
-    width: var(--bearings-entry-node-toggle-container-size);
-    height: var(--bearings-entry-node-toggle-container-size);
+    top: 0.2rem;
+    /* left: -0.65rem; */
+    left: -0.3rem;
+    /* width: var(--bearings-entry-node-toggle-container-size); */
+    /* height: var(--bearings-entry-node-toggle-container-size); */
     display: flex;
     align-items: center;
     justify-content: center;

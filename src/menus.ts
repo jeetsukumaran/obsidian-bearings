@@ -57,6 +57,8 @@ export function buildLinkTargetEditMenu(
             })
     );
 
+    menu.addSeparator();
+
     let activeFilePath: string = app.workspace.getActiveFile()?.path || "";
     menu.addItem((item) =>
                     item

@@ -58,9 +58,9 @@ export const DISPLAY_TEXT = "Bearings";
 
 
 
-const OUTLINKED_RELATIONSHIP_GLYPH = "↤";
-const INLINKED_RELATIONSHIP_GLYPH = "↦";
-const BILINKED_RELATIONSHIP_GLYPH = "⇌";
+// const OUTLINKED_RELATIONSHIP_GLYPH = "↤";
+// const INLINKED_RELATIONSHIP_GLYPH = "↦";
+// const BILINKED_RELATIONSHIP_GLYPH = "⇌";
 
 // const OUTLINKED_RELATIONSHIP_GLYPH = "⇽";
 // const INLINKED_RELATIONSHIP_GLYPH = "⇾";
@@ -78,9 +78,9 @@ const BILINKED_RELATIONSHIP_GLYPH = "⇌";
 // const INLINKED_RELATIONSHIP_GLYPH = "🠶";
 // const BILINKED_RELATIONSHIP_GLYPH = "↔";
 
-// const OUTLINKED_RELATIONSHIP_GLYPH = "↼";
-// const INLINKED_RELATIONSHIP_GLYPH = "⇀";
-// const BILINKED_RELATIONSHIP_GLYPH = "⇌";
+const OUTLINKED_RELATIONSHIP_GLYPH = "↼";
+const INLINKED_RELATIONSHIP_GLYPH = "⇀";
+const BILINKED_RELATIONSHIP_GLYPH = "⇌";
 
 type NavigationViewResults = {
     treeNodes: FileNavigationTreeNode[],
@@ -1191,6 +1191,7 @@ export class NavigationEntryFrame extends NavigationBase {
         });
         linkContainer.addEventListener('contextmenu', (event) => {
             const menu = new Menu();
+            buildLinkOpenMenu(menu, this._context.app, linkPath);
             buildLinkTargetEditMenu(
                 this._context.app,
                 this._context.configuration,
@@ -1200,7 +1201,6 @@ export class NavigationEntryFrame extends NavigationBase {
                 this._context.updateCallbackFn,
                 true,
             );
-            buildLinkOpenMenu(menu, this._context.app, linkPath);
             buildLinkCopyMenu(menu, linkPath);
             menu.showAtMouseEvent(event);
         });
