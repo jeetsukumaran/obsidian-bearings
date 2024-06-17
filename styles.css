@@ -347,11 +347,6 @@ input:disabled {
 }
 
 
-.bearings-main-container.bearings-container-codeblock .bearings-entry-node-toggle-container {
-    top: 0.38rem;
-    left: -0.65rem;
-}
-
 .bearings-entry-node-toggle-container {
     cursor: pointer;
     position: absolute;
