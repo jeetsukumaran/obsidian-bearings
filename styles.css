@@ -307,24 +307,28 @@ input:disabled {
 
 .bearings-entry-guideline {
     position: absolute;
-    top: 1rem;
-    left: calc( (-1 * var(--bearings-font-base-size)) + 0.25rem);
-    width: calc(var(--bearings-gutter-width)/2 + 0.1rem);
+
+    top: 0.4rem;
+    left: calc((-1 * var(--bearings-gutter-width)/2) + 0.25rem);
+    /* top: 1rem; */
+
+    /* left: calc( (-1 * var(--bearings-font-base-size)) + 0.25rem); */
+    /* width: calc(var(--bearings-gutter-width)/2 + 0.1rem); */
+    border-left: solid 1px var(--bearings-guideline-color);
+
     min-height: 0;
     height: calc(100% - 1rem);
-    border-right: solid 1px var(--bearings-guideline-color);
-    align-items: start;
-    justify-content: center;
     opacity: 0.2;
 }
 
 
-
 .bearings-entry-node-connection-container {
     position: absolute;
-    font-size: calc(var(--bearings-font-base-size) - 0.2rem);
+    /* font-size: calc(var(--bearings-font-base-size) - 0.2rem); */
+    font-size: var(--bearings-font-base-size);
     left: calc( (-1 * var(--bearings-font-base-size)) - 0rem);
-    top: 0.38rem;
+    /* top: 0.38rem; */
+    top: 0rem;
     width: var(--bearings-gutter-width);
     height: var(--bearings-gutter-width);
     padding: 0;
@@ -343,13 +347,18 @@ input:disabled {
 }
 
 
+.bearings-main-container.bearings-container-codeblock .bearings-entry-node-toggle-container {
+    top: 0.38rem;
+    left: -0.65rem;
+}
 
 .bearings-entry-node-toggle-container {
     cursor: pointer;
     position: absolute;
-    top: 0.2rem;
+    top: 0rem;
     /* left: -0.65rem; */
-    left: -0.3rem;
+    /* left: -0.2rem; */
+    left: 0rem;
     /* width: var(--bearings-entry-node-toggle-container-size); */
     /* height: var(--bearings-entry-node-toggle-container-size); */
     display: flex;
@@ -357,17 +366,9 @@ input:disabled {
     justify-content: center;
     padding: 0;
     margin: 0;
-}
-
-.bearings-main-container.bearings-container-codeblock .bearings-entry-node-toggle-container {
-    top: 0.38rem;
-    left: -0.65rem;
-}
-
-.bearings-entry-node-toggle-container {
     color: var(--text-muted);
     font-size: var(--bearings-font-base-size);
-    opacity: 1.0;
+    /* opacity: 1.0; */
 }
 
 .bearings-entry-node-toggle-container.bearings-node-closed {
@@ -415,9 +416,10 @@ input:disabled {
 
 
 .bearings-entry-head {
+    /* border: solid 1px red; */
     position: relative;
-    top: 0.15rem;
-    left: -0.5rem;
+    top: 0rem;
+    left: 0rem;
     align-items: flex-start;
     justify-content: flex-start;
 }

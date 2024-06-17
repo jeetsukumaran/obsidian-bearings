@@ -58,9 +58,9 @@ export const DISPLAY_TEXT = "Bearings";
 
 
 
-// const OUTLINKED_RELATIONSHIP_GLYPH = "↤";
-// const INLINKED_RELATIONSHIP_GLYPH = "↦";
-// const BILINKED_RELATIONSHIP_GLYPH = "⇌";
+const OUTLINKED_RELATIONSHIP_GLYPH = "↤";
+const INLINKED_RELATIONSHIP_GLYPH = "↦";
+const BILINKED_RELATIONSHIP_GLYPH = "⇌";
 
 // const OUTLINKED_RELATIONSHIP_GLYPH = "⇽";
 // const INLINKED_RELATIONSHIP_GLYPH = "⇾";
@@ -78,9 +78,9 @@ export const DISPLAY_TEXT = "Bearings";
 // const INLINKED_RELATIONSHIP_GLYPH = "🠶";
 // const BILINKED_RELATIONSHIP_GLYPH = "↔";
 
-const OUTLINKED_RELATIONSHIP_GLYPH = "↼";
-const INLINKED_RELATIONSHIP_GLYPH = "⇀";
-const BILINKED_RELATIONSHIP_GLYPH = "⇌";
+// const OUTLINKED_RELATIONSHIP_GLYPH = "↼";
+// const INLINKED_RELATIONSHIP_GLYPH = "⇀";
+// const BILINKED_RELATIONSHIP_GLYPH = "⇌";
 
 type NavigationViewResults = {
     treeNodes: FileNavigationTreeNode[],
@@ -1055,13 +1055,14 @@ export class NavigationEntryFrame extends NavigationBase {
                 // let terminal: string = "☉";
                 // let terminal: string = "⪦";
                 // let terminal: string = "⪧";
-                let terminal: string = "⏺";
+                // let terminal: string = "⏺";
                 // let terminal: string = "⨀";
                 // let terminal: string = "⨁";
                 // let terminal: string = "⟦";
                 // let terminal: string = "⟴";
                 // let terminal: string = "¶";
                 // let terminal: string = "§";
+                let terminal: string = "☗";
                 // let terminal: string = "⋇";
                 // let terminal: string = "⊛";
                 // let terminal: string = "⦿";
