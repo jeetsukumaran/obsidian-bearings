@@ -44,22 +44,6 @@ interface PropertyField {
 
 export const PLUGIN_NAME = "Bearings";
 
-export async function updateFrontmatterStrings(
-    app: App,
-    file: TFile,
-    newFrontMatter: Record<string, string>
-) {
-    await app.fileManager.processFrontMatter(file, (frontmatter: { [key: string]: any }) => {
-        // Update each key in the new front matter data
-        for (const key in newFrontMatter) {
-            frontmatter[key] = newFrontMatter[key];
-        }
-        new Notice('Front matter updated.');
-    }).catch((error) => {
-        new Notice(`Failed to update front matter: ${error.message}`);
-    });
-}
-
 export async function copyYamlFrontmatterProperties(
     app: App,
     sourcePath: string,
@@ -105,6 +89,25 @@ export async function copyYamlFrontmatterProperties(
             new Notice(`Failed to read front matter: ${error.message}`);
         }
     }
+}
+
+export async function updateFrontmatterStrings(
+    app: App,
+    file: TFile,
+    newFrontMatter: Record<string, string>,
+    isAddUpdateNotice: boolean = true,
+) {
+    await app.fileManager.processFrontMatter(file, (frontmatter: { [key: string]: any }) => {
+        // Update each key in the new front matter data
+        for (const key in newFrontMatter) {
+            frontmatter[key] = newFrontMatter[key];
+        }
+        if (isAddUpdateNotice) {
+            new Notice('Front matter updated.');
+        }
+    }).catch((error) => {
+        new Notice(`Failed to update front matter: ${error.message}`);
+    });
 }
 
 export async function appendFrontmatterLists(
