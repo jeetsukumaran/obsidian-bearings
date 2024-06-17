@@ -14,6 +14,10 @@ import {
 } from "./dataservice";
 
 import {
+    copyYamlFrontmatterProperties,
+} from "./fileservice";
+
+import {
     BearingsConfiguration,
 } from "./settings";
 
@@ -197,7 +201,12 @@ export function buildLinkTargetEditMenu(
                             configuration,
                             (newPath: string) => {
                                 if (newPath) {
-                                    // chatgpt: here if newPath is not
+                                    copyYamlFrontmatterProperties(
+                                        this.app,
+                                        linkPath,
+                                        newPath,
+                                        configuration.allPropertyNames(),
+                                    );
                                     const titleModal = new UpdateDisplayTitleModal(
                                         app,
                                         configuration,

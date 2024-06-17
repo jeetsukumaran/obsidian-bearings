@@ -131,6 +131,21 @@ export class BearingsConfiguration {
             .filter(rdef => rdef.categories?.includes("symmetrical"));
     }
 
+    allPropertyNames(): string[] {
+        const propertyNames = new Set<string>();
+
+        Object.values(this.relationshipDefinitions).forEach(relDef => {
+            if (relDef.primaryRelationshipPropertyName) {
+                propertyNames.add(relDef.primaryRelationshipPropertyName);
+            }
+            if (relDef.complementaryRelationshipPropertyName) {
+                propertyNames.add(relDef.complementaryRelationshipPropertyName);
+            }
+        });
+
+        return Array.from(propertyNames);
+    }
+
     get titleFields(): string[] {
         return this.options?.titleField || DEFAULT_TITLE_FIELDS;
     }

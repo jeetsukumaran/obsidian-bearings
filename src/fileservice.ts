@@ -26,7 +26,7 @@ export async function getUniquePath(
     return normalizePath(uniquePath);
 }
 
-async function copyYamlFrontmatterProperties(
+export async function copyYamlFrontmatterProperties(
     app: App,
     sourcePath: string,
     destinationPath: string,
