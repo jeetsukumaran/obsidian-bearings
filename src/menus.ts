@@ -196,9 +196,9 @@ export function buildLinkTargetEditMenu(
                         const modal = new CreateFileModal(
                             app,
                             configuration,
-                            (newPath: string) => {
+                            async (newPath: string) => {
                                 if (newPath) {
-                                    copyYamlFrontmatterProperties(
+                                    await copyYamlFrontmatterProperties(
                                         this.app,
                                         linkPath,
                                         newPath,

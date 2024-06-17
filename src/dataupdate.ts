@@ -81,6 +81,7 @@ export async function copyYamlFrontmatterProperties(
                 this.app,
                 destinationFile,
                 copiedFrontmatterStringValues,
+                false,
             );
             // Object.keys(copiedFrontmatterStringValues).forEach( async (key: string) => {
             // });
