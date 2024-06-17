@@ -143,34 +143,6 @@ export function buildLinkTargetEditMenu(
                             updateCallbackFn,
                             'to',
                         );
-                        // let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
-                        // const modal = new CreateFileModal(
-                        //     app,
-                        //     configuration,
-                        //     (newPath: string) => {
-                        //         if (newPath) {
-                        //             const titleModal = new UpdateDisplayTitleModal(
-                        //                 app,
-                        //                 configuration,
-                        //                 newPath,
-                        //                 async () => {
-                        //                     const relModal = new CreateRelationshipModal(
-                        //                         app,
-                        //                         configuration,
-                        //                         newPath,
-                        //                         linkPath,
-                        //                         async () => {
-                        //                             updateCallbackFn()
-                        //                         }
-                        //                     );
-                        //                 relModal.open();
-                        //                 },
-                        //             );
-                        //             titleModal.open();
-                        //         }
-                        //     },
-                        //     initialPath);
-                        // modal.open();
                     }));
     menu.addItem((item) =>
                     item

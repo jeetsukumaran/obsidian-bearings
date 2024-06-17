@@ -16,6 +16,11 @@ import {
     BearingsConfiguration,
 } from "./settings";
 
+
+import {
+    getUniquePath,
+} from "./fileservice";
+
 import {
     getDisplayTitle,
 } from "./dataservice";
@@ -59,11 +64,11 @@ export class CreateFileModal extends Modal {
 
     // addFooterButtons(textArea: TextComponent) {
     addFooterButtons(textArea: HTMLTextAreaElement) {
-        let createFile = (isOpen: boolean) => {
+        let createFile = async (isOpen: boolean) => {
             // const filename = textArea.getValue();
-            const filepath = normalizePath(textArea.value.replace(/.md$/,""));
+            const filepath = textArea.value.replace(/.md$/,"");
             if (filepath) {
-                const fullFilePath = `${filepath}.md`;
+                const fullFilePath = await getUniquePath(this.app, filepath) + ".md";
                 this.app.vault.create(fullFilePath, "")
                     .then( (file: TFile) => {
                         if (isOpen) {
