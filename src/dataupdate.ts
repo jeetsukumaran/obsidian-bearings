@@ -64,28 +64,42 @@ export async function copyYamlFrontmatterProperties(
     app: App,
     sourcePath: string,
     destinationPath: string,
-    includedPropertyNames: string[]
+    includedListFields: string[],
+    includedStringFields: string[],
 ): Promise<void> {
     const sourceFile = app.vault.getAbstractFileByPath(sourcePath) as TFile;
     const destinationFile = app.vault.getAbstractFileByPath(destinationPath) as TFile;
 
     if (sourceFile && destinationFile) {
         try {
-            let copyFrontmatter: { [key: string]: any } = {};
+            let copiedFrontmatterLists: { [key: string]: any } = {};
+            let copiedFrontmatterStringValues: { [key: string]: any } = {};
             await app.fileManager.processFrontMatter(sourceFile, (sourceFrontmatter: { [key: string]: any }) => {
                 // Object.keys(sourceFrontmatter).forEach( (key: string) => {
                 //     let value = sourceFrontmatter[key];
                 //     console.log(`${key}: ${value}`);
                 // });
-                for (let key of includedPropertyNames) {
+                for (let key of includedListFields) {
                     if (sourceFrontmatter[key]) {
-                        copyFrontmatter[key] = sourceFrontmatter[key];
+                        copiedFrontmatterLists[key] = sourceFrontmatter[key];
+                    }
+                }
+                for (let key of includedStringFields) {
+                    if (sourceFrontmatter[key]) {
+                        copiedFrontmatterStringValues[key] = sourceFrontmatter[key];
                     }
                 }
             });
-            Object.keys(copyFrontmatter).forEach( async (key: string) => {
-                await appendFrontmatterLists(this.app, destinationFile, key, copyFrontmatter[key], false);
+            Object.keys(copiedFrontmatterLists).forEach( async (key: string) => {
+                await appendFrontmatterLists(this.app, destinationFile, key, copiedFrontmatterLists[key], false);
             });
+            await updateFrontmatterStrings(
+                this.app,
+                destinationFile,
+                copiedFrontmatterStringValues,
+            );
+            // Object.keys(copiedFrontmatterStringValues).forEach( async (key: string) => {
+            // });
             new Notice('Front matter updated.');
         } catch (error) {
             new Notice(`Failed to read front matter: ${error.message}`);
