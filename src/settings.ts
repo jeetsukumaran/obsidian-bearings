@@ -30,10 +30,14 @@ export const DEFAULT_TITLE_FIELDS: string[] = [
     "title",
 ];
 
+export const DEFAULT_TITLE_PREFIX_FIELD: string = "title-prefix";
+
+
 export const BEARINGS_DEFAULT_SETTINGS: BearingsSettingsData = {
     schemaVersion: "0.0.0",
     options: {
-        titleField: ["title", "entry-title"],
+        titleField: DEFAULT_TITLE_FIELDS,
+        titlePrefix: DEFAULT_TITLE_PREFIX_FIELD,
         glyphField: ["glyphs", "entry-glyphs"],
         autoexpansionDepthLimit: 2,
         discoveryDepthLimitPrimary: 2,
@@ -259,6 +263,16 @@ export class BearingsSettingsTab extends PluginSettingTab {
                     await this.saveSettingsFn();
                 })
             );
+
+        new Setting(container)
+            .setName('Title prefix field')
+            .setDesc('Name of property name for title prefix')
+            .addText(text => text
+                .setValue(options.titlePrefix || "")
+                .onChange(async (value) => {
+                    options.titlePrefix = value;
+                    await this.saveSettingsFn();
+                }));
 
         new Setting(container)
             .setName('Primary views subtree mapping depth limit')

@@ -8,6 +8,7 @@ import {
 } from 'obsidian';
 
 import {
+    DEFAULT_TITLE_PREFIX_FIELD,
     DEFAULT_TITLE_FIELDS,
     RelationshipDefinition,
     BearingsConfiguration,
@@ -161,6 +162,13 @@ export function getFrontMatterDisplayTitle(
             return result;
         }
     });
+    let titlePrefixKey = configuration.options["titlePrefix"] || DEFAULT_TITLE_PREFIX_FIELD;
+    if (titlePrefixKey && frontMatterCache && frontMatterCache[titlePrefixKey]) {
+        let value = frontMatterCache[titlePrefixKey].trim();
+        if (value) {
+            result = `${value} ${result}`;
+        }
+    }
     return result;
 }
 
