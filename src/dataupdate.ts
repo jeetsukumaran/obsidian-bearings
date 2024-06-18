@@ -12,6 +12,7 @@ import {
 } from 'obsidian';
 
 import {
+    DEFAULT_TITLE_PREFIX_FIELD,
     RelationshipDefinition,
     BearingsConfiguration,
 } from "./settings";
@@ -498,7 +499,12 @@ export class UpdateDisplayTitleModal extends Modal {
         }
         this.file = afile;
         this.updateCallbackFn = updateCallbackFn;
-        this.loadProperties(configuration.titleFields);
+        this.loadProperties(
+            [
+                (configuration.options?.titlePrefix || DEFAULT_TITLE_PREFIX_FIELD),
+                ... configuration.titleFields,
+            ]
+        );
     }
 
     async loadProperties(propertyNames: string[]) {
