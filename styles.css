@@ -433,10 +433,27 @@ input:disabled {
     margin: 0;
 }
 
+
+/* .bearings-entry-head-link { */
+/*     display: flex; */
+/*     flex-direction: column; */
+/*     align-items: flex-start; */
+/*     justify-content: flex-start; */
+/* } */
+.bearings-entry-head-link {
+    align-items: center;
+}
+
+
 .bearings-entry-head-link-container {
     padding: 0;
     border-radius: 0.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    display: inline-block;
 }
+
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
     border: solid 1px var(--bearings-node-leaf-color);
@@ -464,17 +481,25 @@ input:disabled {
 }
 
 
-.bearings-entry-head-link {
-    align-items: center;
-}
 
-.bearings-entry-head-link >  p {
+.bearings-entry-head-link >  p,
+.bearings-entry-head-link-container>  p,
+.bearings-entry-head-link-title-container >  p,
+.bearings-entry-head-link-title-prefix >  p,
+.bearings-entry-head-link-title-text >  p
+{
     display: inline-block;
     padding: 0;
     margin: 0;
 }
 
+.bearings-entry-head-link-title-container {
+    /* border: solid 1px blue !important; */
+}
 
+.bearings-entry-head-link-title-text {
+    /* border: solid 1px red !important; */
+}
 
 .bearings-entry-glyph-bar-container {
     position: relative;

@@ -1188,25 +1188,25 @@ export class NavigationEntryFrame extends NavigationBase {
         entryData: FileNavigationTreeNode,
     ) {
 
-        // const linkPath = entryData.value.filePath;
-        // let linkContainer = root.createEl("div", { cls: "bearings-entry-head-link-container"} );
-        // let linkTitleContainer = linkContainer.createEl("span", { cls: "bearings-entry-head-link-title-container"} );
-        // let linkTitlePrefixContainer = linkTitleContainer.createEl("span", { cls: "bearings-entry-head-link-title-prefix"} );
-        // let linkTitleLabelContainer = linkTitleContainer.createEl("div", { cls: "bearings-entry-head-link-title-text"} );
-        // let linkDisplayText = entryData.value.indexEntryTextWithoutPrefix;
-        // this.renderMarkdown(
-        //     linkDisplayText,
-        //     linkTitleLabelContainer,
-        // );
-
-        let linkContainer = root.createEl("a", { cls: "bearings-entry-head-link"} );
         const linkPath = entryData.value.filePath;
-        let linkDisplayText = entryData.value.indexEntryText;
+        let linkContainer = root.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-container"]} );
+        let linkTitleContainer = linkContainer.createEl("span", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-container"]} );
+        let linkTitlePrefixContainer = linkTitleContainer.createEl("span", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-prefix"]} );
+        let linkTitleLabelContainer = linkTitleContainer.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-text"]} );
+        let linkDisplayText = entryData.value.indexEntryTextWithoutPrefix;
         this.renderMarkdown(
             linkDisplayText,
-            linkContainer,
-            // linkPath,
+            linkTitleLabelContainer,
         );
+
+        // let linkContainer = root.createEl("a", { cls: "bearings-entry-head-link"} );
+        // const linkPath = entryData.value.filePath;
+        // let linkDisplayText = entryData.value.indexEntryText;
+        // this.renderMarkdown(
+        //     linkDisplayText,
+        //     linkContainer,
+        //     // linkPath,
+        // );
 
         linkContainer.addEventListener("mouseover", (event) => {
             this._context.app.workspace.trigger("hover-link", {
