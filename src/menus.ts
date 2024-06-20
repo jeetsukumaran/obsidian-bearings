@@ -133,7 +133,7 @@ export function buildLinkTargetEditMenu(
                     }));
     menu.addItem((item) =>
                     item
-                    .setTitle(`Create new file with relationship to ...`)
+                    .setTitle(`Create new note with relationship to ...`)
                     // .setIcon("file-input")
                     .setIcon("git-pull-request-create-arrow")
                     .onClick( () => {
@@ -147,7 +147,7 @@ export function buildLinkTargetEditMenu(
                     }));
     menu.addItem((item) =>
                     item
-                    .setTitle(`Create new file with relationship from ...`)
+                    .setTitle(`Create new note with relationship from ...`)
                     .setIcon("git-pull-request-create")
                     // .setIcon("file-output")
                     .onClick( () => {
@@ -189,7 +189,7 @@ export function buildLinkTargetEditMenu(
                     }));
     menu.addItem((item) =>
                     item
-                    .setTitle(`Create new file duplicating relationships from ...`)
+                    .setTitle(`Create new note duplicating relationships from ...`)
                     .setIcon("git-fork")
                     .onClick( () => {
                         let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
