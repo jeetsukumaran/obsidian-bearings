@@ -494,11 +494,16 @@ input:disabled {
 }
 
 .bearings-entry-head-link-title-container {
-    /* border: solid 1px blue !important; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
+.bearings-entry-head-link-title-container,
+.bearings-entry-head-link-title-prefix,
 .bearings-entry-head-link-title-text {
-    /* border: solid 1px red !important; */
+    display: inline-block;
 }
 
 .bearings-entry-glyph-bar-container {

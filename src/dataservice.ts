@@ -152,6 +152,18 @@ export function getDisplayTitle(
         );
 }
 
+
+export function getFrontMatterDisplayTitlePrefix(
+    configuration: BearingsConfiguration,
+    frontMatterCache: FrontMatterCache | undefined,
+): string {
+    let titlePrefixKey = configuration.options["titlePrefix"] || DEFAULT_TITLE_PREFIX_FIELD;
+    if (titlePrefixKey && frontMatterCache && frontMatterCache[titlePrefixKey]) {
+        return frontMatterCache[titlePrefixKey].trim();
+    }
+    return "";
+}
+
 export function getFrontMatterDisplayTitle(
     configuration: BearingsConfiguration,
     frontMatterCache: FrontMatterCache | undefined,
