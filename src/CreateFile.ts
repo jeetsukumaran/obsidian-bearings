@@ -21,11 +21,6 @@ import {
     getUniquePath,
 } from "./fileservice";
 
-import {
-    getDisplayTitle,
-} from "./dataservice";
-
-
 export class CreateFileModal extends Modal {
     configuration: BearingsConfiguration;
     onSubmit: (filename: string) => void;
@@ -47,17 +42,25 @@ export class CreateFileModal extends Modal {
         const headerEl = this.contentEl.createEl('h3', { text: "Create new file", cls: 'bearings-modal-data-entry-heading-title' });
         const fieldEntryContainer = this.contentEl.createDiv({ cls: 'bearings-modal-data-entry-item-container' });
         const valueBox = fieldEntryContainer.createDiv({ cls: 'bearings-modal-data-entry-value-box' });
+
         const textArea = valueBox.createEl('textarea', {
             cls: 'bearings-modal-data-entry-text-area',
             text: "",
         });
-        // const textArea = new TextComponent(valueBox);
-        // textArea.setClass("bearings-modal-data-entry-text-area");
-        // textArea.setPlaceholder('Enter filename');
-        // textArea.setValue(this.initialValue);
         textArea.value = this.initialValue;
-        // textArea.disabled = true;
+        textArea.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                // Trigger any desired action here
+                // this.handleEnterKeyPress(textArea);
+            }
+        });
         this.addFooterButtons(textArea);
+
+        // const textEl = new TextComponent(valueBox);
+        // textEl.setPlaceholder('Enter filename');
+        // textEl.setValue(this.initialValue);
+        // textEl.disabled = true;
 
         return textArea;
     }

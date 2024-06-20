@@ -253,8 +253,6 @@ export class CreateRelationshipModal extends Modal {
                 return "";
             }
         };
-        // this.headerEl.setText(`"${this.focalFilePathDisplayTitle}": Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
-        // this.headerEl.setText(`Add ${currentSelection.primaryRelationshipRole || 'relationship'}`);
         let formatDisplay = (fpath: string, ftitle: string) => {
             let s = [];
             if (!fpath) {
@@ -266,7 +264,6 @@ export class CreateRelationshipModal extends Modal {
                 return `[[${fpath}]]`;
             }
         }
-        // this.focalFilePathDisplayEl.setText(`[[${this.focalFilePath}]]: '${this.focalFilePathDisplayTitle}'`)
         let focalFileDisplayText = formatDisplay(this.focalFilePath, this.focalFilePathDisplayTitle)
         let linkDisplayText = formatDisplay(this.linkPath, this.linkPathDisplayTitle)
         this.focalFilePathDisplayEl.setText(focalFileDisplayText);
