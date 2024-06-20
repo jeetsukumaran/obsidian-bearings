@@ -507,23 +507,28 @@ input:disabled {
 }
 
 .bearings-entry-head-link-title-prefix {
-    font-size: 85%;
+    font-size: 90%;
     font-weight: bold;
     opacity: 0.6;
     color: var(--text-muted);
     font-style: italic;
     margin-right: 0.2rem;
+    /* font-size: 90%; */
+    /* color: var(--bearings-node-leaf-color); */
+    /* color: var(--text-muted); */
+    /* margin-right: 0.2rem; */
+    /* font-weight: 900; */
 }
-.bearings-entry-head-link-has-title-prefix.bearings-entry-head-link-title-prefix::before {
-    font-style: normal;
-    color: initial;
-    content: "[";
-}
-.bearings-entry-head-link-title-prefix.bearings-entry-head-link-title-prefix::after {
-    font-style: normal;
-    color: initial;
-    content: "]";
-}
+/* .bearings-entry-head-link-has-title-prefix.bearings-entry-head-link-title-prefix::before { */
+/*     font-style: normal; */
+/*     color: initial; */
+/*     content: "["; */
+/* } */
+/* .bearings-entry-head-link-title-prefix.bearings-entry-head-link-title-prefix::after { */
+/*     font-style: normal; */
+/*     color: initial; */
+/*     content: "]"; */
+/* } */
 
 .bearings-entry-glyph-bar-container {
     position: relative;
