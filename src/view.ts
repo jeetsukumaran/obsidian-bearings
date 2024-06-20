@@ -1194,10 +1194,17 @@ export class NavigationEntryFrame extends NavigationBase {
         let titlePrefix = entryData.value.indexEntryPrefix;
         if (titlePrefix) {
             let linkTitlePrefixContainer = linkTitleContainer.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-prefix"]} );
-            this.renderMarkdown(
-                titlePrefix,
-                linkTitlePrefixContainer,
-            );
+            let prefixes = titlePrefix.split("/");
+            prefixes.forEach( (prefix: string, index: number) => {
+                this.renderMarkdown(
+                    prefix,
+                    linkTitlePrefixContainer,
+                );
+                if (index < prefixes.length - 1) {
+                    let bulletElement = linkTitlePrefixContainer.createEl("span", { cls: "bearings-title-prefix-infix-separator" });
+                    bulletElement.setText("⦁");
+                }
+            });
             linkTitlePrefixContainer.classList.add("bearings-entry-head-link-has-title-prefix");
         }
         let linkTitleLabelContainer = linkTitleContainer.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-text"]} );

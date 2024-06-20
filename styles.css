@@ -530,6 +530,11 @@ input:disabled {
 /*     content: "]"; */
 /* } */
 
+.bearings-title-prefix-infix-separator {
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+}
+
 .bearings-entry-glyph-bar-container {
     position: relative;
     display: flex;
