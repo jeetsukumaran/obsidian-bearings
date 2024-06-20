@@ -92,6 +92,7 @@ export class SelectFileModal extends SuggestModal<FileDisplayRecord> {
                         this.configuration,
                         undefined,
                         file,
+                        true,
                         file.path,
                     ),
                 };

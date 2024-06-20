@@ -215,14 +215,14 @@ export class CreateRelationshipModal extends Modal {
 
     get focalFilePathDisplayTitle() {
         if (!this._focalFilePathDisplayTitle) {
-            this._focalFilePathDisplayTitle = this.focalFilePath ? getDisplayTitle(app, this.configuration, this.focalFilePath, undefined, this.focalFilePath) : "";
+            this._focalFilePathDisplayTitle = this.focalFilePath ? getDisplayTitle(app, this.configuration, this.focalFilePath, undefined, true, this.focalFilePath) : "";
         }
         return this._focalFilePathDisplayTitle;
     }
 
     get linkPathDisplayTitle() {
         if (!this._linkPathDisplayTitle) {
-            this._linkPathDisplayTitle = this.linkPath ? getDisplayTitle(app, this.configuration, this.linkPath, undefined, this.linkPath) : "";
+            this._linkPathDisplayTitle = this.linkPath ? getDisplayTitle(app, this.configuration, this.linkPath, undefined, true, this.linkPath) : "";
         }
         return this._linkPathDisplayTitle;
     }

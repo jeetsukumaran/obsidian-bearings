@@ -141,11 +141,13 @@ export function getDisplayTitle(
     configuration: BearingsConfiguration,
     filePath?: string,
     file?: TFile,
+    isIncludePrefix: boolean = true,
     defaultTitle: string = ""): string {
         const frontMatter = getFrontMatter(app, filePath, file);
         return getFrontMatterDisplayTitle(
             configuration,
             frontMatter,
+            isIncludePrefix,
             defaultTitle,
         );
 }
@@ -153,7 +155,9 @@ export function getDisplayTitle(
 export function getFrontMatterDisplayTitle(
     configuration: BearingsConfiguration,
     frontMatterCache: FrontMatterCache | undefined,
-    defaultTitle: string): string {
+    isIncludePrefix: boolean = true,
+    defaultTitle: string = "",
+): string {
     let result: string = defaultTitle;
     let propertyNames: string[] = configuration.options["titleField"] || DEFAULT_TITLE_FIELDS;
     propertyNames.forEach( (propertyName: string) => {
@@ -162,11 +166,13 @@ export function getFrontMatterDisplayTitle(
             return result;
         }
     });
-    let titlePrefixKey = configuration.options["titlePrefix"] || DEFAULT_TITLE_PREFIX_FIELD;
-    if (titlePrefixKey && frontMatterCache && frontMatterCache[titlePrefixKey]) {
-        let value = frontMatterCache[titlePrefixKey].trim();
-        if (value) {
-            result = `${value} ${result}`;
+    if (isIncludePrefix) {
+        let titlePrefixKey = configuration.options["titlePrefix"] || DEFAULT_TITLE_PREFIX_FIELD;
+        if (titlePrefixKey && frontMatterCache && frontMatterCache[titlePrefixKey]) {
+            let value = frontMatterCache[titlePrefixKey].trim();
+            if (value) {
+                result = `${value} ${result}`;
+            }
         }
     }
     return result;
@@ -917,15 +923,15 @@ export class FileNode {
     }
 
     get indexEntryText(): string {
+        let isIncludePrefix: boolean = true;
         let dt = (
                 this.displayText
                 || getFrontMatterDisplayTitle(
                     this.dataService.configuration,
                     this.fileData?.frontMatterCache,
+                    isIncludePrefix,
                     this.fileBaseName,
                     )
-                || this.filePath
-                || "(?)"
             )
             .trim();
         return dt;
@@ -943,6 +949,20 @@ export class FileNode {
         //         .trim();
         //     return dt;
         // });
+    }
+    get indexEntryTextWithoutPrefix(): string {
+        let isIncludePrefix: boolean = false;
+        let dt = (
+                this.displayText
+                || getFrontMatterDisplayTitle(
+                    this.dataService.configuration,
+                    this.fileData?.frontMatterCache,
+                    isIncludePrefix,
+                    this.fileBaseName,
+                    )
+            )
+            .trim();
+        return dt;
     }
 
     sort_key(other: FileNode): number {

@@ -447,9 +447,17 @@ export class NavigationView extends NavigationBase {
         };
         refreshButton.onClick( () => refreshAction() );
 
-        let headerLabel = mainSide.createEl("div", {
-            cls: ["bearings-main-container-header-label"],
-            text: this._context.dataService.getFileNode(this._context._focalFilePath).indexEntryText,
+        const fileNode = this._context.dataService.getFileNode(this._context._focalFilePath);
+        let headerLabelContainer = mainSide.createEl("div", {
+            cls: ["bearings-main-container-header-label-container"],
+        });
+        // let headerPrefix = headerLabelContainer.createEl("div", {
+        //     cls: ["bearings-main-container-header-label-prefix"],
+        //     text: fileNode.fileData?.frontMatterCache?.["title-prefix"] || "hello",
+        // });
+        let headerLabel = headerLabelContainer.createEl("div", {
+            cls: ["bearings-main-container-header-label-title"],
+            text: fileNode.indexEntryText,
         });
 
         // let controlRowRight = headerRight.createEl("div", {cls: ["bearings-control-row"]});
@@ -1179,17 +1187,27 @@ export class NavigationEntryFrame extends NavigationBase {
         root: HTMLElement,
         entryData: FileNavigationTreeNode,
     ) {
+
+        // const linkPath = entryData.value.filePath;
+        // let linkContainer = root.createEl("div", { cls: "bearings-entry-head-link-container"} );
+        // let linkTitleContainer = linkContainer.createEl("span", { cls: "bearings-entry-head-link-title-container"} );
+        // let linkTitlePrefixContainer = linkTitleContainer.createEl("span", { cls: "bearings-entry-head-link-title-prefix"} );
+        // let linkTitleLabelContainer = linkTitleContainer.createEl("div", { cls: "bearings-entry-head-link-title-text"} );
+        // let linkDisplayText = entryData.value.indexEntryTextWithoutPrefix;
+        // this.renderMarkdown(
+        //     linkDisplayText,
+        //     linkTitleLabelContainer,
+        // );
+
         let linkContainer = root.createEl("a", { cls: "bearings-entry-head-link"} );
         const linkPath = entryData.value.filePath;
         let linkDisplayText = entryData.value.indexEntryText;
-
-        // linkContainer.innerText = entryData.value.indexEntryText;
-
         this.renderMarkdown(
             linkDisplayText,
             linkContainer,
             // linkPath,
         );
+
         linkContainer.addEventListener("mouseover", (event) => {
             this._context.app.workspace.trigger("hover-link", {
                 event,
