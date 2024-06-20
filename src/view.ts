@@ -1194,7 +1194,7 @@ export class NavigationEntryFrame extends NavigationBase {
         let linkTitlePrefixContainer = linkTitleContainer.createEl("span", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-prefix"]} );
         let linkTitleLabelContainer = linkTitleContainer.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-text"]} );
         this.renderMarkdown(
-            entryData.value.indexEntryTextWithoutPrefix,
+            entryData.value.indexEntryPrefix,
             linkTitlePrefixContainer,
         );
         this.renderMarkdown(

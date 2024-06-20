@@ -934,6 +934,13 @@ export class FileNode {
             .map( (link: Link) => this.createNew(link.path, link.display) );
     }
 
+    get indexEntryPrefix(): string {
+        return getFrontMatterDisplayTitlePrefix(
+                    this.dataService.configuration,
+                    this.fileData?.frontMatterCache,
+        ).trim();
+    }
+
     get indexEntryText(): string {
         let isIncludePrefix: boolean = true;
         let dt = (
@@ -944,8 +951,7 @@ export class FileNode {
                     isIncludePrefix,
                     this.fileBaseName,
                     )
-            )
-            .trim();
+            ).trim();
         return dt;
         // return this._memoize( "indexEntry", () => {
         //     let dt = (
