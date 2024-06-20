@@ -1191,12 +1191,16 @@ export class NavigationEntryFrame extends NavigationBase {
         const linkPath = entryData.value.filePath;
         let linkContainer = root.createEl("a", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-container"]} );
         let linkTitleContainer = linkContainer.createEl("span", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-container"]} );
-        let linkTitlePrefixContainer = linkTitleContainer.createEl("span", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-prefix"]} );
+        let titlePrefix = entryData.value.indexEntryPrefix;
+        if (titlePrefix) {
+            let linkTitlePrefixContainer = linkTitleContainer.createEl("span", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-prefix"]} );
+            this.renderMarkdown(
+                titlePrefix,
+                linkTitlePrefixContainer,
+            );
+            linkTitlePrefixContainer.classList.add("bearings-entry-head-link-has-title-prefix");
+        }
         let linkTitleLabelContainer = linkTitleContainer.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-text"]} );
-        this.renderMarkdown(
-            entryData.value.indexEntryPrefix,
-            linkTitlePrefixContainer,
-        );
         this.renderMarkdown(
             entryData.value.indexEntryTextWithoutPrefix,
             linkTitleLabelContainer,
