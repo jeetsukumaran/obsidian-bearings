@@ -197,6 +197,31 @@ The navigational views can be embedded into a note using the code block identifi
 ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/ea16e33c-a716-4093-b5cf-eb488e655f5e)
 
 
+### Decorations
+
+#### Title prefix
+
+Title prefixes, by default picked up from the ``title-prefix`` property field of each note allow you to augment the display of the nodes by marked up text.
+
+For example, notes with:
+
+```
+---
+title-prefix: "Tasking/Capture"
+title: "Inbox"
+---
+```
+
+will display as ![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/e65c08d3-0dc4-4ef4-905b-1aa5ed01b31a) .
+
+
+You can use this feature to provide more visual cues for navigation or adjusting the sort order by using key prefixes:
+
+
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/c6b97dd7-b060-4d44-90ff-1f3410e20c9e)
+
+
+
 ## Design considerations
 
 ### Mechanisms
