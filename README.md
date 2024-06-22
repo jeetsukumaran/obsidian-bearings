@@ -6,6 +6,9 @@ Metadata is tracked by frontmatter properties.
 
 Bearings allows you to flow through the logical hallways, highways, and byways of your notegraph's semantic architectures constructed by combining these two mechanisms.
 
+![image](https://github.com/jeetsukumaran/obsidian-bearings/assets/26183/9ea48af6-a9d3-4515-9a50-c66d37bba3d8)
+
+
 ### What it does
 
 Bearings provides dynamically-scoped expanding tree views of relationships between your notes.
