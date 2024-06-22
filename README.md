@@ -109,7 +109,7 @@ Hovering over links opens up the Hover Editor (if installed).
 
 #### Example relationships
 
-(Note: here the naming convention of the relationships
+(Note: here the naming convention of the relationships reflect the superordinate role. This is just a convention).
 
 
 | Name         | Category               | Focal note property     | Focal note role  | Linked note role |
@@ -177,9 +177,9 @@ All superordinate relationships of the current note, with superordinate relation
 
 Full subtree expansions of all *immediate* superordinates (e.g., all children of all parents of the current note) expanded into full subtrees (tracked to their leaves or until the specifed depth).
 
-#### "Referrals"
+#### "Crosslinks"
 
-All coordinate relationships.
+All symmetrical relationships.
 
 #### "Backlinks"
 
