@@ -502,7 +502,7 @@ export class NavigationView extends NavigationBase {
         let symmetricalViewFrame = new CoordinateRelationshipsViewFrame(
             this._context,
             viewContainerBody.createEl("div", {cls: "bearings-viewframe-container"}),
-            "Referrals",
+            "Crosslinks",
         );
         symmetricalViewFrame.render();
 
