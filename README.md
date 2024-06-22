@@ -202,6 +202,7 @@ The navigational views can be embedded into a note using the code block identifi
 #### Title prefix
 
 Title prefixes, by default picked up from the ``title-prefix`` property field of each note allow you to augment the display of the nodes by marked up text.
+You can use "``/``" or the "`::`" to separate prefix elements.
 
 For example, notes with:
 

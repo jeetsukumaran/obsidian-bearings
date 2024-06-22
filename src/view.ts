@@ -1194,8 +1194,11 @@ export class NavigationEntryFrame extends NavigationBase {
         let titlePrefix = entryData.value.indexEntryPrefix;
         if (titlePrefix) {
             let linkTitlePrefixContainer = linkTitleContainer.createEl("div", { cls: ["bearing-entry-head-link", "bearings-entry-head-link-title-prefix"]} );
-            let prefixes = titlePrefix.split("/");
+            // let prefixes = titlePrefix.split("/");
+            // let prefixes = titlePrefix.split(/(\/|::)/);
+            let prefixes = titlePrefix.split(/(?:\/|::)/);
             prefixes.forEach( (prefix: string, index: number) => {
+                prefix = prefix.trim();
                 this.renderMarkdown(
                     prefix,
                     linkTitlePrefixContainer,
