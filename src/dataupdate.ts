@@ -45,6 +45,9 @@ interface PropertyField {
 
 export const PLUGIN_NAME = "Bearings";
 
+let PREV_LINK_PATHS: string[] = [];
+let PREV_FOCAL_FILE_PATHS: string[] = [];
+
 export async function copyYamlFrontmatterProperties(
     app: App,
     sourcePath: string,
@@ -206,9 +209,17 @@ export class CreateRelationshipModal extends Modal {
     }
 
     get linkPath() {
+        console.log(this._linkPath);
+        console.log(PREV_LINK_PATHS);
+        if (!this._linkPath && PREV_LINK_PATHS.length > 0) {
+            this._linkPath = PREV_LINK_PATHS.at(-1) || this._linkPath;
+        }
         return this._linkPath;
     }
     set linkPath(value: string) {
+        if (value) {
+            PREV_LINK_PATHS.push(value);
+        }
         this._linkPath = value;
         this._linkPathDisplayTitle = "";
     }
