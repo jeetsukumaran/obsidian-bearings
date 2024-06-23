@@ -168,7 +168,10 @@ export class BearingsView extends ItemView {
                 this.configuration,
                 this.dataService,
                 "",
-                async () => await this.render(),
+                async () => {
+                    // await this.dataService.refresh();
+                    await this.render();
+                },
                 true,
             );
             this.navigationView = new NavigationView(
