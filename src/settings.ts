@@ -150,6 +150,11 @@ export class BearingsConfiguration {
         return Array.from(propertyNames);
     }
 
+
+    get titlePrefixField(): string {
+        return this.options?.titlePrefixField || DEFAULT_TITLE_PREFIX_FIELD;
+    }
+
     get titleFields(): string[] {
         return this.options?.titleField || DEFAULT_TITLE_FIELDS;
     }

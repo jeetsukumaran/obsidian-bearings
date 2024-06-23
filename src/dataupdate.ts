@@ -47,6 +47,7 @@ export const PLUGIN_NAME = "Bearings";
 
 let PREV_LINK_PATHS: string[] = [];
 let PREV_FOCAL_FILE_PATHS: string[] = [];
+let PREV_RELATIONSHIPS: string[] = [];
 
 export async function copyYamlFrontmatterProperties(
     app: App,
@@ -158,6 +159,7 @@ export class CreateRelationshipModal extends Modal {
     public _focalFilePathDisplayTitle: string;
     public _linkPath: string;
     public _linkPathDisplayTitle: string;
+    public initialRelationshipKey: string;
     public configuration: BearingsConfiguration;
     public updateCallbackFn: () => Promise<void>;
     private selectBox: HTMLSelectElement;
@@ -180,6 +182,7 @@ export class CreateRelationshipModal extends Modal {
         focalFilePath: string,
         linkPath: string,
         updateCallbackFn: () => Promise<void>,
+        initialRelationshipKey: string = "",
     ) {
         super(app);
         this.focalFilePath = focalFilePath;
@@ -191,6 +194,10 @@ export class CreateRelationshipModal extends Modal {
         this.selectBox = document.createElement('select');
         // this.selectBox.addEventListener('change', this.selectionUpdate.bind(this));
         this.selectBox.addEventListener('change', () => this.selectionUpdate());
+        this.initialRelationshipKey = initialRelationshipKey;
+        if (!this.initialRelationshipKey && PREV_RELATIONSHIPS.length > 0) {
+            this.initialRelationshipKey = PREV_RELATIONSHIPS.at(-1) || this.initialRelationshipKey;
+        }
         this.loadChoices();
         this.loadProperties();
     }
@@ -209,6 +216,9 @@ export class CreateRelationshipModal extends Modal {
         if (value) {
             PREV_FOCAL_FILE_PATHS.push(value);
         }
+        if (PREV_FOCAL_FILE_PATHS.length > 10) {
+            PREV_FOCAL_FILE_PATHS = PREV_FOCAL_FILE_PATHS.slice(-10);
+        }
         this._focalFilePath = value;
         this._focalFilePathDisplayTitle = "";
     }
@@ -222,6 +232,9 @@ export class CreateRelationshipModal extends Modal {
     set linkPath(value: string) {
         if (value) {
             PREV_LINK_PATHS.push(value);
+        }
+        if (PREV_LINK_PATHS.length > 10) {
+            PREV_LINK_PATHS = PREV_LINK_PATHS.slice(-10);
         }
         this._linkPath = value;
         this._linkPathDisplayTitle = "";
@@ -401,6 +414,9 @@ export class CreateRelationshipModal extends Modal {
                     value: choice.key,
                 });
             });
+        if (this.initialRelationshipKey) {
+            this.selectBox.value = this.initialRelationshipKey;
+        }
         selectContainer.appendChild(this.selectBox);
         this.contentEl.createEl('br');
         this.complementaryRelationshipRoleEl = this.contentEl.createEl('div', {text: "*", cls: 'bearings-modal-data-entry-item-label'});
@@ -463,6 +479,12 @@ export class CreateRelationshipModal extends Modal {
             const selectedProperty = this.currentSelection.propertyName;
             const normalizedPath = normalizePath(this.focalFilePath);
             const file = this.app.vault.getAbstractFileByPath(normalizedPath);
+            if (selectedProperty) {
+                PREV_RELATIONSHIPS.push(this.selectBox.value);
+            }
+            if (PREV_RELATIONSHIPS.length > 10) {
+                PREV_RELATIONSHIPS = PREV_RELATIONSHIPS.slice(-10);
+            }
             if (file instanceof TFile) {
                 await appendFrontmatterLists(
                     this.app,

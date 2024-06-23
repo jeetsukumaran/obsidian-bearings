@@ -203,7 +203,7 @@ export function buildLinkTargetEditMenu(
                                         linkPath,
                                         newPath,
                                         configuration.allPropertyNames(),
-                                        configuration.titleFields,
+                                        [ configuration.titlePrefixField, ... configuration.titleFields],
                                     );
                                     const titleModal = new UpdateDisplayTitleModal(
                                         app,
