@@ -65,7 +65,6 @@ export async function copyYamlFrontmatterProperties(
             await app.fileManager.processFrontMatter(sourceFile, (sourceFrontmatter: { [key: string]: any }) => {
                 // Object.keys(sourceFrontmatter).forEach( (key: string) => {
                 //     let value = sourceFrontmatter[key];
-                //     console.log(`${key}: ${value}`);
                 // });
                 for (let key of includedListFields) {
                     if (sourceFrontmatter[key]) {
@@ -201,16 +200,20 @@ export class CreateRelationshipModal extends Modal {
     }
 
     get focalFilePath() {
+        if (!this._focalFilePath && PREV_FOCAL_FILE_PATHS.length > 0) {
+            this._focalFilePath = PREV_FOCAL_FILE_PATHS.at(-1) || this._focalFilePath;
+        }
         return this._focalFilePath;
     }
     set focalFilePath(value: string) {
+        if (value) {
+            PREV_FOCAL_FILE_PATHS.push(value);
+        }
         this._focalFilePath = value;
         this._focalFilePathDisplayTitle = "";
     }
 
     get linkPath() {
-        console.log(this._linkPath);
-        console.log(PREV_LINK_PATHS);
         if (!this._linkPath && PREV_LINK_PATHS.length > 0) {
             this._linkPath = PREV_LINK_PATHS.at(-1) || this._linkPath;
         }
