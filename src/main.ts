@@ -33,8 +33,8 @@ import {
 
 import {
     UpdateDisplayTitleModal,
-    CreateRelationshipModal,
     appendFrontmatterLists,
+    CreateRelationshipModal,
 } from "./dataupdate"
 
 import {
@@ -59,6 +59,10 @@ export default class BearingsPlugin extends Plugin {
         this.registerMarkdownCodeBlockProcessor(
             "bearings",
             (source, el, ctx) => {
+                // console.log(source);
+                // console.log(el);
+                // console.log(ctx);
+
                 // source = source.trim();
                 // let trimmedSource = source.trim()
                 // if (!trimmedSource || trimmedSource === ":self:") {
@@ -66,21 +70,30 @@ export default class BearingsPlugin extends Plugin {
                 // } else if (trimmedSource === ":children:") {
                 //     source = inventorizeChildrenSpec;
                 // }
+                // this.dataService.refresh()
+
+                let sourcePath = ctx.sourcePath;
                 let root = el;
-                this.dataService.refresh()
                 let navigationContext = new NavigationContext(
                     this.app,
                     this.configuration,
                     this.dataService,
                     "",
-                    // this.codeBlockRefresh,
-                    this.refresh,
+                    async () => {
+                        // await this.dataService.refresh();
+                        // await this.render();
+                        // let focalFilePath = this.computeActiveFilePath();
+                        // this.navigationView.refresh({"isForce": true, isCodeBlock: false});
+                        this.refresh();
+                    },
                     true,
                 );
+
                 let navigationView = new NavigationView(
                     navigationContext,
                     root,
                 );
+
                 // let hoverSourceId = NAVIGATOR_VIEW_TYPE;
                 // this.registerHoverLinkSource(
                 //     hoverSourceId,
@@ -89,8 +102,9 @@ export default class BearingsPlugin extends Plugin {
                 //         display: NAVIGATOR_VIEW_TYPE,
                 //     }
                 // );
-                let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
-                navigationView.render(activeFilePath, {
+
+                navigationView.render(
+                    sourcePath, {
                     isCodeBlock: true,
                     isForce: true,
                 });
@@ -105,7 +119,7 @@ export default class BearingsPlugin extends Plugin {
 
         this.addCommand({
             id: 'create-bearings-relationship',
-            name: 'Add relationship link ...',
+            name: 'Create relationship ...',
             callback: () => this.addRelationship(),
         });
 
@@ -125,7 +139,7 @@ export default class BearingsPlugin extends Plugin {
             this.activateView();
         });
 
-        this.addRibbonIcon("git-branch-plus", "Add relationship link", () => {
+        this.addRibbonIcon("git-branch-plus", "Create relationship", () => {
             this.addRelationship();
         });
 
@@ -155,7 +169,6 @@ export default class BearingsPlugin extends Plugin {
 
         this.registerEvent(
             this.app.workspace.on("file-menu", (menu, file) => {
-                // let activeFilePath = this.app.workspace.getActiveFile()?.path || "";
                 buildLinkTargetEditMenu(
                     this.app,
                     this.configuration,
