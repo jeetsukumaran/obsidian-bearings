@@ -14,7 +14,12 @@ import {
     BearingsConfiguration,
 } from "./settings";
 
-let getFileBaseName = (value: string) => value.split('\\')?.pop()?.split('/').pop() || value;
+import {
+    getPathBaseName,
+    getUniquePath,
+} from "./fileservice";
+
+
 
 // ** Dataview **
 // Available at `app.plugins.plugins.dataview.api` or as global `DataviewAPI`)
@@ -467,7 +472,7 @@ export class FileNode {
     ) {
         this.filePath = filePath;
         this.dataService = dataService;
-        this.fileBaseName = getFileBaseName(filePath);
+        this.fileBaseName = getPathBaseName(filePath);
         this.fileData = this.dataService.readFileNodeDataRecords(filePath);
         this.displayText = displayText;
     }
