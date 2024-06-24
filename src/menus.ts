@@ -19,10 +19,15 @@ import {
 
 import {
     UpdateDisplayTitleModal,
-    CreateRelationshipModal,
+    // CreateRelationshipModal,
     appendFrontmatterLists,
     copyYamlFrontmatterProperties,
 } from "./dataupdate"
+
+import {
+    CreateRelationshipModal,
+} from "./CreateRelationship"
+
 
 import {
     CreateFileModal,

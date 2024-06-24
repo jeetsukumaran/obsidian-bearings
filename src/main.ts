@@ -34,8 +34,12 @@ import {
 import {
     UpdateDisplayTitleModal,
     appendFrontmatterLists,
-    CreateRelationshipModal,
+    // CreateRelationshipModal,
 } from "./dataupdate"
+
+import {
+    CreateRelationshipModal,
+} from "./CreateRelationship"
 
 import {
     VIEW_TYPE as NAVIGATOR_VIEW_TYPE,
