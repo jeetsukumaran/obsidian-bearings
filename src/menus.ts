@@ -19,7 +19,6 @@ import {
 
 import {
     UpdateDisplayTitleModal,
-    // CreateRelationshipModal,
     appendFrontmatterLists,
     copyYamlFrontmatterProperties,
 } from "./dataupdate"
@@ -27,7 +26,6 @@ import {
 import {
     CreateRelationshipModal,
 } from "./CreateRelationship"
-
 
 import {
     CreateFileModal,
@@ -37,7 +35,7 @@ export const createNewRelationshipFile = (
     app: App,
     configuration: any,
     linkPath: string | null,
-    updateCallbackFn: () => void,
+    updateCallbackFn: (file: TFile) => void,
     relationshipType: 'to' | 'from',
 ) => {
     const initialPath = linkPath ? `${linkPath.replace(/.md$/, "")}_related` : "NewRelationFile";
@@ -56,8 +54,8 @@ export const createNewRelationshipFile = (
                             configuration,
                             relationshipType === 'to' ? newPath : (linkPath || ""),
                             relationshipType === 'to' ? (linkPath || "") : newPath,
-                            async () => {
-                                updateCallbackFn();
+                            async (file: TFile) => {
+                                await updateCallbackFn(file);
                             }
                         );
                         relModal.open();
@@ -77,7 +75,7 @@ export function buildLinkTargetEditMenu(
     configuration: BearingsConfiguration,
     menu: Menu,
     linkPath: string,
-    updateCallbackFn: () => Promise<void>,
+    updateCallbackFn: (file: TFile) => Promise<void>,
     includePreSeparator = true,
 ) {
     if (includePreSeparator) {
@@ -95,7 +93,9 @@ export function buildLinkTargetEditMenu(
                         app,
                         configuration,
                         file,
-                        updateCallbackFn,
+                        async (file: TFile) => {
+                            await updateCallbackFn(file);
+                        }
                     );
                     modal.open();
                 } else {
@@ -118,7 +118,9 @@ export function buildLinkTargetEditMenu(
                             activeFilePath,
                             // activeFilePath === linkPath ? "" : linkPath,
                             linkPath,
-                            updateCallbackFn,
+                            async (file: TFile) => {
+                                await updateCallbackFn(file);
+                            }
                         );
                         modal.open();
                     }));
@@ -132,7 +134,9 @@ export function buildLinkTargetEditMenu(
                             configuration,
                             linkPath,
                             activeFilePath,
-                            updateCallbackFn,
+                            async (file: TFile) => {
+                                await updateCallbackFn(file);
+                            }
                         );
                         modal.open();
                     }));
@@ -146,7 +150,9 @@ export function buildLinkTargetEditMenu(
                             app,
                             configuration,
                             linkPath,
-                            updateCallbackFn,
+                            async (file: TFile) => {
+                                await updateCallbackFn(file);
+                            },
                             'to',
                         );
                     }));
@@ -160,7 +166,9 @@ export function buildLinkTargetEditMenu(
                             app,
                             configuration,
                             linkPath,
-                            updateCallbackFn,
+                            async (file: TFile) => {
+                                await updateCallbackFn(file);
+                            },
                             'from'
                         );
                         // let initialPath = linkPath ? `${linkPath.replace(/.md$/,"")}_related` : "NewRelationFile";
