@@ -8,6 +8,10 @@ import {
     Notice,
 } from "obsidian";
 
+export function getPathBaseName(value: string): string {
+    return value.trim().split('\\')?.pop()?.split('/').pop() || value;
+}
+
 export async function getUniquePath(
     app: App,
     initialPath: string,

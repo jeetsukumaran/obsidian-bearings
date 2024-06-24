@@ -16,10 +16,14 @@ import {
     BearingsConfiguration,
 } from "./settings";
 
-
 import {
+    getPathBaseName,
     getUniquePath,
 } from "./fileservice";
+
+import {
+    updateFrontmatterStrings,
+} from "./dataupdate";
 
 export class CreateFileModal extends Modal {
     configuration: BearingsConfiguration;
@@ -65,36 +69,49 @@ export class CreateFileModal extends Modal {
         return textArea;
     }
 
+    async postProcessFile(file: TFile, isOpen: boolean) {
+        const baseName = getPathBaseName(file.path).replace(/\.md$/, "");
+        let defaultTitleField = this.configuration.titleFields.at(-1) || "title";
+        await updateFrontmatterStrings(
+            this.app,
+            file,
+            {
+                [defaultTitleField]: baseName,
+            },
+            false,
+        );
+        await this.onSubmit(file.path);
+        if (isOpen) {
+            this.app.workspace.openLinkText(
+                file.path,
+                "",
+                "split",
+                { active: false }
+            );
+        }
+    }
+    async createFile(value: string, isOpen: boolean) {
+        let cleanedValue = value.trim();
+        const filepath = cleanedValue.replace(/\.md$/,"");
+        if (filepath) {
+            const fullFilePath = await getUniquePath(this.app, filepath) + ".md";
+            this.app.vault.create(fullFilePath, "")
+            .then( (file: TFile) => this.postProcessFile(file, isOpen).then( () => {} ))
+            .catch( (error) => {
+                new Notice(`Failed to create file: ${error}`);
+            })
+        }
+    };
+
+
     // addFooterButtons(textArea: TextComponent) {
     addFooterButtons(textArea: HTMLTextAreaElement) {
-        let createFile = async (isOpen: boolean) => {
-            // const filename = textArea.getValue();
-            const filepath = textArea.value.replace(/.md$/,"");
-            if (filepath) {
-                const fullFilePath = await getUniquePath(this.app, filepath) + ".md";
-                this.app.vault.create(fullFilePath, "")
-                    .then( (file: TFile) => {
-                        if (isOpen) {
-                            this.app.workspace.openLinkText(
-                                fullFilePath,
-                                "",
-                                "split",
-                                { active: false }
-                            );
-                        }
-                        this.onSubmit(fullFilePath);
-                    })
-                    .catch( (error) => {
-                        new Notice(`Failed to create file: ${error}`);
-                    })
-            }
-            footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
-        };
         const footer = this.contentEl.createDiv({ cls: 'bearings-modal-footer' });
+        // footer.createEl("div", {cls: [ "bearings-data-entry-control-cell", ]})
         this.addCancelButton(footer);
         const createButton = this.addFooterButton("Create", "bearings-modal-footer-button", footer)
         createButton.onclick = () => {
-            createFile(true);
+            this.createFile(textArea.value, true);
             this.close();
         }
     }
