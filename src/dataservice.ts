@@ -164,7 +164,7 @@ export function getFrontMatterDisplayTitlePrefix(
 ): string {
     let titlePrefixKey = configuration.options["titlePrefix"] || DEFAULT_TITLE_PREFIX_FIELD;
     if (titlePrefixKey && frontMatterCache && frontMatterCache[titlePrefixKey]) {
-        return frontMatterCache[titlePrefixKey].trim();
+        return String(frontMatterCache[titlePrefixKey]).trim();
     }
     return "";
 }
@@ -186,7 +186,7 @@ export function getFrontMatterDisplayTitle(
     if (isIncludePrefix) {
         let titlePrefixKey = configuration.options["titlePrefix"] || DEFAULT_TITLE_PREFIX_FIELD;
         if (titlePrefixKey && frontMatterCache && frontMatterCache[titlePrefixKey]) {
-            let value = frontMatterCache[titlePrefixKey].trim();
+            let value = String(frontMatterCache[titlePrefixKey]).trim();
             if (value) {
                 result = `${value} ${result}`;
             }
