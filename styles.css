@@ -325,6 +325,7 @@ input:disabled {
     /* height: calc(100%); */
     height: calc(100% - 1.27rem);
     opacity: 0.2;
+    color: var(--bearings-guideline-color) !important;
 }
 
 
@@ -340,7 +341,8 @@ input:disabled {
     overflow: clipped;
     /* height: var(--bearings-gutter-width); */
     padding: 0;
-    opacity: 0.5;
+    opacity: 0.3;
+    color: var(--bearings-guideline-color) !important;
 }
 
 .bearings-entry-node-terminal-container {
