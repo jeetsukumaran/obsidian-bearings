@@ -1,6 +1,7 @@
 
 
 :root {
+    --bearings-gutter-offset: 1rem;
     --bearings-font-base-size: 0.8rem;
     --bearings-gutter-width: 0.8rem;
     --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
@@ -285,6 +286,7 @@ input:disabled {
 
 .bearings-entry-gutter {
     position: relative;
+    padding-left: var(--bearings-gutter-offset);
 }
 
 .bearings-entry-gutter-head {
@@ -310,7 +312,8 @@ input:disabled {
     position: absolute;
 
     top: 0.4rem;
-    left: calc((-1 * var(--bearings-gutter-width)/2) + 0.25rem);
+    left: calc(var(--bearings-gutter-offset) + 0.175rem);
+    /* left: calc((-1 * var(--bearings-gutter-width)/2) + 0.25rem); */
     /* top: 1rem; */
 
     /* left: calc( (-1 * var(--bearings-font-base-size)) + 0.25rem); */
