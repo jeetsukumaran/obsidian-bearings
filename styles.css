@@ -311,7 +311,7 @@ input:disabled {
 .bearings-entry-guideline {
     position: absolute;
 
-    top: 0.4rem;
+    top: 0.5rem;
     left: calc(var(--bearings-gutter-offset) + 0.175rem);
     /* left: calc((-1 * var(--bearings-gutter-width)/2) + 0.25rem); */
     /* top: 1rem; */
@@ -321,7 +321,9 @@ input:disabled {
     border-left: solid 1px var(--bearings-guideline-color);
 
     min-height: 0;
-    height: calc(100% - 1rem);
+    /* height: 100%; */
+    /* height: calc(100%); */
+    height: calc(100% - 1.27rem);
     opacity: 0.2;
 }
 
@@ -333,7 +335,7 @@ input:disabled {
     left: calc( (-1 * var(--bearings-font-base-size)) + 0.175rem);
     /* left: calc(-1 * (var(--bearings-gutter-offset) + 0.175rem)); */
     /* top: 0.38rem; */
-    top: -0.1rem;
+    top: 0;
     width: var(--bearings-gutter-width);
     overflow: clipped;
     /* height: var(--bearings-gutter-width); */
