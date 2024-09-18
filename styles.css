@@ -1,7 +1,7 @@
 
 
 :root {
-    --bearings-gutter-offset: 1rem;
+    --bearings-gutter-offset: 0rem;
     --bearings-font-base-size: 0.8rem;
     --bearings-gutter-width: 0.8rem;
     --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
@@ -330,11 +330,13 @@ input:disabled {
     position: absolute;
     /* font-size: calc(var(--bearings-font-base-size) - 0.2rem); */
     font-size: var(--bearings-font-base-size);
-    left: calc( (-1 * var(--bearings-font-base-size)) - 0rem);
+    left: calc( (-1 * var(--bearings-font-base-size)) + 0.175rem);
+    /* left: calc(-1 * (var(--bearings-gutter-offset) + 0.175rem)); */
     /* top: 0.38rem; */
     top: 0rem;
     width: var(--bearings-gutter-width);
-    height: var(--bearings-gutter-width);
+    overflow: hidden;
+    /* height: var(--bearings-gutter-width); */
     padding: 0;
     opacity: 0.7;
 }
