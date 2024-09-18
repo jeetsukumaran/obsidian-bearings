@@ -333,12 +333,12 @@ input:disabled {
     left: calc( (-1 * var(--bearings-font-base-size)) + 0.175rem);
     /* left: calc(-1 * (var(--bearings-gutter-offset) + 0.175rem)); */
     /* top: 0.38rem; */
-    top: 0rem;
+    top: -0.1rem;
     width: var(--bearings-gutter-width);
-    overflow: hidden;
+    overflow: clipped;
     /* height: var(--bearings-gutter-width); */
     padding: 0;
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
 .bearings-entry-node-terminal-container {
