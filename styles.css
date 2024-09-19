@@ -2,8 +2,8 @@
 
 :root {
     --bearings-gutter-offset: 0.2rem;
-    --bearings-font-base-size: 0.8rem;
-    --bearings-gutter-width: 0.8rem;
+    --bearings-font-base-size: 1.0rem;
+    --bearings-gutter-width: 1.0rem;
     --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
 }
 
@@ -313,7 +313,7 @@ input:disabled {
     position: absolute;
 
     top: 0.5rem;
-    left: calc(var(--bearings-gutter-offset) + 0.175rem);
+    left: calc(var(--bearings-gutter-offset) + 0.2rem);
     /* left: calc((-1 * var(--bearings-gutter-width)/2) + 0.25rem); */
     /* top: 1rem; */
 
@@ -325,7 +325,7 @@ input:disabled {
     /* height: 100%; */
     /* height: calc(100%); */
     /* height: calc(100% - 1.27rem); */
-    height: calc(100% - 1.1rem);
+    height: calc(100% - 1.2rem);
     opacity: 0.2;
     color: var(--bearings-guideline-color) !important;
 }
@@ -402,7 +402,7 @@ input:disabled {
     content: "";
     position: absolute;
     top: -0.1rem;
-    height: calc(0.2rem + 100%);
+    height: calc(0.1rem + 100%);
     left: calc( (-1 * var(--bearings-font-base-size)) - 0rem);
     width: calc(1rem + 100%);
     border-radius: 0.4rem;
