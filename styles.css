@@ -1,7 +1,7 @@
 
 
 :root {
-    --bearings-gutter-offset: 0rem;
+    --bearings-gutter-offset: 0.2rem;
     --bearings-font-base-size: 0.8rem;
     --bearings-gutter-width: 0.8rem;
     --bearings-entry-node-toggle-container-size: calc(1 * var(--bearings-font-base-size));
@@ -325,7 +325,7 @@ input:disabled {
     /* height: 100%; */
     /* height: calc(100%); */
     /* height: calc(100% - 1.27rem); */
-    height: calc(100% - 1.14rem);
+    height: calc(100% - 1.1rem);
     opacity: 0.2;
     color: var(--bearings-guideline-color) !important;
 }
@@ -335,7 +335,7 @@ input:disabled {
     position: absolute;
     /* font-size: calc(var(--bearings-font-base-size) - 0.2rem); */
     font-size: var(--bearings-font-base-size);
-    left: calc( (-1 * var(--bearings-font-base-size)) + 0.175rem);
+    left: calc( (-1 * var(--bearings-font-base-size)) + 0rem);
     /* left: calc(-1 * (var(--bearings-gutter-offset) + 0.175rem)); */
     /* top: 0.38rem; */
     top: 0;
@@ -345,6 +345,7 @@ input:disabled {
     padding: 0;
     opacity: 0.3;
     color: var(--bearings-guideline-color) !important;
+    align-items: start !important;
 }
 
 .bearings-entry-node-terminal-container {
