@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-bearings",
-	"version": "1.4.4",
+	"version": "1.4.5",
 	"description": "Dynamically-scoped expanding tree views of your vault's semantic and logical architectures.",
 	"main": "main.js",
 	"scripts": {

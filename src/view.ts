@@ -75,8 +75,8 @@ export const DISPLAY_TEXT = "Bearings";
 // const BILINKED_RELATIONSHIP_GLYPH = "⇿";
 
 // ↑ ↓ ← → ⇐ ⇒ ⇑ ⇓ ⇐ ⇾ ⇽ ⇿
-const OUTLINKED_RELATIONSHIP_GLYPH = "🡒";
-const INLINKED_RELATIONSHIP_GLYPH = "🡐";
+const OUTLINKED_RELATIONSHIP_GLYPH = "🡐";
+const INLINKED_RELATIONSHIP_GLYPH = "🡒";
 const BILINKED_RELATIONSHIP_GLYPH = "🡘";
 
 
