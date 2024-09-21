@@ -276,11 +276,14 @@ input:disabled {
     border-radius: 0.4rem;
     /* padding-top: 0.1rem; */
     /* padding-bottom: 0.1rem; */
+    /* border-left: solid 1px #00000022; */
+    /* border-top: solid 1px #00000022; */
+    /* border-right: solid 1px #00000022; */
 }
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
     /* margin-bottom: 0.1rem; */
-    margin-left: -0.275rem;
+    /* margin-left: -0.275rem; */
 }
 
 
@@ -339,7 +342,7 @@ input:disabled {
     left: calc( (-1 * var(--bearings-font-base-size)) + 0.1rem);
     /* left: calc(-1 * (var(--bearings-gutter-offset) + 0.175rem)); */
     /* top: 0.38rem; */
-    top: 0;
+    top: -0.1rem;
     width: var(--bearings-gutter-width);
     overflow: clipped;
     padding: 0;
@@ -470,11 +473,11 @@ input:disabled {
 
 
 .bearings-entry-head-link-container.bearings-is-focal-file-entry {
-    border: solid 1px var(--bearings-node-leaf-color);
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
+    /* border: solid 1px var(--bearings-node-leaf-color); */
+    /* padding-left: 0.2rem; */
+    /* padding-right: 0.2rem; */
+    /* padding-top: 0.1rem; */
+    /* padding-bottom: 0.1rem; */
 }
 
 .bearings-entry-head-link-container.bearings-node-closed {
