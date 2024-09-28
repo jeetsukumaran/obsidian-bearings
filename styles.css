@@ -508,6 +508,7 @@ input:disabled {
     display: inline-block;
     padding: 0;
     margin: 0;
+    font-weight: normal;
 }
 
 .bearings-entry-head-link-title-container {
