@@ -350,10 +350,11 @@ input:disabled {
     height: 100%;
     width: var(--bearings-gutter-width);
     padding: 0;
+    padding-left: 0.2em;
     opacity: 0.3;
     color: var(--bearings-guideline-color) !important;
-    align-items: start !important;
-    justify: start !important;
+    align-items: center !important;
+    justify: center !important;
     overflow: hidden;
 }
 .bearings-entry-node-connection-container p,
