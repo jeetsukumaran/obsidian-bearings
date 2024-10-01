@@ -1098,7 +1098,8 @@ export class NavigationEntryFrame extends NavigationBase {
                 // let terminal: string = "¶";
                 // let terminal: string = "§";
                 // let terminal: string = "☗";
-                let terminal: string = "⧫";
+                // let terminal: string = "⧫";
+                let terminal: string = "🠷";
                 // let terminal: string = "⋇";
                 // let terminal: string = "⊛";
                 // let terminal: string = "⦿";
