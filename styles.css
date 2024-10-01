@@ -379,10 +379,10 @@ input:disabled {
 .bearings-entry-node-toggle-container {
     cursor: pointer;
     position: absolute;
-    top: 0em;
+    top: -0.1em;
     /* left: -0.65em; */
     /* left: -0.2em; */
-    left: 0em;
+    left: -0em;
     /* width: var(--bearings-entry-node-toggle-container-size); */
     /* height: var(--bearings-entry-node-toggle-container-size); */
     display: flex;
