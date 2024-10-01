@@ -1026,7 +1026,7 @@ export class NavigationEntryFrame extends NavigationBase {
         } else if (parentFileNode) {
             relationships.push( ... entryData?.value?.relationships[parentFileNode.filePath]);
         }
-        if (relationships.length > 0) {
+        // if (relationships.length > 0) {
             let relationshipDesc: string[] = relationships.map( (relationship: RelationshipLinkedPathDataType) => {
                 if (relationship.isInlink) {
                     return `${relationship.relationshipKey}${INLINKED_RELATIONSHIP_GLYPH}`;
@@ -1054,7 +1054,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 relEl.innerText = relationshipPolarityGlyph;
                 relEl.setAttribute("title", relationshipDesc.join("; "));
             }
-        }
+        // }
 
         this.elements.entryNodeToggleContainer = this.elements.entryGutterLeftHead.createEl("div", {
             cls: ["bearings-entry-node-toggle-container"]
@@ -1155,8 +1155,17 @@ export class NavigationEntryFrame extends NavigationBase {
         // }
 
         this.elements.entryHeadContent = this.elements.entryHead.createEl("div", { cls: "bearings-entry-head-content"});
+        //
         // this.elements.entryGlyphRow = this.elements.entryHeadContent.createEl("div");
+        // if (relationshipDesc.length > 0) {
+        //     this.elements.entryRelationshipDescription = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-link-container"});
+        //     this.elements.entryRelationshipDescription.innerText = relationshipDesc.join("/");
+        // }
+
+
+
         this.elements.entryHeadLinkContainer = this.elements.entryHeadContent.createEl("div", { cls: "bearings-entry-head-link-container"});
+
 
         this.renderEntryLink(
             this.elements.entryHeadLinkContainer,
