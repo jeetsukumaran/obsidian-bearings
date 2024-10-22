@@ -195,7 +195,7 @@ input:disabled {
     height: 1.5em !important;
     border: none !important;
     opacity: 0.6;
-    font-size: 0.6em !important;
+    padding: 0;
 }
 
 .bearings-control-input-number-container .is-null
