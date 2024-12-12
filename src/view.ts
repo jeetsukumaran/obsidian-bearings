@@ -1277,7 +1277,7 @@ export class NavigationEntryFrame extends NavigationBase {
                 this._context.updateCallbackFn,
                 true,
             );
-            buildLinkCopyMenu(menu, linkPath);
+            buildLinkCopyMenu(menu,  this._context.app, linkPath);
             menu.showAtMouseEvent(event);
         });
         linkContainer.addEventListener('click', (event) => {

@@ -6,6 +6,7 @@ import {
     Notice,
     normalizePath,
     TFile,
+    FileSystemAdapter,
 } from "obsidian";
 
 import {
@@ -326,6 +327,7 @@ function _copyToClipboard(text: string) {
 
 export function buildLinkCopyMenu(
     menu: Menu,
+    app: App,
     linkPath: string,
     includePreSeparator = true,
     includePostSeparator = false,
@@ -426,6 +428,21 @@ export function buildLinkCopySubmenu(
             .setIcon("documents")
             .onClick(() => _appendToClipboard(internalPath))
     );
+
+    menu.addItem((item) =>
+        item
+            .setTitle("Copy absolute path")
+            .setIcon("file-symlink")
+            .onClick(() => {
+                let adapter = app.vault.adapter;
+                let absolutePath = "";
+                if (adapter instanceof FileSystemAdapter) {
+                    absolutePath = adapter.getBasePath() + '/' + normalizedLinkPath;
+                }
+                _copyToClipboard(absolutePath);
+            })
+    );
+
 }
 
 

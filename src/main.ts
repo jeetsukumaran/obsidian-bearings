@@ -183,7 +183,7 @@ export default class BearingsPlugin extends Plugin {
                     async () => {},
                     true,
                 );
-                buildLinkCopyMenu(menu, file.path)
+                buildLinkCopyMenu(menu, this.app, file.path)
 
             })
         );
@@ -191,7 +191,7 @@ export default class BearingsPlugin extends Plugin {
         this.registerEvent(
             this.app.workspace.on("editor-menu", (menu, editor, view) => {
                 if (menu && view?.file?.path) {
-                    buildLinkCopyMenu(menu, view.file.path)
+                    buildLinkCopyMenu(menu, this.app, view.file.path)
                 }
             })
         );
