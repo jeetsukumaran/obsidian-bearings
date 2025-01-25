@@ -183,8 +183,20 @@ export default class BearingsPlugin extends Plugin {
                     async () => {},
                     true,
                 );
-                buildLinkCopyMenu(menu, this.app, file.path)
+                if (file instanceof TFile) {
+                    menu.addItem((item) => {
+                        item
+                            .setTitle('Open in new tab in background')
+                            .setIcon('popup-open')
+                            .onClick(() => app.workspace.openLinkText(
+                                file.path,
+                                file.path,
+                                "tab",
+                                { active: false, }
+                            ))});
+                }
 
+                buildLinkCopyMenu(menu, this.app, file.path)
             })
         );
 
@@ -211,6 +223,16 @@ export default class BearingsPlugin extends Plugin {
         // disabled for development
         // this.app.workspace.detachLeavesOfType(VIEW_TYPE_APEXNAVIGATOR)
     }
+
+    // openInBackgroundTab(file: TFile) {
+    //     if (!file) return;
+
+    //     const { workspace } = this.app;
+    //     const newLeaf = workspace.splitActiveLeaf();
+
+    //     newLeaf.openFile(file);
+    //     // workspace.setActiveLeaf(workspace.activeLeaf); // Revert focus to the original active leaf
+    // }
 
     addRelationship() {
         let activeFilePath: string = this.app.workspace.getActiveFile()?.path || "";
